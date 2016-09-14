@@ -8,7 +8,6 @@
         
             var vm = this;
             
-    
             // main object
             // initialized with some placeholder data,
             // and collects our utility methods.
@@ -27,7 +26,6 @@
                 calcFutureValue: calcFV,
                 calcRate: calcRATE
             };
-            
             
             
             // ====================== UTILITY METHODS ======================
@@ -72,7 +70,8 @@
             }
 
             
-            // RATE calculator
+            // rate solver
+            // credit: http://stackoverflow.com/questions/12064793/simple-financial-rate-function-in-javascript
             function solveRate(nper, pmt, pv, fv, type, guess) {
                 
                 if (guess === null) {
@@ -129,15 +128,13 @@
                 var pmt  = vm.napkin.FVpmt,
                     pv   = vm.napkin.FVpv,
                     nper = vm.napkin.retirementAge - vm.napkin.calculatedAge,
-                    fv   = vm.napkin.requiredSavings,
-                    rate = (100 * solveRate(nper, -pmt, -pv, fv, null, null));
+                    fv   = vm.napkin.requiredSavings;
+                    
+                // the moneyshot!
+                var rate = (100 * solveRate(nper, -pmt, -pv, fv, null, null));
                 
+                // bind calculated rate to main object
                 vm.napkin.requiredRate = rate;
             }
-
-            document.getElementById("RATE-button")
-                .addEventListener("click", calcRATE);
-        
         }]);
-
 }());
