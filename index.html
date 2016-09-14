@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="pfapp">
 
 <head>
     <meta charset="utf-8">
@@ -11,7 +11,7 @@
 
 </head>
 
-<body>
+<body ng-controller="pfappController as vm">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -25,10 +25,11 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container" ng-cloak>
 
         <div id="goals" class="page-header">
-            <h1>GOALS <small>calculator</small></h1>
+            <h1>GOALS
+                <small>calculate required retirement savings</small></h1>
         </div>
         <div class="row well">
             <div class="col-md-8">
@@ -37,43 +38,51 @@
                         <tr>
                             <td>Birth Date:</td>
                             <td>
-                                <input type="date" id="birthDate" placeholder="DD/MM/YYYY">
+                                <input type="date" id="birthDate"
+                                       ng-model="vm.napkin.birthDate">
                             </td>
                             <td>Expected retirement age:</td>
                             <td>
-                                <input type="number" min="1" step="1" id="retirementAge">
+                                <input type="number" min="1" step="1" id="retirementAge"
+                                       ng-model="vm.napkin.retirementAge">
                             </td>
                         </tr>
                         <tr>
                             <td>Annual Expenses:</td>
                             <td>
-                                <input type="number" min="0.00" step="0.01" id="annualExpenses">
+                                <input type="number" min="0.00" step="1" id="annualExpenses"
+                                       ng-model="vm.napkin.annualExpenses">
                             </td>
                             <td>Withdrawal Rate:</td>
                             <td>
-                                <input type="text" id="withdrawalRate" placeholder="Decimal (eg. 0.04)">
+                                <input type="number" min="0.01" max="0.20" step="0.005"
+                                       id="withdrawalRate"
+                                       ng-model="vm.napkin.withdrawalRate">
                             </td>
                         </tr>
                         <tr>
-                            <td>Calculated Age:</td>
-                            <td><span id="calculatedAge"></span></td>
+                            <td>Current Age:</td>
+                            <td><span id="calculatedAge">{{ vm.napkin.calculatedAge }}</span></td>
                             <td>Required savings:</td>
-                            <td><span id="calculatedSavings"></span></td>
+                            <td><span id="requiredSavings">{{ vm.napkin.requiredSavings | currency:"$" }}</span></td>
                         </tr>
                         <tr>
                             <td colspan="4"></td>
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-default" id="req-savings">
+                <button class="btn btn-warning" id="req-savings"
+                        ng-click="vm.napkin.calcReqSavings()">
                     Calculate
                 </button>
             </div>
-            <div class="col-md-4  well">
+            <div class="col-md-4 well">
                 <p>Notes:</p>
                 <ol>
-                    <li>Birth date needs day/month/year, but the formatting is flexible.</li>
-                    <li>Retirement age MUST be a whole number.</li>
+                    <li><strong>Design goal:</strong> calculate the total amount of savings required to sustain your expect retirement expenses, given your target withdrawal rate.</li>
+                    <li>Edit the fields with your personal data.</li>
+                    <li>Birth date format: year-month-day (format is strict).</li>
+                    <li>Retirement age must be a whole number.</li>
                     <li>Current age is calculated</li>
                     <li>Annual expenses MUST be a whole number</li>
                     <li>Withdrawal rate is expressed as a decimal (eg. 5% = .05)</li>
@@ -82,7 +91,7 @@
         </div>
 
         <div id="fv" class="page-header">
-            <h1>FUTURE VALUE <small>calculator</small></h1>
+            <h1>FUTURE VALUE <small>calculate savings growth</small></h1>
         </div>
         <div class="row well">
             <div class="col-md-8">
@@ -91,25 +100,29 @@
                         <tr>
                             <td>Rate of Return:</td>
                             <td>
-                                <input type="text" id="FVrate" placeholder="Decimal (eg. 0.04)">
+                                <input id="FVrate"
+                                       type="number" min="0.01" max="0.20" step="0.001"
+                                       ng-model="vm.napkin.FVrate">
                             </td>
                             <td>Number of years:</td>
-                            <td><span id="FVnper"></span></td>
+                            <td><span id="FVnper">{{ vm.napkin.FVnper }}</span></td>
                         </tr>
                         <tr>
                             <td>Annual contributions:</td>
                             <td>
-                                <input type="number" min="0.00" step="0.01" id="FVpmt">
+                                <input type="number" min="0.00" step="0.01" id="FVpmt"
+                                       ng-model="vm.napkin.FVpmt">
                             </td>
-                            <td>Current total savings:</td>
+                            <td>Total existing savings:</td>
                             <td>
-                                <input type="number" min="0.00" step="0.01" id="FVpv">
+                                <input type="number" min="0.00" step="0.01" id="FVpv"
+                                       ng-model="vm.napkin.FVpv">
                             </td>
                         </tr>
                         <tr>
                             <td>Future Value:</td>
                             <td colspan="3">
-                                <span id="calculatedFV"></span>
+                                <span id="calculatedFV">{{ vm.napkin.calculatedFV | currency:"$"}}</span>
                             </td>
                         </tr>
                         <tr>
@@ -117,24 +130,28 @@
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-default" id="FV-button">
+                <button class="btn btn-warning" id="FV-button"
+                        ng-click="vm.napkin.calcFutureValue()">
                     Calculate FV
                 </button>
+                
+                
             </div>
             <div class="col-md-4  well">
                 <p>Notes:</p>
                 <ol>
-                    <li><strong>Design Goal:</strong> FV(rate, nper, pmt, pv, type)</li>
+                    <li><strong>Design goal:</strong> Determine whether your current savings and savings rate will achieve the calculated required savings above.</li>
+                    <li><strong>TVM function:</strong> FV(rate, nper, pmt, pv, type)</li>
                     <li><strong>rate:</strong> rate of return or interest rate, expressed as a decimal (eg. 5% = .05)</li>
                     <li><strong>nper:</strong> calculated number of years (retirement age - current age)</li>
-                    <li><strong>pmt:</strong> your annual contributions, expressed as a positive or negative number (polarity must match pv polarity!)</li>
-                    <li><strong>pv:</strong> your present savings, expressed as a positive or negative number (polarity must match pmt polarity!)</li>
+                    <li><strong>pmt:</strong> your annual contributions, expressed as a positive number</li>
+                    <li><strong>pv:</strong> your present savings, expressed as a positive</li>
                 </ol>
             </div>
         </div>
 
         <div id="rate" class="page-header">
-            <h1>RATE <small>calculator</small></h1>
+            <h1>RATE <small>calculate required rate of return</small></h1>
         </div>
         <div class="row well">
             <div class="col-md-8">
@@ -142,34 +159,36 @@
                     <tbody>
                         <tr>
                             <td>Required Savings:</td>
-                            <td><span id="RateSavings"></span></td>
+                            <td><span id="RateSavings">{{ vm.napkin.requiredSavings | currency:"$" }}</span></td>
                             <td>Required Annual Rate:</td>
-                            <td><span id="RateReqRate"></span></td>
+                            <td><span id="requiredRate">{{ vm.napkin.requiredRate | number:3 }}%</span></td>
                         </tr>
                         <tr>
                             <td>Current Savings:</td>
                             <td>
-                                <input type="number" min="0.00" step="0.01" id="RatePV">
+                                <span id="RatePV">{{ vm.napkin.FVpv | currency:"$" }}</span>
                             </td>
                         </tr>
                         <tr>
                             <td>Annual Contributions:</td>
                             <td>
-                                <input type="number" min="0.00" step="0.01" id="RatePmt">
+                                <span id="RatePmt">{{ vm.napkin.FVpmt | currency:"$" }}</span>
                             </td>
                             <td>Monthly Contributions:</td>
-                            <td><span id="RateMnthlySavings"></span></td>
+                            <td><span id="RateMnthlySavings">{{ (vm.napkin.FVpmt / 12) | currency:"$" }}</span></td>
                         </tr>
                 </table>
 
-                <button class="btn btn-default" id="RATE-button">
-                    Calculate Required Rate
+                <button class="btn btn-warning" id="RATE-button"
+                        ng-click="vm.napkin.calcRATE()">
+                    Calculate Rate
                 </button>
             </div>
             <div class="col-md-4  well">
                 <p>Notes:</p>
                 <ol>
-                    <li><strong>Design Goal:</strong> calculate required rate of return to achieve required savings, given the other TVM variables. Mimics the TVM function: RATE(nper, pmt, pv, fv)</li>
+                    <li><strong>Design Goal:</strong> calculate required rate of return to achieve calculated savings goal, given the other variables calculated above.</li>
+                    <li><strong>TVM function:</strong> RATE(nper, pmt, pv, fv)
                     <li><strong>nper:</strong> calculated number of years (retirement age - current age)</li>
                     <li><strong>pmt:</strong> your annual contributions, expressed as a positive or negative number (polarity must match pv polarity!)</li>
                     <li><strong>pv:</strong> your present savings, expressed as a positive or negative number (polarity must match pmt polarity!)</li>
@@ -179,6 +198,7 @@
         </div>
 
         <!-- javascript -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
         <script src="js/pfapp.js"></script>
 </body>
 
