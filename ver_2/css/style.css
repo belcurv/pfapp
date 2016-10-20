@@ -1,0 +1,109 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-size: 14px;
+    background: #bebbb7;
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+header, footer, #main, #inputs, #outputs, #goals, #fv-calc, #rate-calc {
+    box-sizing: border-box;
+}
+
+.border {
+    border: 1px dashed aqua;
+}
+
+.content-box {
+    padding: 5px;
+    background: #FFF;
+    border-left: 8px solid #404040;
+/*    margin: 0;*/
+}
+
+header {
+    flex: 0;
+    padding: 1em;
+    background: #0f0f0f;
+    color: #e5e5e5;
+}
+
+#main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#inputs {
+    flex: 0;
+    padding: 0 1em;
+}
+
+#outputs {
+    flex: 1 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+#goals, #fv-calc, #rate-calc {
+    flex: 0 0 100%;
+    padding: 0 1em;
+}
+
+footer {
+    flex: none;
+    padding: 1.5rem;
+    background: #404040;
+    color: #999;
+    font-size: 0.85em;
+    text-align: center;
+}
+
+.footer-credit {
+    display: inline-block;
+    margin: 0 2em;
+    vertical-align: middle;
+}
+
+.footer-social {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+footer a {
+    color: #e5e5e5;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Large Screens */
+@media all and (min-width: 960px) {
+    #goals, #fv-calc, #rate-calc {
+        flex: 0 0 33.3333%;
+    }
+    
+    #goals {
+        padding: 0 0.5em 0 1em;
+    }
+
+    #fv-calc {
+        padding: 0 0.5em 0;
+    }
+
+    #rate-calc {
+        padding: 0 1em 0 0.5em;
+    }
+}
+
