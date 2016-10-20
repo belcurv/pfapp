@@ -10,11 +10,12 @@
 
     <link href="css/style.css" type="text/css" rel="stylesheet" />
     <link href="css/input-add-on.css" type="text/css" rel="stylesheet" />
+    <link href="css/flexbox-grid.css" type="text/css" rel="stylesheet" />
 
 </head>
 
 <body ng-controller="pfappController as vm">
-    <header class="">RETIREMENT CALCULATOR</header>
+    <header class=""><h4>Retirement Calculator</h4></header>
 
     <div id="main">
         <div class="" id="inputs">
@@ -22,40 +23,38 @@
 
                 <p>INPUTS</p>
 
-                <div class="InputGroup">
-                    <div class="InputAddOn">
+                <div class="Grid Grid--gutters Grid--full med-Grid--1of2 large-Grid--1of3">
+                    <div class="Grid-cell InputAddOn">
                         <span class="InputAddOn-item">Birth Date:</span>
                         <input class="InputAddOn-field" type="date" id="birthDate" ng-model="vm.napkin.birthDate">
                     </div>
 
-                    <div class="InputAddOn">
+                    <div class="Grid-cell InputAddOn">
                         <span class="InputAddOn-item">Retirement age:</span>
                         <input class="InputAddOn-field" type="number" min="1" step="1" id="retirementAge" ng-model="vm.napkin.retirementAge">
                     </div>
                     
-                    <div class="InputAddOn">
+                    <div class="Grid-cell InputAddOn">
                         <span class="InputAddOn-item">Annual Expenses:</span>
                         <input class="InputAddOn-field" type="number" min="0.00" step="1" id="annualExpenses" ng-model="vm.napkin.annualExpenses">
                     </div>
                     
-                    <div class="InputAddOn">
+                    <div class="Grid-cell InputAddOn">
                         <span class="InputAddOn-item">Withdrawal Rate:</span>
                         <input class="InputAddOn-field" type="number" min="0.01" max="0.20" step="0.005" id="withdrawalRate" ng-model="vm.napkin.withdrawalRate">
                     </div>
-                </div>
-
-                <div class="InputGroup">
-                   <div class="InputAddOn">
+                
+                   <div class="Grid-cell InputAddOn">
                         <span class="InputAddOn-item">Total existing savings:</span>
                         <input class="InputAddOn-field" type="number" min="0.00" step="0.01" id="FVpv" ng-model="vm.napkin.FVpv">
                     </div>
                     
-                    <div class="InputAddOn">
+                    <div class="Grid-cell InputAddOn">
                         <span class="InputAddOn-item">Rate of Return:</span>
                         <input class="InputAddOn-field" id="FVrate" type="number" min="0.01" max="0.20" step="0.001" ng-model="vm.napkin.FVrate">
                     </div>
                     
-                    <div class="InputAddOn">
+                    <div class="Grid-cell InputAddOn">
                         <span class="InputAddOn-item">Annual contributions:</span>
                         <input class="InputAddOn-field" type="number" min="0.00" step="0.01" id="FVpmt" ng-model="vm.napkin.FVpmt">
                     </div>

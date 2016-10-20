@@ -2,26 +2,13 @@
  * credit: https://philipwalton.github.io/solved-by-flexbox/demos/input-add-ons/
 */
 
-.InputGroup {
-    display: flex;
-    flex-flow: row wrap;
-    margin: 1em;
-}
-
-.InputGroup > div {
-    flex: 1 auto;
-}
-
-.InputGroup > div:not(:first-child) {
-    margin-left: 1em;
-}
-
 .InputAddOn {
     display: flex;
 }
 
 .InputAddOn-field {
     flex: 1 1 auto;
+    
 }
 
 .InputAddOn-field:not(:first-child) {
@@ -33,6 +20,7 @@
 }
 
 .InputAddOn-item {
+    flex: 0 0 auto;
     background-color: rgba(147, 128, 108, 0.1);
     color: #666666;
     font: inherit;

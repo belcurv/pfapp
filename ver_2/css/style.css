@@ -19,6 +19,8 @@ header, footer, #main, #inputs, #outputs, #goals, #fv-calc, #rate-calc {
     box-sizing: border-box;
 }
 
+
+
 .border {
     border: 1px dashed aqua;
 }
@@ -26,15 +28,27 @@ header, footer, #main, #inputs, #outputs, #goals, #fv-calc, #rate-calc {
 .content-box {
     padding: 5px;
     background: #FFF;
-    border-left: 8px solid #404040;
-/*    margin: 0;*/
+/*    border-left: 8px solid #404040;*/
+    border-left: 8px solid cadetblue;
+/*    border-left: 8px solid darkseagreen;*/
 }
 
 header {
     flex: 0;
-    padding: 1em;
+    margin: 0;
+    padding: .25em 1em;
+    box-sizing: border-box;
     background: #0f0f0f;
-    color: #e5e5e5;
+}
+
+header > h4 {
+    float: left;
+    line-height: 1.1em;
+    margin: 0;
+    padding: 0;
+    color: #999;
+    font-size: 30px;
+    font-weight: 500;
 }
 
 #main {
@@ -45,8 +59,14 @@ header {
 
 #inputs {
     flex: 0;
-    padding: 0 1em;
+    padding: 1em 1em 0 1em;
 }
+
+input {
+    min-width: 4em;
+}
+
+
 
 #outputs {
     flex: 1 100%;

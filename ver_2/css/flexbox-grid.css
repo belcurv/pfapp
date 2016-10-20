@@ -1,0 +1,176 @@
+/* 
+ * adapted from:
+ * https://philipwalton.github.io/solved-by-flexbox/demos/grids/
+*/
+
+/* =============================== BASE GRID =============================== */
+
+.Grid {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.Grid-cell {
+    flex: 1 0 auto;
+    box-sizing: border-box; /* width & height incl padding and border */
+}
+
+
+/* ========================= GRID STYLE MODIFIERS ========================== */
+
+/* Gutters */
+.Grid--gutters {
+    margin: -1em 0 1em -1em;
+}
+
+.Grid--gutters > .Grid-cell {
+    padding: 1em 0 0 1em;
+}
+
+.Grid--guttersLg {
+    margin: -1.5em 0 1.5em -1.5em;
+}
+
+.Grid--guttersLg > .Grid-cell {
+    padding: 1.5em 0 0 1.5em;
+}
+
+.Grid--guttersXl {
+    margin: -2em 0 2em -2em;
+}
+
+.Grid--guttersXl > .Grid-cell {
+    padding: 2em 0 0 2em;
+}
+
+
+/* Alignment per row */
+.Grid--top {
+    align-items: flex-start;
+}
+
+.Grid--bottom {
+    align-items: flex-end;
+}
+
+.Grid--center {
+    align-items: center;
+}
+
+.Grid--justifyCenter {
+    justify-content: center;
+}
+
+
+/* alignment per cell */
+.Grid-cell--top {
+    align-self: flex-start;
+}
+
+.Grid-cell--bottom {
+    align-self: flex-end;
+}
+
+.Grid-cell--center {
+    align-self: center;
+}
+
+.Grid-cell--autoSize {
+    flex: none;
+}
+
+
+/* ======================= GRID RESPONSIVE MODIFIERS ======================= */
+
+/* Base classes for all media */
+.Grid--fit > .Grid-cell {
+    flex: 1;
+}
+
+.Grid--full > .Grid-cell {
+    flex: 1 0 100%;
+}
+
+.Grid--1of2 > .Grid-cell {
+    flex: 1 0 50%;
+}
+
+.Grid--1of3 > .Grid-cell {
+    flex: 1 0 33.3333%;
+}
+
+.Grid--1of4 > .Grid-cell {
+    flex: 1 0 25%;
+}
+
+/* Small screens */
+@media (min-width: 384px) {
+    .small-Grid--fit > .Grid-cell {
+        flex: 1;
+    }
+
+    .small-Grid--full > .Grid-cell {
+        flex: 1 0 100%;
+    }
+
+    .small-Grid--1of2 > .Grid-cell {
+        flex: 1 0 50%;
+    }
+
+    .small-Grid--1of3 > .Grid-cell {
+        flex: 1 0 33.3333%;
+    }
+
+    .small-Grid--1of4 > .Grid-cell {
+        flex: 1 0 25%;
+    }
+}
+
+/* Medium screens */
+@media (min-width: 576px) {
+    .med-Grid--fit > .Grid-cell {
+        flex: 1;
+    }
+
+    .med-Grid--full > .Grid-cell {
+        flex: 1 0 100%;
+    }
+
+    .med-Grid--1of2 > .Grid-cell {
+        flex: 1 0 50%;
+    }
+
+    .med-Grid--1of3 > .Grid-cell {
+        flex: 1 0 33.3333%;
+    }
+
+    .med-Grid--1of4 > .Grid-cell {
+        flex: 1 0 25%;
+    }
+}
+
+/* Large screens */
+@media (min-width: 768px) {
+    .large-Grid--fit > .Grid-cell {
+        flex: 1;
+    }
+
+    .large-Grid--full > .Grid-cell {
+        flex: 1 0 100%;
+    }
+
+    .large-Grid--1of2 > .Grid-cell {
+        flex: 1 0 50%;
+    }
+
+    .large-Grid--1of3 > .Grid-cell {
+        flex: 1 0 33.3333%;
+    }
+
+    .large-Grid--1of4 > .Grid-cell {
+        flex: 1 0 25%;
+    }
+}
