@@ -88,6 +88,7 @@ footer a:hover {
     text-decoration: underline;
 }
 
+
 /* Large Screens */
 @media all and (min-width: 960px) {
     #goals, #fv-calc, #rate-calc {

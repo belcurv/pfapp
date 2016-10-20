@@ -1,41 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="pfapp">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-          
-    <title>Flexbox Layout Tests</title>
-    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>Retirement Calculator v2</title>
+
     <link href="css/style.css" type="text/css" rel="stylesheet" />
+    <link href="css/input-add-on.css" type="text/css" rel="stylesheet" />
+
 </head>
 
-<body>
-    <header class="">Header Goes Here</header>
-    
+<body ng-controller="pfappController as vm">
+    <header class="">RETIREMENT CALCULATOR</header>
+
     <div id="main">
-        <div class="" id="inputs"><h4 class="content-box">Inputs Go Here</h4></div>
-       <div id="outputs">
-           <div class="" id="goals">
-               <p class="content-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis arcu eu sapien sagittis molestie. Quisque luctus velit at lectus vestibulum varius. In eleifend sapien turpis, et tristique est rhoncus ac. Aliquam erat volutpat. Curabitur mi ex, congue non rhoncus sed, elementum vestibulum neque. Integer aliquet justo orci, eget aliquet sem fermentum at. Morbi non consectetur orci. Aenean a suscipit dui. Nunc ornare volutpat libero, sed suscipit purus mattis ac. Sed fermentum sagittis nisl, ac dignissim urna eleifend a. Vivamus placerat tempus euismod. Ut placerat at elit a congue.</p>
+        <div class="" id="inputs">
+            <div class="content-box">
 
-           </div>
-           <div class="" id="fv-calc">
-               <p class="content-box">Quisque luctus velit at lectus vestibulum varius. In eleifend sapien turpis, et tristique est rhoncus ac. Aliquam erat volutpat. Curabitur mi ex, congue non rhoncus sed, elementum vestibulum neque. Integer aliquet justo orci, eget aliquet sem fermentum at. Morbi non consectetur orci. Aenean a suscipit dui. Nunc ornare volutpat libero, sed suscipit purus mattis ac. Sed fermentum sagittis nisl, ac dignissim urna eleifend a. Vivamus placerat tempus euismod. Ut placerat at elit a congue.</p>
+                <p>INPUTS</p>
 
-           </div>
-           <div class="" id="rate-calc">
-               <p class="content-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis arcu eu sapien sagittis molestie. Quisque luctus velit at lectus vestibulum varius. In eleifend sapien turpis, et tristique est rhoncus ac. Aliquam erat volutpat. Curabitur mi ex, congue non rhoncus sed, elementum vestibulum neque. Integer aliquet justo orci, eget aliquet sem fermentum at. Morbi non consectetur orci. Aenean a suscipit dui.</p>
+                <div class="InputGroup">
+                    <div class="InputAddOn">
+                        <span class="InputAddOn-item">Birth Date:</span>
+                        <input class="InputAddOn-field" type="date" id="birthDate" ng-model="vm.napkin.birthDate">
+                    </div>
 
-           </div>
-       </div>
+                    <div class="InputAddOn">
+                        <span class="InputAddOn-item">Retirement age:</span>
+                        <input class="InputAddOn-field" type="number" min="1" step="1" id="retirementAge" ng-model="vm.napkin.retirementAge">
+                    </div>
+                    
+                    <div class="InputAddOn">
+                        <span class="InputAddOn-item">Annual Expenses:</span>
+                        <input class="InputAddOn-field" type="number" min="0.00" step="1" id="annualExpenses" ng-model="vm.napkin.annualExpenses">
+                    </div>
+                    
+                    <div class="InputAddOn">
+                        <span class="InputAddOn-item">Withdrawal Rate:</span>
+                        <input class="InputAddOn-field" type="number" min="0.01" max="0.20" step="0.005" id="withdrawalRate" ng-model="vm.napkin.withdrawalRate">
+                    </div>
+                </div>
+
+                <div class="InputGroup">
+                   <div class="InputAddOn">
+                        <span class="InputAddOn-item">Total existing savings:</span>
+                        <input class="InputAddOn-field" type="number" min="0.00" step="0.01" id="FVpv" ng-model="vm.napkin.FVpv">
+                    </div>
+                    
+                    <div class="InputAddOn">
+                        <span class="InputAddOn-item">Rate of Return:</span>
+                        <input class="InputAddOn-field" id="FVrate" type="number" min="0.01" max="0.20" step="0.001" ng-model="vm.napkin.FVrate">
+                    </div>
+                    
+                    <div class="InputAddOn">
+                        <span class="InputAddOn-item">Annual contributions:</span>
+                        <input class="InputAddOn-field" type="number" min="0.00" step="0.01" id="FVpmt" ng-model="vm.napkin.FVpmt">
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div id="outputs">
+            <div class="" id="goals">
+                <p class="content-box">GOALS</p>
+
+            </div>
+            <div class="" id="fv-calc">
+                <p class="content-box">FUTURE VALUE</p>
+
+            </div>
+            <div class="" id="rate-calc">
+                <p class="content-box">RATE CALC</p>
+
+            </div>
+        </div>
     </div>
-    
+
     <footer class="footer">
         <iframe class="footer-social" src="https://ghbtns.com/github-btn.html?user=belcurv&amp;repo=flexbox-test&amp;type=watch&amp;count=true" allowtransparency="true" scrolling="0" width="106px" height="20px" frameborder="0"></iframe>
-        <p class="footer-credit">Created by <a href="https://github.com/belcurv" target="_blank">belcurv</a></p>
-        
+        <p class="footer-credit">pfapp v2.0.0 : : made by <a href="https://github.com/belcurv" target="_blank">belcurv</a></p>
+
     </footer>
-    
+
+    <!-- javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+    <script src="js/pfapp.js"></script>
+
 </body>
+
 </html>
