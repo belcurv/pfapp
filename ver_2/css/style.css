@@ -26,10 +26,10 @@ header, footer, #main, #inputs, #outputs, #goals, #fv-calc, #rate-calc {
 }
 
 .content-box {
-    padding: 5px;
+    padding: .25em 1em;
     background: #FFF;
 /*    border-left: 8px solid #404040;*/
-    border-left: 8px solid cadetblue;
+    border-left: 8px solid rgb(95, 158, 160); /* cadetblue */
 /*    border-left: 8px solid darkseagreen;*/
 }
 
@@ -65,8 +65,6 @@ header > h4 {
 input {
     min-width: 4em;
 }
-
-
 
 #outputs {
     flex: 1 100%;

@@ -8,7 +8,6 @@
 
 .InputAddOn-field {
     flex: 1 1 auto;
-    
 }
 
 .InputAddOn-field:not(:first-child) {
@@ -17,6 +16,23 @@
 
 .InputAddOn-field:not(:last-child) {
     border-right: 0;
+}
+
+/* Custom input field focus effects */
+.InputAddOn-field:not(:first-child):focus {
+    outline: none;
+    border-top: 1px solid rgba(190, 187, 183, 1);
+    border-right: 1px solid rgba(190, 187, 183, 1);
+    border-bottom: 1px solid rgba(190, 187, 183, 1);
+    box-shadow: 0 0 5px rgba(190, 187, 183, 1);
+}
+
+.InputAddOn-field:not(:last-child):focus {
+    outline: none;
+    border-top: 1px solid rgba(190, 187, 183, 1);
+    border-left: 1px solid rgba(190, 187, 183, 1);
+    border-bottom: 1px solid rgba(190, 187, 183, 1);
+    box-shadow: 0 0 5px rgba(190, 187, 183, 1);
 }
 
 .InputAddOn-item {
