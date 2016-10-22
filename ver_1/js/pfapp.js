@@ -1,79 +1,42 @@
+/*
+ * pfapp Retirement Calculator
+ * ver 1.1
+ * 2016 :: belcurv
+ */
+
 (function () {
 
     'use strict';
-    
+
     angular.module('pfapp', [])
-    
-        .controller('pfappController', [function () {
-        
-            var vm = this;
-            
-            // main object
-            // initialized with some placeholder data,
-            // and collects our utility methods.
-            vm.napkin = {
-                birthDate: new Date('01/23/1978'),
-                retirementAge: 65,
-                annualExpenses: 30000,
-                withdrawalRate: 0.04,
-                requiredSavings: 0,
-                FVrate: 0.06,
-                FVnper: 0,
-                FVpmt: 10000,
-                FVpv: 50000,
-                calculatedFV: 0,
-                calcReqSavings: calcReqSavings,
-                calcFutureValue: calcFV,
-                calcRate: calcRATE
-            };
-            
-            
-            // ====================== UTILITY METHODS ======================
-            
-            // savings goal calculator
-            function calcReqSavings() {
-                
-                var birthDate = vm.napkin.birthDate,
-                    today = new Date(),
-                    annualExpenses = vm.napkin.annualExpenses,
-                    withdrawalRate = vm.napkin.withdrawalRate;
-                
-                // calculate & display required nest egg
-                vm.napkin.requiredSavings = annualExpenses / withdrawalRate;
-                
-                // calculate & display age in years
-                // note: dates are in milliseconds; have to convert to years
-                vm.napkin.calculatedAge = (Math.floor((today - birthDate) / 31536000000));
-            }
-            
 
-            // FV calculator
-            function calcFV() {
-                
-                var rate = vm.napkin.FVrate,
-                    pmt  = vm.napkin.FVpmt,
-                    pv   = vm.napkin.FVpv,
-                    nper = vm.napkin.retirementAge - vm.napkin.calculatedAge,
-                    fv;
-                
-                // bind number of years until retirement to main object
-                vm.napkin.FVnper = nper;
-                
-                // // using traditional negative PMT and PV inputs
-                // var fv = -((pmt * (Math.pow(1 + rate, nper) - 1) / rate) + (pv * Math.pow(1 + rate, nper))); 
+        .factory('pfactory', function () {
 
-                // using positive PMT and PV inputs
-                fv = ((pmt * (Math.pow(1 + rate, nper) - 1) / rate) + (pv * Math.pow(1 + rate, nper)));
-                
-                // bind calculated FV to main object
-                vm.napkin.calculatedFV = Math.abs(fv);
+            // Required savings
+            function calcReqSavings(annualExpenses, withdrawalRate) {
+                return annualExpenses / withdrawalRate;
             }
 
-            
-            // rate solver
+            // Age
+            function calcAge(birthDate) {
+                var today = new Date();
+
+                // dates are in milliseconds; have to convert to years
+                return (Math.floor((today - birthDate) / 31536000000));
+            }
+
+            // Future Value
+            function calcFV(rate, pmt, pv, nper) {
+
+                var fv = ((pmt * (Math.pow(1 + rate, nper) - 1) / rate) + (pv * Math.pow(1 + rate, nper)));
+
+                return Math.abs(fv);
+            }
+
+            // Rate solver
             // credit: http://stackoverflow.com/questions/12064793/simple-financial-rate-function-in-javascript
             function solveRate(nper, pmt, pv, fv, type, guess) {
-                
+
                 if (guess === null) {
                     guess = 0.01;
                 }
@@ -83,7 +46,7 @@
                 if (type === null) {
                     type = 0;
                 }
-                
+
                 var FINANCIAL_MAX_ITERATIONS = 128, //Bet accuracy with 128
                     FINANCIAL_PRECISION = 0.0000001; //1.0e-8
 
@@ -122,19 +85,43 @@
                 return rate;
             }
 
+            // return the thing
+            return {
+                calcReqSavings: calcReqSavings,
+                calcAge: calcAge,
+                calcFV: calcFV,
+                solveRate: solveRate
+            };
+
+        })
+
+        .controller('pfappController', ['pfactory', function (pfactory) {
+
+            var vm = this;
+
+            // main object
+            // initialized with some placeholder data,
+            // and collects our utility methods.
+            vm.napkin = {
+                birthDate: new Date('01/23/1978'),
+                retirementAge: 65,
+                annualExpenses: 30000,
+                withdrawalRate: 0.04,
+                requiredSavings: 0,
+                FVrate: 0.06,
+                FVnper: 0,
+                FVpmt: 10000,
+                FVpv: 50000,
+                calcReqSavings: pfactory.calcReqSavings,
+                calcFutureValue: pfactory.calcFV,
+                calcAge: pfactory.calcAge,
+                calcRate: calcRATE
+            };
+
             // RATE calculator
-            function calcRATE() {
-                
-                var pmt  = vm.napkin.FVpmt,
-                    pv   = vm.napkin.FVpv,
-                    nper = vm.napkin.retirementAge - vm.napkin.calculatedAge,
-                    fv   = vm.napkin.requiredSavings;
-                    
-                // the moneyshot!
-                var rate = (100 * solveRate(nper, -pmt, -pv, fv, null, null));
-                
-                // bind calculated rate to main object
-                vm.napkin.requiredRate = rate;
+            function calcRATE(pmt, pv, nper, fv) {
+                return (100 * pfactory.solveRate(nper, -pmt, -pv, fv, null, null));
             }
+
         }]);
 }());

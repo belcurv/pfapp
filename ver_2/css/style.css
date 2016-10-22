@@ -19,8 +19,6 @@ header, footer, #main, #inputs, #outputs, #goals, #fv-calc, #rate-calc {
     box-sizing: border-box;
 }
 
-
-
 .border {
     border: 1px dashed aqua;
 }
@@ -41,7 +39,7 @@ header {
     background: #0f0f0f;
 }
 
-header > h4 {
+header > h1 {
     float: left;
     line-height: 1.1em;
     margin: 0;
@@ -55,26 +53,70 @@ header > h4 {
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 #inputs {
     flex: 0;
-    padding: 1em 1em 0 1em;
+    padding: 1em 1em 1em 1em;
 }
 
 input {
     min-width: 4em;
 }
 
+p, ul, li {
+    font-weight: normal;
+    font-size: 15px;
+    margin: .5em 0;
+}
+
 #outputs {
     flex: 1 100%;
     display: flex;
     flex-flow: row wrap;
+    padding: 0em 1em 0 1em;
+    align-content: flex-start;
+}
+
+#inputs h4,
+#outputs h4 {
+    line-height: 1.1em;
+    margin: 0;
+    padding: 0.5em 0 0.5em 0;
+    color: #404040;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.help-toggle {
+    display: inline-block;
+    line-height: 1.1em;
+    width: 19px;
+    border-radius: 2px;
+    text-align: center;
+    vertical-align: bottom;
+    font-weight: normal;
+    background-color: rgba(147, 128, 108, 0.1);
+    border: 1px solid rgba(147, 128, 108, 0.25);
+    color: #666666;
+    cursor: pointer;
+    margin-left: 0.25em;
+}
+
+.help {
+    padding: 1em;
+    margin: .25em 0 1em 0;;
+    background: #FFF;
+    border: 1px solid rgba(190, 187, 183, 1);
+    box-shadow: 0 0 5px rgba(190, 187, 183, 1);
+
 }
 
 #goals, #fv-calc, #rate-calc {
     flex: 0 0 100%;
-    padding: 0 1em;
+    padding-bottom: 1em;
 }
 
 footer {
@@ -106,23 +148,22 @@ footer a:hover {
     text-decoration: underline;
 }
 
-
 /* Large Screens */
 @media all and (min-width: 960px) {
     #goals, #fv-calc, #rate-calc {
-        flex: 0 0 33.3333%;
+        flex: 0 0 50%;
     }
     
     #goals {
-        padding: 0 0.5em 0 1em;
+        padding: 0 0.5em 1em 0;
     }
 
     #fv-calc {
-        padding: 0 0.5em 0;
+        padding: 0 0.5em 1em;
     }
 
     #rate-calc {
-        padding: 0 1em 0 0.5em;
+        padding: 0 0 1em 0.5em;
     }
 }
 

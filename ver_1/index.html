@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>Retirement Calculator</title>
+    <title>Retirement Calculator v1.1</title>
 
     <!-- css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
@@ -20,13 +20,6 @@
             <div class="navbar-header">
                 <h4 class="navbar-text">Retirement Calculator</h4>
             </div>
-<!--
-            <ul class="nav navbar-nav">
-                <li><a href="#goals">Goals</a></li>
-                <li><a href="#fv">Future Value</a></li>
-                <li><a href="#rate">Rate</a></li>
-            </ul>
--->
         </div>
     </nav>
 
@@ -67,19 +60,16 @@
                         </tr>
                         <tr>
                             <td>Current Age:</td>
-                            <td><span id="calculatedAge">{{ vm.napkin.calculatedAge }}</span></td>
+                            <td><span id="calculatedAge">{{ vm.napkin.calcAge(vm.napkin.birthDate) }}</span></td>
                             <td>Required savings:</td>
-                            <td><span id="requiredSavings">{{ vm.napkin.requiredSavings | currency:"$" }}</span></td>
+                            <td><span id="requiredSavings">{{ vm.napkin.calcReqSavings(vm.napkin.annualExpenses, vm.napkin.withdrawalRate) | currency:"$" }}</span></td>
                         </tr>
                         <tr>
                             <td colspan="4"></td>
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-warning" id="req-savings"
-                        ng-click="vm.napkin.calcReqSavings()">
-                    Calculate
-                </button>
+
             </div>
             <div class="col-md-4 well">
                 <p>Notes:</p>
@@ -110,7 +100,7 @@
                                        ng-model="vm.napkin.FVrate">
                             </td>
                             <td>Number of years:</td>
-                            <td><span id="FVnper">{{ vm.napkin.FVnper }}</span></td>
+                            <td><span id="FVnper">{{ vm.napkin.retirementAge - vm.napkin.calcAge(vm.napkin.birthDate) }}</span></td>
                         </tr>
                         <tr>
                             <td>Annual contributions:</td>
@@ -127,19 +117,15 @@
                         <tr>
                             <td>Future Value:</td>
                             <td colspan="3">
-                                <span id="calculatedFV">{{ vm.napkin.calculatedFV | currency:"$"}}</span>
+                               <!-- rate, pmt, pv, nper -->
+                                <span id="calculatedFV">{{ vm.napkin.calcFutureValue(vm.napkin.FVrate, vm.napkin.FVpmt, vm.napkin.FVpv, (vm.napkin.retirementAge - vm.napkin.calcAge(vm.napkin.birthDate)) ) | currency:"$"}}</span>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="4"></td>
                         </tr>
                     </tbody>
-                </table>
-                <button class="btn btn-warning" id="FV-button"
-                        ng-click="vm.napkin.calcFutureValue()">
-                    Calculate FV
-                </button>
-                
+                </table>                
                 
             </div>
             <div class="col-md-4  well">
@@ -164,9 +150,16 @@
                     <tbody>
                         <tr>
                             <td>Required Savings:</td>
-                            <td><span id="RateSavings">{{ vm.napkin.requiredSavings | currency:"$" }}</span></td>
+                            <td><span id="RateSavings">{{ vm.napkin.calcReqSavings(vm.napkin.annualExpenses, vm.napkin.withdrawalRate) | currency:"$" }}</span></td>
                             <td>Required Annual Rate:</td>
-                            <td><span id="requiredRate">{{ vm.napkin.requiredRate | number:3 }}%</span></td>
+                            
+                            <!-- pmt, pv, nper, fv -->
+                            <td><span id="requiredRate">{{ vm.napkin.calcRate(
+                            vm.napkin.FVpmt,
+                            vm.napkin.FVpv,
+                            (vm.napkin.retirementAge - vm.napkin.calcAge(vm.napkin.birthDate)),
+                            vm.napkin.calcReqSavings(vm.napkin.annualExpenses, vm.napkin.withdrawalRate)
+                            ) | number:3 }}%</span></td>
                         </tr>
                         <tr>
                             <td>Current Savings:</td>
@@ -184,10 +177,6 @@
                         </tr>
                 </table>
 
-                <button class="btn btn-warning" id="RATE-button"
-                        ng-click="vm.napkin.calcRate()">
-                    Calculate Rate
-                </button>
             </div>
             <div class="col-md-4  well">
                 <p>Notes:</p>
