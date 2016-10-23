@@ -18,6 +18,31 @@
     border-right: 0;
 }
 
+.InputAddOn-item {
+    flex: 0 0 auto;
+    background-color: rgba(147, 128, 108, 0.1);
+    color: #666666;
+}
+
+.InputAddOn-field,
+.InputAddOn-item {
+    border: 1px solid rgba(147, 128, 108, 0.25);
+    padding: 0.5em 0.75em;
+    font: inherit;
+    font-weight: normal;
+}
+
+.InputAddOn-field:first-child,
+.InputAddOn-item:first-child {
+    border-radius: 2px 0 0 2px;
+}
+
+.InputAddOn-field:last-child,
+.InputAddOn-item:last-child {
+    border-radius: 0 2px 2px 0;
+}
+
+/* ========= custom stuff =============== */
 /* Custom input field focus effects */
 .InputAddOn-field:not(:first-child):focus {
     outline: none;
@@ -35,26 +60,11 @@
     box-shadow: 0 0 5px rgba(190, 187, 183, 1);
 }
 
-.InputAddOn-item {
-    flex: 0 0 auto;
-    background-color: rgba(147, 128, 108, 0.1);
-    color: #666666;
+.InputAddOn-field-prefix {
+    flex: 0;
+    border-top: 1px solid rgba(147, 128, 108, 0.25);
+    border-bottom: 1px solid rgba(147, 128, 108, 0.25);
+    padding: 0.5em 0 0.5em 0.75em;
     font: inherit;
     font-weight: normal;
-}
-
-.InputAddOn-field,
-.InputAddOn-item {
-    border: 1px solid rgba(147, 128, 108, 0.25);
-    padding: 0.5em 0.75em;
-}
-
-.InputAddOn-field:first-child,
-.InputAddOn-item:first-child {
-    border-radius: 2px 0 0 2px;
-}
-
-.InputAddOn-field:last-child,
-.InputAddOn-item:last-child {
-    border-radius: 0 2px 2px 0;
 }

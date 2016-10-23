@@ -15,12 +15,8 @@ body {
     flex-direction: column;
 }
 
-header, footer, #main, #inputs, #outputs, #goals, #fv-calc, #rate-calc {
+header, footer, #main, #inputs, #outputs, #goals, #fv-calc, #rate-calc, #bottomNav {
     box-sizing: border-box;
-}
-
-.border {
-    border: 1px dashed aqua;
 }
 
 .content-box {
@@ -39,13 +35,47 @@ header {
     background: #0f0f0f;
 }
 
-header > h1 {
-    float: left;
+header h1 {
     line-height: 1.1em;
     margin: 0;
     padding: 0;
     color: #999;
     font-size: 30px;
+    font-weight: 500;
+}
+
+header h4 {
+    float: left;
+    line-height: 1.1em;
+    margin: auto;
+    padding: 0.5em;
+    color: #999;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+#topNav {
+    
+}
+
+#bottomNav {
+    display: none;
+    position: fixed;
+    bottom: 0px;
+    height: 3rem;
+    width: 100%;
+    padding: 1rem 0;
+    text-align: center;
+    background: #0f0f0f;
+    color: #999;
+    font-size: 0.85em;
+}
+
+#bottomNav h4 {
+    margin: 0;
+    padding: 0 0.5em;
+    color: #999;
+    font-size: 15px;
     font-weight: 500;
 }
 
@@ -167,3 +197,20 @@ footer a:hover {
     }
 }
 
+@media all and (max-width: 480px) {
+    #topNav {
+        display: none;
+    }
+    
+    header h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    
+    footer {
+        margin-bottom: 4em;
+    }
+    
+    #bottomNav {
+        display: inline-block;
+    }

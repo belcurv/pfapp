@@ -8,7 +8,7 @@
         
             // Required savings
             function calcReqSavings(annualExpenses, withdrawalRate) {
-                return annualExpenses / withdrawalRate;
+                return annualExpenses / (withdrawalRate / 100);
             }
         
             // Age
@@ -100,9 +100,9 @@
                 birthDate: new Date('01/23/1978'),
                 retirementAge: 65,
                 annualExpenses: 30000,
-                withdrawalRate: 0.04,
+                withdrawalRate: 4.00,
                 requiredSavings: 0,
-                FVrate: 0.06,
+                FVrate: 6,
                 FVnper: 0,
                 FVpmt: 10000,
                 FVpv: 50000,
