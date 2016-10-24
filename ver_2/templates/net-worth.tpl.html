@@ -1,5 +1,23 @@
 <div class="" id="inputs">
     <div class="content-box">
-       <p>Nothing to see here yet...</p>
+        
+        <div class="Grid">
+            <div class="Grid-cell">
+                <h4>NET WORTH TRACKER</h4>
+            </div>
+            <div>
+                <h4><span title="Toggle help" class="help-toggle" ng-click="HelpToggle = !HelpToggle">?</span></h4>
+            </div>
+        </div>
+        
+        <div ng-if="HelpToggle" class="help">
+            <p>A simple net worth tracker.</p>
+
+            <ul>
+                <li><em>Accounts</em> = Name of each account.</li>
+                <li><em>Category</em> = The categories will sort themselves into assets and liabilities.</li>
+            </ul>
+        </div>
+        
     </div>
 </div>

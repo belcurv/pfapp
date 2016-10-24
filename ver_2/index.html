@@ -7,63 +7,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <title>FIRE Calculator v2</title>
-
+    
+    <!-- ========================== STYLESHEETS =========================== -->
     <link href="css/style.css" type="text/css" rel="stylesheet" />
     <link href="css/input-add-on.css" type="text/css" rel="stylesheet" />
     <link href="css/flexbox-grid.css" type="text/css" rel="stylesheet" />
     <link href="css/glyphicons.css" type="text/css" rel="stylesheet" />
-
+    
+    <!-- =========================== JAVASCRIPT =========================== -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+    <script src="https://code.angularjs.org/1.5.5/angular-route.min.js"></script>
+    <script src="js/pfapp.js"></script>
+    <script src="js/pfapp-routes.js"></script>
+    <script src="js/pfapp-header.dir.js"></script>
+    <script src="js/pfapp-footer.dir.js"></script>
+    <script src="js/pfapp.ctrl.js"></script>
+    <script src="js/pfapp-math.fac.js"></script>
+    
 </head>
 
 <body ng-controller="pfappController as vm" ng-cloak>
-    <header>
-
-        <div class="Grid">
-
-            <div class="Grid-cell">
-                <h1>pfapp</h1>
-            </div>
-
-            <!-- shows when view > 480px -->
-            <div id="navText" class="Grid-cell Grid-cell--autoSize">
-                <a href="#/"><h4>FIRE Calculator</h4></a>
-                <a href="#/net-worth"><h4>Net Worth</h4></a>
-                <a href="#/portfolio"><h4>Portfolio</h4></a>
-            </div>
-            
-            <!-- shows when view < 480px -->
-            <div id="navIcons" class="Grid-cell Grid-cell--autoSize">
-                <a href="#/">
-                    <span class="glyphicon glyphicon-fire"></span>
-                </a>
-                <a href="#/net-worth">
-                    <span class="glyphicon glyphicon-piggy-bank"></span>
-                </a>
-                <a href="#/portfolio">
-                    <span class="glyphicon glyphicon-folder-open"></span>
-                </a>
-            </div>
-            
-        </div>
-
-    </header>
+    
+    <pfapp-header></pfapp-header>
 
     <div id="main">
         <div ng-view></div>
     </div>
 
-    <div class="footer">
-        <iframe class="footer-social" src="https://ghbtns.com/github-btn.html?user=belcurv&amp;repo=pfapp&amp;type=watch&amp;count=true" allowtransparency="true" scrolling="0" width="106px" height="20px" frameborder="0"></iframe>
-        <p class="footer-credit">pfapp v2.0.1 : : by <a href="https://github.com/belcurv" target="_blank">belcurv</a></p>
-    </div>
-
-    <!-- javascript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
-    <script src="https://code.angularjs.org/1.5.5/angular-route.min.js"></script>
-    <script src="js/pfapp.js"></script>
-    <script src="js/pfapp-routes.js"></script>
-    <script src="js/pfapp.ctrl.js"></script>
-    <script src="js/pfapp-math.fac.js"></script>
+    <pfapp-footer></pfapp-footer>
 
 </body>
 

@@ -36,7 +36,7 @@ header,
 .content-box {
     padding: .25em 1em;
     background: #FFF;
-    border-left: 8px solid rgb(95, 158, 160);
+    border-left: 0.6em solid rgb(95, 158, 160);
 }
 
 header {
@@ -50,14 +50,13 @@ header {
     align-content: center;
 }
 
-
-
 header h1 {
     box-sizing: border-box;
     display: inline-block;
     font-style: italic;
     margin: 0;
-    padding: 13px;
+    height: 100%;
+    padding: 12px 0 0 14px;
     color: #999;
     font-size: 24px;
     font-weight: 500;
@@ -66,16 +65,18 @@ header h1 {
 header h4 {
     box-sizing: border-box;
     display: inline-block;
-/*    line-height: 1.1em;*/
     margin: 0;
-    padding: 19px 0.5em;
+    height: 100%;
+    padding: 20px 0.5em 0 0.5em;
     color: #999;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 500;
+    outline: 0;
 }
 
-header h4:hover {
-    border-bottom: 2px solid rgb(95, 158, 160);
+header a {
+    outline: 0;
+    text-decoration: none;
 }
 
 #navText {
@@ -83,23 +84,26 @@ header h4:hover {
 }
 
 #navIcons {
+    box-sizing: border-box;
     display: inline-block;
     box-sizing: border-box;
-    margin: 0 -1em 0 0;
-    padding-right: 0;
+    height: 100%;
+    margin: 0 -14px 0 0;
 }
 
 #navIcons a {
+    box-sizing: border-box;
     display: inline-block;
     text-decoration: none;
-    margin: 0;
-    padding: 12px 1em 10px 1em;
+    height: 100%;
+    padding: 15px 1em;
     color: #999;
-    font-size: 24px;
+    font-size: 22px;
 }
 
+header h4:hover,
 #navIcons a:hover {
-    border-bottom: 2px solid rgb(95, 158, 160);   
+    border-bottom: 3px solid rgb(95, 158, 160);   
 }
 
 #navIcons a:active,
@@ -200,7 +204,7 @@ p, ul, li {
     -webkit-box-flex: 0;
     -ms-flex: none;
     flex: none;
-    padding: 1.5rem;
+    padding: 1.5rem 0;
     background: #404040;
     color: #999;
     font-size: 0.85em;
@@ -209,7 +213,7 @@ p, ul, li {
 
 .footer-credit {
     display: inline-block;
-    margin: 0 2em;
+    margin: 0 1em;
     vertical-align: middle;
 }
 
