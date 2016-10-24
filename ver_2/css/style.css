@@ -1,6 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
-
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -11,83 +10,121 @@ body {
     font-size: 14px;
     background: #bebbb7;
     color: black;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
 }
 
-header, footer, #main, #inputs, #outputs, #goals, #fv-calc, #rate-calc, #bottomNav {
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+
+header,
+.footer,
+#main,
+#inputs,
+#outputs,
+#goals,
+#fv-calc,
+#rate-calc,
+#bottomNav {
     box-sizing: border-box;
 }
 
 .content-box {
     padding: .25em 1em;
     background: #FFF;
-/*    border-left: 8px solid #404040;*/
-    border-left: 8px solid rgb(95, 158, 160); /* cadetblue */
-/*    border-left: 8px solid darkseagreen;*/
+    border-left: 8px solid rgb(95, 158, 160);
 }
 
 header {
-    flex: 0;
+    position: fixed;
+    width: 100%;
+    height: 54px;
     margin: 0;
-    padding: .25em 1em;
+    padding: 0 1em;
     box-sizing: border-box;
     background: #0f0f0f;
+    align-content: center;
 }
 
+
+
 header h1 {
-    line-height: 1.1em;
+    box-sizing: border-box;
+    display: inline-block;
+    font-style: italic;
     margin: 0;
-    padding: 0;
+    padding: 13px;
     color: #999;
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 500;
 }
 
 header h4 {
-    float: left;
-    line-height: 1.1em;
-    margin: auto;
-    padding: 0.5em;
-    color: #999;
-    font-size: 15px;
-    font-weight: 500;
-}
-
-#topNav {
-    
-}
-
-#bottomNav {
-    display: none;
-    position: fixed;
-    bottom: 0px;
-    height: 3rem;
-    width: 100%;
-    padding: 1rem 0;
-    text-align: center;
-    background: #0f0f0f;
-    color: #999;
-    font-size: 0.85em;
-}
-
-#bottomNav h4 {
+    box-sizing: border-box;
+    display: inline-block;
+/*    line-height: 1.1em;*/
     margin: 0;
-    padding: 0 0.5em;
+    padding: 19px 0.5em;
     color: #999;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
+}
+
+header h4:hover {
+    border-bottom: 2px solid rgb(95, 158, 160);
+}
+
+#navText {
+    display: none;
+}
+
+#navIcons {
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 0 -1em 0 0;
+    padding-right: 0;
+}
+
+#navIcons a {
+    display: inline-block;
+    text-decoration: none;
+    margin: 0;
+    padding: 12px 1em 10px 1em;
+    color: #999;
+    font-size: 24px;
+}
+
+#navIcons a:hover {
+    border-bottom: 2px solid rgb(95, 158, 160);   
+}
+
+#navIcons a:active,
+header h4:active {
+    color: white;
 }
 
 #main {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
     flex: 1 0 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 54px 0 0 0;
 }
 
 #inputs {
+    -webkit-box-flex: 0;
+    -ms-flex: 0;
     flex: 0;
     padding: 1em 1em 1em 1em;
 }
@@ -103,10 +140,16 @@ p, ul, li {
 }
 
 #outputs {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 100%;
     flex: 1 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-flow: row wrap;
     flex-flow: row wrap;
     padding: 0em 1em 0 1em;
+    -ms-flex-line-pack: start;
     align-content: flex-start;
 }
 
@@ -137,19 +180,25 @@ p, ul, li {
 
 .help {
     padding: 1em;
-    margin: .25em 0 1em 0;;
+    margin: .25em 0 1em 0;
+    ;
     background: #FFF;
     border: 1px solid rgba(190, 187, 183, 1);
     box-shadow: 0 0 5px rgba(190, 187, 183, 1);
-
 }
 
-#goals, #fv-calc, #rate-calc {
+#goals,
+#fv-calc,
+#rate-calc {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
     flex: 0 0 100%;
     padding-bottom: 1em;
 }
 
-footer {
+.footer {
+    -webkit-box-flex: 0;
+    -ms-flex: none;
     flex: none;
     padding: 1.5rem;
     background: #404040;
@@ -169,48 +218,54 @@ footer {
     vertical-align: middle;
 }
 
-footer a {
+.footer a {
     color: #e5e5e5;
     text-decoration: none;
 }
 
-footer a:hover {
+.footer a:hover {
     text-decoration: underline;
 }
 
+
 /* Large Screens */
+
 @media all and (min-width: 960px) {
-    #goals, #fv-calc, #rate-calc {
+    #goals,
+    #fv-calc,
+    #rate-calc {
         flex: 0 0 50%;
     }
-    
     #goals {
         padding: 0 0.5em 1em 0;
     }
-
     #fv-calc {
         padding: 0 0.5em 1em;
     }
-
     #rate-calc {
         padding: 0 0 1em 0.5em;
     }
 }
 
-@media all and (max-width: 480px) {
-    #topNav {
-        display: none;
+@media all and (min-width: 480px) {
+    
+    #main {
+        margin: 60px 0 0 0;
+    }
+    
+    header {
+        height: 60px;
     }
     
     header h1 {
-        text-align: center;
-        font-size: 24px;
+        font-size: 30px;
     }
     
-    footer {
-        margin-bottom: 4em;
-    }
-    
-    #bottomNav {
+    #navText {
         display: inline-block;
     }
+    
+    #navIcons {
+        display: none;
+    }
+}

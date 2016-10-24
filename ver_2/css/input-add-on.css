@@ -3,10 +3,14 @@
 */
 
 .InputAddOn {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
 .InputAddOn-field {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
     flex: 1 1 auto;
 }
 
@@ -19,6 +23,8 @@
 }
 
 .InputAddOn-item {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     background-color: rgba(147, 128, 108, 0.1);
     color: #666666;
@@ -61,6 +67,8 @@
 }
 
 .InputAddOn-field-prefix {
+    -webkit-box-flex: 0;
+    -ms-flex: 0;
     flex: 0;
     border-top: 1px solid rgba(147, 128, 108, 0.25);
     border-bottom: 1px solid rgba(147, 128, 108, 0.25);
