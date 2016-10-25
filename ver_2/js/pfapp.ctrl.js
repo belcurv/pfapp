@@ -3,7 +3,7 @@
     
     angular.module('pfapp')
     
-    .controller('pfappController', ['pfactory', function (pfactory) {
+        .controller('pfappController', ['pfactory', 'LS', function (pfactory, LS) {
 
             var vm = this;
 
@@ -25,6 +25,23 @@
                 calcAge: pfactory.calcAge,
                 calcRate: calcRATE
             };
+        
+            // localStorage!
+            vm.napkin.value = LS.getData();
+            
+            vm.napkin.storageArray = [];
+            
+            vm.napkin.latestData = function () {
+                return LS.getData();
+            };
+            
+            vm.napkin.update = function (val) {
+                return LS.setData(val);
+            };
+            
+            vm.napkin.pushToArray = function (val) {
+                vm.napkin.storageArray.push(val);
+            }
 
             // RATE calculator
             function calcRATE(pmt, pv, nper, fv) {

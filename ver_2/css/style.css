@@ -1,3 +1,10 @@
+/* quick reset */
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
 html,
 body {
     height: 100%;
@@ -34,7 +41,12 @@ input[type="number"],
     border-radius: 0;
 }
 
+input {
+    width: 100%;
+}
+
 header,
+input,
 .footer,
 #main,
 #inputs,

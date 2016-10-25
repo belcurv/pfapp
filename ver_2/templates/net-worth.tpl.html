@@ -19,5 +19,26 @@
             </ul>
         </div>
         
+        <h2>Playing with HTML5 localStorage</h2>
+        <p>Current value of localStorage: {{vm.napkin.latestData()}}</p>
+        <div class="InputAddOn">
+            <div class="InputAddOn-item">
+                <span class="">New blah</span>
+            </div>
+            <div class="InputAddOn-field">
+                <input type="text" ng-model="vm.napkin.value">
+            </div>
+            <div class="InputAddOn-item">
+                <input type="button" value="Update" ng-click="vm.napkin.update(vm.napkin.value)">
+            </div>
+            <div class="InputAddOn-item">
+                <input type="button" value="Push to Array" ng-click="vm.napkin.pushToArray(vm.napkin.value)">
+            </div>
+         
+        </div>
+          <ul>
+              <li ng-repeat="n in vm.napkin.storageArray track by $index">{{ n }}</li>
+          </ul>
+           
     </div>
 </div>
