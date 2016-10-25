@@ -21,6 +21,17 @@ body {
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
 
+/* anti-iOS Safari / Webkit tweak */
+textarea,
+input.text,
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+.input-checkbox {
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+
 header,
 .footer,
 #main,
@@ -244,7 +255,7 @@ p, ul, li {
         padding: 0 0.5em 1em 0;
     }
     #fv-calc {
-        padding: 0 0.5em 1em;
+        padding: 0 0 1em 0.5em;
     }
     #rate-calc {
         padding: 0 0 1em 0.5em;
