@@ -6,7 +6,7 @@
         .directive('pfappFooter', function () {
         
             return {
-                restrict: 'AE',
+                restrict: 'E',
                 templateUrl: 'templates/footer.tpl.html'
             };
 

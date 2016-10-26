@@ -9,10 +9,10 @@
     <title>FIRE Calculator v2</title>
 
     <!-- ========================== STYLESHEETS =========================== -->
-    <link href="css/style.css" type="text/css" rel="stylesheet" />
-    <link href="css/input-add-on.css" type="text/css" rel="stylesheet" />
-    <link href="css/flexbox-grid.css" type="text/css" rel="stylesheet" />
-    <link href="css/glyphicons.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/input-add-on.css" />
+    <link rel="stylesheet" href="css/flexbox-grid.css" />
+    <link rel="stylesheet" href="css/glyphicons.css" />
 
     <!-- =========================== JAVASCRIPT =========================== -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
@@ -30,14 +30,17 @@
 
 <body ng-cloak>
 
-    <pfapp-header></pfapp-header>
+    <header>
+        <pfapp-header></pfapp-header>
+    </header>
 
-    <div id="main">
+    <article>
         <div ng-view></div>
-    </div>
+    </article>
 
-    <pfapp-footer></pfapp-footer>
+    <footer>
+        <pfapp-footer></pfapp-footer>
+    </footer>
 
 </body>
-
 </html>
