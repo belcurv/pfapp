@@ -165,7 +165,14 @@ input {
 p, ul, li {
     font-weight: normal;
     font-size: 15px;
+}
+
+p {
     margin: .5em 0;
+}
+
+ul {
+    margin: 0 1em 1em 1em;
 }
 
 #outputs {

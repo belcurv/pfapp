@@ -3,7 +3,7 @@
         
         <div class="Grid">
             <div class="Grid-cell">
-                <h4>NET WORTH TRACKER</h4>
+                <h4>Playing with HTML5 localStorage</h4>
             </div>
             <div>
                 <h4><span title="Toggle help" class="help-toggle" ng-click="HelpToggle = !HelpToggle">?</span></h4>
@@ -11,34 +11,48 @@
         </div>
         
         <div ng-if="HelpToggle" class="help">
-            <p>A simple net worth tracker.</p>
-
             <ul>
-                <li><em>Accounts</em> = Name of each account.</li>
-                <li><em>Category</em> = The categories will sort themselves into assets and liabilities.</li>
+                <li>If there is no data stored in localStorage, the array is initialized empty.</li>
+                <li>If there is data in localStorage, the array is populated with its data.</li>
+                <li><em>Push to Array</em> = Pushes a new thing to the array & stores it in localStorage.</li>
+                <li><em>Clear Storage</em> = Clears localStorage and the array.</li>
+                <li>Adding JSON objects to the array is wonky!</li>
             </ul>
         </div>
         
-        <h2>Playing with HTML5 localStorage</h2>
-        <p>Current value of localStorage: {{vm.napkin.latestData()}}</p>
         <div class="InputAddOn">
             <div class="InputAddOn-item">
-                <span class="">New blah</span>
+                <span class="">New thing</span>
             </div>
             <div class="InputAddOn-field">
-                <input type="text" ng-model="vm.napkin.value">
+                <input type="text" ng-model="vm.value">
             </div>
             <div class="InputAddOn-item">
-                <input type="button" value="Update" ng-click="vm.napkin.update(vm.napkin.value)">
+                <input type="button" value="Push to Array" ng-click="vm.pushToArray(vm.value)">
             </div>
             <div class="InputAddOn-item">
-                <input type="button" value="Push to Array" ng-click="vm.napkin.pushToArray(vm.napkin.value)">
+                <input type="button" value="Clear Storage" ng-click="vm.clearStorage()">
             </div>
-         
+            
         </div>
-          <ul>
-              <li ng-repeat="n in vm.napkin.storageArray track by $index">{{ n }}</li>
-          </ul>
-           
+    </div>
+</div>
+        
+<div class="" id="outputs">
+    
+    <div id="goals">
+        <div class="content-box">
+            <p>ng-repeat looping over the array:</p>
+            <ul>
+                <li ng-repeat="n in vm.storageArray track by $index">{{ n }}</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div id="fv-calc">
+        <div class="content-box">
+            <p>Raw JSON:</p>
+            <pre>{{ vm.latestData() | json:4 }}</pre>
+        </div>           
     </div>
 </div>
