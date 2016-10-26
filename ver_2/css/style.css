@@ -47,14 +47,15 @@ header h4,
 article,
 input,
 footer,
-#main,
 #inputs,
 #outputs,
 #goals,
 #fv-calc,
 #rate-calc,
 #navIcons,
-#navIcons a {
+#navIcons a,
+.content-box,
+.container {
     box-sizing: border-box;
 }
 
@@ -64,12 +65,19 @@ footer,
     border-left: 0.6em solid rgb(95, 158, 160);
 }
 
+.container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0 1em;
+    height: 100%;
+}
+
 header {
     position: fixed;
     width: 100%;
     height: 54px;
     margin: 0;
-    padding: 0 1em;
+    padding: 0;
     background: #0f0f0f;
 }
 
@@ -145,11 +153,6 @@ article {
     
     /* space main content under header */
     margin-top: 54px;
-    
-    /* center main content */
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 input {
@@ -279,6 +282,12 @@ footer a:hover {
     }
     #rate-calc {
         padding: 0 0 1em 0.5em;
+    }
+    article {
+        /* limit and center main content */
+        max-width: 1024px;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
