@@ -134,6 +134,7 @@ header h4:hover,
 header h1:hover,
 #navIcons a:hover {
     border-bottom: 3px solid rgb(95, 158, 160);   
+    cursor: pointer;
 }
 
 #navIcons a:active,
