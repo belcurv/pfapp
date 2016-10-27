@@ -26,13 +26,13 @@
 
 /* ========================== custom GRID tweaks =========================== */
 
-/* Grid and Grid-cell need 100% height for navbar element aignment */
+/* <header> Grid & Grid-cell 100% height for proper aignment */
 
-.Grid {
+header .Grid {
     height: 100%;
 }
 
-.Grid-cell {
+header .Grid-cell {
     height: 100%;
 }
 

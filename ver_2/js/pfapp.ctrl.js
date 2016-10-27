@@ -24,31 +24,7 @@
                 calcFutureValue: pfactory.calcFV,
                 calcAge: pfactory.calcAge,
                 calcRate: calcRATE
-            };
-        
-            // localStorage!
-            vm.napkin.value = LS.getData();
-            
-            vm.napkin.storageArray = LS.getData() || [];
-            
-            vm.napkin.latestData = function () {
-                return LS.getData();
-            };
-            
-            vm.napkin.update = function (val) {
-                return LS.setData(val);
-            };
-            
-            vm.napkin.pushToArray = function (val) {
-                vm.napkin.storageArray.push(val);
-                LS.setData(vm.napkin.storageArray);
-            };
-            
-            vm.napkin.clearStorage = function () {
-                LS.deleteData();
-                vm.napkin.storageArray.length = 0;
-            };
-            
+            };            
 
             // RATE calculator
             function calcRATE(pmt, pv, nper, fv) {

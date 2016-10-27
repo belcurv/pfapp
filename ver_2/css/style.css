@@ -15,7 +15,7 @@ body {
     padding: 0px;
     font-family: 'Roboto', 'Arial', sans-serif;
     font-size: 14px;
-    background: #bebbb7;
+    background: #bebbb5;
     color: black;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -47,11 +47,6 @@ header h4,
 article,
 input,
 footer,
-#inputs,
-#outputs,
-#goals,
-#fv-calc,
-#rate-calc,
 #navIcons,
 #navIcons a,
 .content-box,
@@ -63,6 +58,7 @@ footer,
     padding: .25em 1em;
     background: #FFF;
     border-left: 0.6em solid rgb(95, 158, 160);
+    width: 100%;
 }
 
 .container {
@@ -83,7 +79,7 @@ header {
 
 header h1,
 header h4,
-#navIcons a{
+#navIcons a {
     display: inline-block;
     margin: 0;
     height: 100%;
@@ -150,9 +146,15 @@ article {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
+    padding: 0.5em;
     
-    /* space main content under header */
+    /* push article beneath header */
     margin-top: 54px;
+    
+    /* limit main content width and center */
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 input {
@@ -172,29 +174,14 @@ ul {
     margin: 0 1em 1em 1em;
 }
 
-#inputs {
+section {
     -webkit-box-flex: 0;
     -ms-flex: 0;
     flex: 0;
-    padding: 1em 1em 1em 1em;
+    padding: 0.5em;
 }
 
-#outputs {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 100%;
-    flex: 1 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
-    padding: 0em 1em 0 1em;
-    -ms-flex-line-pack: start;
-    align-content: flex-start;
-}
-
-#inputs h4,
-#outputs h4 {
+h4 {
     line-height: 1.1em;
     margin: 0;
     padding: 0.5em 0 0.5em 0;
@@ -224,15 +211,6 @@ ul {
     background: #FFF;
     border: 1px solid rgba(190, 187, 183, 1);
     box-shadow: 0 0 5px rgba(190, 187, 183, 1);
-}
-
-#goals,
-#fv-calc,
-#rate-calc {
-    -webkit-box-flex: 0;
-    -ms-flex: 0 0 100%;
-    flex: 0 0 100%;
-    padding-bottom: 1em;
 }
 
 footer {
@@ -267,31 +245,7 @@ footer a:hover {
 }
 
 
-/* Large Screens */
-@media all and (min-width: 960px) {
-    #goals,
-    #fv-calc,
-    #rate-calc {
-        flex: 0 0 50%;
-    }
-    #goals {
-        padding: 0 0.5em 1em 0;
-    }
-    #fv-calc {
-        padding: 0 0 1em 0.5em;
-    }
-    #rate-calc {
-        padding: 0 0 1em 0.5em;
-    }
-    article {
-        /* limit and center main content */
-        max-width: 1024px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
-/* Small Screens */
+/* Greater than 480px, show nav text & hide icons */
 @media all and (min-width: 480px) {
     #navText {
         display: inline-block;

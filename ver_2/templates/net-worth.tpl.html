@@ -1,58 +1,66 @@
-<div class="" id="inputs">
-    <div class="content-box">
-        
-        <div class="Grid">
-            <div class="Grid-cell">
-                <h4>Playing with HTML5 localStorage</h4>
+<div class="Grid Grid--full">
+    <section class="Grid-cell">
+        <div class="content-box">
+
+            <div class="Grid">
+                <div class="Grid-cell">
+                    <h4>Playing with HTML5 localStorage</h4>
+                </div>
+                <div>
+                    <h4><span title="Toggle help" class="help-toggle" ng-click="HelpToggle = !HelpToggle">?</span></h4>
+                </div>
             </div>
-            <div>
-                <h4><span title="Toggle help" class="help-toggle" ng-click="HelpToggle = !HelpToggle">?</span></h4>
-            </div>
-        </div>
-        
-        <div ng-if="HelpToggle" class="help">
-            <ul>
-                <li>If there is no data stored in localStorage, the array is initialized empty.</li>
-                <li>If there is data in localStorage, the array is populated with its data.</li>
-                <li><em>Push to Array</em> = Pushes a new thing to the array & stores it in localStorage.</li>
-                <li><em>Clear Storage</em> = Clears localStorage and the array.</li>
-                <li>Adding JSON objects to the array is wonky!</li>
-            </ul>
-        </div>
-        
-        <div class="InputAddOn">
-            <div class="InputAddOn-item">
-                <span class="">New thing</span>
-            </div>
-            <div class="InputAddOn-field">
-                <input type="text" ng-model="vm.value">
-            </div>
-            <div class="InputAddOn-item">
-                <input type="button" value="Push to Array" ng-click="vm.pushToArray(vm.value)">
-            </div>
-            <div class="InputAddOn-item">
-                <input type="button" value="Clear Storage" ng-click="vm.clearStorage()">
+
+            <div ng-if="HelpToggle" class="help">
+                <ul>
+                    <li>If there is no data stored in localStorage, the array is initialized empty.</li>
+                    <li>If there is data in localStorage, the array is populated with its data.</li>
+                    <li><em>Push to Array</em> = Pushes a new thing to the array & stores it in localStorage.</li>
+                    <li><em>Clear Storage</em> = Clears localStorage and the array.</li>
+                    <li>Adding JSON objects to the array is wonky!</li>
+                </ul>
             </div>
             
+            <div class="Grid Grid--gutters">
+                <div class="Grid-cell">
+                    <div class="InputAddOn">
+                        <div class="InputAddOn-item">
+                            <span>New thing</span>
+                        </div>
+                        <div class="InputAddOn-field">
+                            <input type="text" ng-model="vm.value">
+                        </div>
+                    </div>
+                </div>
+                <div class="Grid-cell">
+                    <div class="InputAddOn">
+                        <div class="InputAddOn-item">
+                            <input type="button" value="Push to Array" ng-click="vm.pushToArray(vm.value)">
+                        </div>
+                        <div class="InputAddOn-item">
+                            <input type="button" value="Clear Storage" ng-click="vm.clearStorage()">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 </div>
-        
-<div class="" id="outputs">
-    
-    <div id="goals">
+
+<div class="Grid Grid--full large-Grid--1of2">
+    <section class="Grid-cell">
         <div class="content-box">
             <p>ng-repeat looping over the array:</p>
             <ul>
                 <li ng-repeat="n in vm.storageArray track by $index">{{ n }}</li>
             </ul>
         </div>
-    </div>
-    
-    <div id="fv-calc">
-        <div class="content-box">
-            <p>Raw JSON:</p>
-            <pre>{{ vm.latestData() | json:4 }}</pre>
-        </div>           
-    </div>
+    </section>
+
+    <section class="Grid-cell">
+            <div class="content-box">
+                <p>Raw JSON:</p>
+                <pre>{{ vm.latestData() | json:4 }}</pre>
+            </div>
+    </section>
 </div>
