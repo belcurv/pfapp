@@ -8,6 +8,11 @@
         $routeProvider
 
             .when('/', {
+                templateUrl: 'templates/home.tpl.html',
+                controller: 'pfappController as vm'
+            })
+        
+            .when('/fire-calc', {
                 templateUrl: 'templates/fire-calc.tpl.html',
                 controller: 'pfappController as vm'
             })

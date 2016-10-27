@@ -77,6 +77,10 @@ header {
     background: #0f0f0f;
 }
 
+nav {
+    height: 100%;
+}
+
 header h1,
 header h4,
 #navIcons a {
@@ -89,7 +93,7 @@ header h4,
 
 header h1 {
     font-style: italic;
-    padding: 12px 0 0 14px;
+    padding: 11px 0.5em 0 0.5em;
     font-size: 24px;    
 }
 
@@ -113,10 +117,11 @@ header h1 {
 */
 #navText {
     display: none;
+    height: 100%;
 }
 
 header h4 {
-    padding: 18px 0.5em 0 0.5em;
+    padding: 19px 0.5em 0 0.5em;
     font-size: 17px;
 }
 
@@ -126,6 +131,7 @@ header a {
 }
 
 header h4:hover,
+header h1:hover,
 #navIcons a:hover {
     border-bottom: 3px solid rgb(95, 158, 160);   
 }
