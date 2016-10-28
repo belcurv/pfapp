@@ -1,29 +1,74 @@
 <!-- section title -->
 <section>
     <div class="content-box">
-        <h1>Welcome to pfapp!</h1>
+        <h1>What is pfapp?</h1>
 
-        <p><em>pfapp</em> (Personal Finance App) is a small collection of utilities for calculations related to personal finance.  <em>pfapp</em> currently consists of the following utilities:</p>
+        <p><em>pfapp</em> (Personal Finance App) is a small collection of utilities for calculations related to personal finance. Everybody can use it!  If you are unfamiliar with some of the theory or concepts, click on the little help <span class="help-toggle glyphicon glyphicon-question-sign"></span> icons.</p>
         
-        <div class="help">
-            <a href="#/fire-calc"><h4>FIRE Calculator</h4></a>
-            <p>Calulations related to Financial Independence / Early Retirement.</p>
+        <div class="Grid Grid--gutters Grid--full large-Grid--1of2">
+           
+            <div class="Grid-cell">
+                <div class="shadow-box">
+                    <a href="#/fire-calc"><h4>FIRE Calculator</h4></a>
+                    <p>Calulations related to Financial Independence / Early Retirement.</p>
+                </div>
+            </div>
+
+            <div class="Grid-cell">
+                <div class="shadow-box">
+                    <a href="#/commute-calc"><h4>Commute Calculator</h4></a>
+                    <p>How much is your commute costing you?</p>
+                </div>
+            </div>
+
+            <div class="Grid-cell">
+                <div class="shadow-box">
+                    <a href="#/net-worth"><h4>Net Worth Tracker</h4></a>
+                    <p>Track your net workth over time. How does your actual net worth match the projections from the FIRE Calculator?</p>
+                </div>
+            </div>
+
+            <div class="Grid-cell">
+                <div class="shadow-box">
+                    <a href="#/portfolio"><h4>Portfolio</h4></a>
+                    <p>A (very) simple tracker, designed to calculate the aggregate returns of a collection of stock and bond mutual funds.  Also includes portfolio reallocation suggestion based on the target returns calculated in the FIRE Calculator.</p>
+                </div>
+            </div>
         </div>
         
-        <div class="help">
-            <a href="#/commute-calc"><h4>Commute Calculator</h4></a>
-            <p>How much is your commute costing you?</p>
-        </div>
+        <h1>History</h1>
+        <p>Before there was <em>pfapp</em> there was a simple spreadsheet calculator using a variety of TVM functions (Time Value of Money) to calculate the future value and required invesment returns to achieve a hypothetical savings target.  The spreadsheet originally just compared a few college savings strategies (savings rates and returns over time).  At the time, we were awaiting the birth of our first child and I was planning for her eventual higher education expenses.</p>
         
-        <div class="help">
-            <a href="#/net-worth"><h4>Net Worth Tracker</h4></a>
-            <p>Track your net workth over time. How does your actual net worth match the projections from the FIRE Calculator?</p>
-        </div>
+        <p>As the spreadsheet evolved over time, the college-savings features were removed and replaced by more retirement-appropriate features.  I added a Net Worth calculator, which just summed columns of manually-input monthly data.  Then I added a Portfolio worksheet that calculated the allocation ratio of a portfolio of stocks and bonds as well as its theoretical future value, based on manually-input data.  Finally, I added a FIRE calculator worksheet which used results from the other worksheets to compare my hypothetical goals to the reality of my account balances and historical returns.</p>
         
-        <div class="help">
-            <a href="#/portfolio"><h4>Portfolio</h4></a>
-            <p>A (very) simple tracker, designed to calculate the aggregate returns of a collection of stock and bond mutual funds.  Also includes portfolio reallocation suggestion based on the target returns calculated in the FIRE Calculator.</p>
-        </div>
+        <p>I always had the goal of making the spreadsheet an actual web application, but I did not possess the javascript experience to do so until mid-2016.</p>
+        
+        <h1>TVM Functions</h1>
+        <p><a href="http://www.tvmcalcs.com/index.php/calculators/excel_tvm_functions/excel_tvm_functions_page1" target="_blank">TVM functions</a> are built into nearly every spreadsheet (Excel, Google Sheets, LibreOffice Calc, etc) and are very easy to use.  There are five basic component parts to all of the TVM functions:</p>
+        <ul>
+            <li><strong>Pmt</strong>: the recurring payment, whether you're using it as savings or paying off some debt.</li>
+            <li><strong>Rate</strong>: the Interest rate for the loan or earned by the savings/investment.</li>
+            <li><strong>Nper</strong>: the total number of payments for the loan or number of contributions to a savings/investment account. For a target savings calculation like my college savings example, you can think of this like the <strong>n</strong>umber of <strong>per</strong>iods before you need the savings.  </li>
+            <li><strong>Pv</strong>: The present value of a debt or savings/investment.</li>
+            <li><strong>Fv</strong>: The future value, or a cash balance you want to attain after the last payment is made.</li>
+        </ul>
+        
+        <p>Accordingly there are five TVM functions, each solving for one of the above five components, given the other components (italicized components are optional):</p>
+        <ul>
+            <li><strong>NPer(rate, pmt, pv, <em>fv, type</em>)</strong> solves for Number of Periods</li>
+            <li><strong>Rate(nper, pmt, pv, <em>fv, type, guess</em>)</strong> solves for periodic interest rate</li>
+            <li><strong>PV(rate, nper, pmt, <em>fv, type</em>)</strong> solves for present value</li>
+            <li><strong>PMT(rate, nper, pv, <em>fv, type</em>)</strong> solves for annuity payment</li>
+            <li><strong>FV(rate, nper, pmt, <em>pv, type</em>)</strong> solves for future value</li>
+        </ul>
+        
+        <p>The math behind all of the above (except <em>Rate</em>) is basic algebra.  For example, the Future Value function is a geometric series:
+        <br />FV = pv * rate^n + pmt (rate^n - 1)/(rate-1)</p>
+        
+        <p>But <em>Rate</em> is a different beast. The Rate function is an open problem solvable only though iteration (aka: convergence, approximation).  Rate works by iterating from a starting guess (thus the optional <em>guess</em> component), finding successively better approximate solutions.  It will either converge on a good enough solution or not find one at all.  My Rate calculator uses <a href="https://en.wikipedia.org/wiki/Newton%27s_method" target="_blank">Newton's Method</a>.</p>
+        
+        <h1>Privacy</h1>        
+        <p>Neither this web site (belcurv.com) nor <em>pfapp</em> use cookies, nor do they track you or collect any personal information from you. Features <em>do</em> make use of HTML5 web storage - a method of storing a limited amount of data in your browser's own local storage. Again, none of this information is transmitted to the internet or otherwise collected.</p>
         
     </div>
 </section>

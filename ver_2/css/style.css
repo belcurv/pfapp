@@ -201,12 +201,24 @@ section {
 }
 
 h4 {
+    display: inline-block;
     line-height: 1.1em;
     margin: 0;
     padding: 0.5em 0 0.5em 0;
     color: #404040;
     font-size: 18px;
     font-weight: 500;
+}
+
+.content-box > h1 {
+    margin: 0;
+    padding: 0.25em 0;
+    color: #404040;
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+/*    font-style: italic;*/
+/*    text-align: center;*/
 }
 
 /* use with Glyphicon toggle */
@@ -242,11 +254,19 @@ h4 {
     box-shadow: 0 0 5px rgba(190, 187, 183, 1);
 }
 
+.shadow-box {
+    padding: 1em;
+    margin-top: .25em;
+    background: #FFF;
+    border: 1px solid rgba(190, 187, 183, 1);
+    box-shadow: 0 0 5px rgba(190, 187, 183, 1);
+}
+
 footer {
     -webkit-box-flex: 0;
     -ms-flex: none;
     flex: none;
-    padding: 1.5rem 0;
+    padding: 0.85em 0;
     background: #404040;
     color: #999;
     font-size: 0.85em;
@@ -255,13 +275,15 @@ footer {
 
 .footer-credit {
     display: inline-block;
-    margin: 0 1em;
+    margin: .25em;
     vertical-align: middle;
 }
 
 .footer-social {
     display: inline-block;
     vertical-align: middle;
+    height: 20px;
+    width: 106px;
 }
 
 footer a {
@@ -299,5 +321,9 @@ footer a:hover {
     
     .container {
         padding: 0;
+    }
+    
+    footer p {
+        font-size: 13px;
     }
 }
