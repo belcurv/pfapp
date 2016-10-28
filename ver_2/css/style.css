@@ -254,14 +254,6 @@ h4 {
     box-shadow: 0 0 5px rgba(190, 187, 183, 1);
 }
 
-.shadow-box {
-    padding: 1em;
-    margin-top: .25em;
-    background: #FFF;
-    border: 1px solid rgba(190, 187, 183, 1);
-    box-shadow: 0 0 5px rgba(190, 187, 183, 1);
-}
-
 footer {
     -webkit-box-flex: 0;
     -ms-flex: none;
