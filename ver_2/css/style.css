@@ -74,7 +74,8 @@ header {
     height: 54px;
     margin: 0;
     padding: 0;
-    background: #0f0f0f;
+    background: #000;
+    z-index: 1; /* must be > 0 or Glyphicons show above header */
 }
 
 nav {
@@ -103,12 +104,11 @@ header h1 {
 #navIcons {
     display: inline-block;
     height: 100%;
-    margin: 0 -14px 0 0;
 }
 
 #navIcons a {
     text-decoration: none;
-    padding: 15px 1em;
+    padding: 15px .75em;
     font-size: 22px;
 }
 
@@ -154,6 +154,7 @@ article {
     -ms-flex-direction: column;
     flex-direction: column;
     padding: 0.5em;
+    width: 100%;
     
     /* push article beneath header */
     margin-top: 54px;
@@ -162,6 +163,12 @@ article {
     max-width: 1024px;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* feature title styles */
+article > div > h1 {
+    
+    
 }
 
 input {
@@ -181,6 +188,11 @@ ul {
     margin: 0 1em 1em 1em;
 }
 
+pre {
+    font-weight: normal;
+    font-size: 12px;
+}
+
 section {
     -webkit-box-flex: 0;
     -ms-flex: 0;
@@ -197,6 +209,14 @@ h4 {
     font-weight: 500;
 }
 
+/* use with Glyphicon toggle */
+.help-toggle {
+    cursor: pointer;
+    color: #bebbb5;
+}
+
+/* OLD METHOD: use with custom [?] button toggle */
+/*
 .help-toggle {
     display: inline-block;
     line-height: 1.1em;
@@ -211,6 +231,8 @@ h4 {
     cursor: pointer;
     margin-left: 0.25em;
 }
+*/
+
 
 .help {
     padding: 1em;
@@ -252,13 +274,30 @@ footer a:hover {
 }
 
 
-/* Greater than 480px, show nav text & hide icons */
-@media all and (min-width: 480px) {
+/* Greater than 640x, show nav text & hide icons */
+@media all and (min-width: 640px) {
     #navText {
         display: inline-block;
     }
     
     #navIcons {
         display: none;
+    }
+}
+
+/* Tiny screens: narrow nav icon spacing & full width content */
+@media all and (max-width: 360px) {
+
+    #navIcons a {
+        padding: 15px .5em;
+    }
+    
+    article,
+    section{
+        padding: 0.5em 0;
+    }
+    
+    .container {
+        padding: 0;
     }
 }

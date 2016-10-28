@@ -16,6 +16,11 @@
                 templateUrl: 'templates/fire-calc.tpl.html',
                 controller: 'pfappController as vm'
             })
+        
+            .when('/commute-calc', {
+                templateUrl: 'templates/commute-calc.tpl.html',
+                controller : 'pfappCommuteCalcController as vm'
+            })
 
             .when('/net-worth', {
                 templateUrl: 'templates/net-worth.tpl.html',

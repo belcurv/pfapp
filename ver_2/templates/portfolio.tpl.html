@@ -1,23 +1,61 @@
-<section class="" id="inputs">
+<!-- section title -->
+<section>
     <div class="content-box">
-        
-        <div class="Grid">
-            <div class="Grid-cell">
-                <h4>PORTFOLIO</h4>
-            </div>
-            <div>
-                <h4><span title="Toggle help" class="help-toggle" ng-click="HelpToggle = !HelpToggle">?</span></h4>
-            </div>
-        </div>
-        
-        <div ng-if="HelpToggle" class="help">
-            <p>Input your portfolio components.</p>
-
-            <ul>
-                <li><em>Ticker</em> = The letter abbreviation for the investment.</li>
-                <li><em>Shares</em> = The qtu of shares of each investment you own.</li>
-            </ul>
-        </div>
-        
+        <h1>Portfolio Tracker</h1>
+        <p><em>Work in progress!</em></p>
     </div>
 </section>
+
+<!-- ============== INPUTS ============== -->
+<div class="Grid Grid--full">
+
+    <!-- ============== INPUTS SECTION ============== -->
+    <section class="Grid-cell" id="inputs">
+        <div class="content-box">
+
+            <div class="Grid">
+                <div class="Grid-cell">
+                    <h4>PORTFOLIO</h4>
+                </div>
+                <div>
+                    <h4 title="Toggle help" class="help-toggle" ng-click="HelpToggle = !HelpToggle">
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                </h4>
+                </div>
+            </div>
+
+            <div ng-if="HelpToggle" class="help">
+                <p>Input your portfolio components.</p>
+
+                <ul>
+                    <li><em>Ticker</em> = The letter abbreviation for the investment.</li>
+                    <li><em>Shares</em> = The quantity of shares of each investment you own.</li>
+                </ul>
+            </div>
+
+            <p><em>Work in progress!</em></p>
+
+            <div class="Grid Grid--gutters Grid--full med-Grid--1of2">
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Ticker</span>
+                    <input class="InputAddOn-field" tabindex="1" type="text">
+                </div>
+
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Shares</span>
+                    <input class="InputAddOn-field" tabindex="1" type="number">
+                </div>
+
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Ticker</span>
+                    <input class="InputAddOn-field" tabindex="1" type="text">
+                </div>
+
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Shares</span>
+                    <input class="InputAddOn-field" tabindex="1" type="number">
+                </div>
+            </div>
+
+        </div>
+    </section>
