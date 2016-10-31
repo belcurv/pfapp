@@ -97,22 +97,19 @@
             <table>
                 <thead>
                     <tr>
-                        <th rowspan="2">Per</th>
-                        <th rowspan="2">Duration</th>
-                        <th rowspan="2">Distance</th>
-                        <th colspan="3">Costs</th>
-                    </tr>
-                    <tr>
-                        <th>Auto</th>
-                        <th>Time</th>
-                        <th>Total</th>
+                        <th>Per</th>
+                        <th>Duration<br />(hours)</th>
+                        <th>Distance<br />(miles)</th>
+                        <th>Auto<br />Costs</th>
+                        <th>Time<br />Costs</th>
+                        <th>Total<br />Costs</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="n in vm.myObj.commuteArr">
                         <td>{{ n.per }}</td>
-                        <td>{{ n.time | number:2 }} hours</td>
-                        <td>{{ n.dist | number:2 }} miles</td>
+                        <td>{{ n.time | number:2 }} </td>
+                        <td>{{ n.dist | number:2 }} </td>
                         <td>{{ n.carCost | currency }}</td>
                         <td>{{ n.timeCost | currency }}</td>
                         <td>{{ n.carCost + n.timeCost | currency }}</td>

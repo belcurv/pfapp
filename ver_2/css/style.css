@@ -181,16 +181,13 @@ tbody tr:nth-child(odd) {
 }
 
 td, th {
-/*    border: 1px solid #404040;*/
+    text-align: left;
     padding: 0.25rem;
 }
 
-td {
-    text-align: left;
-}
-
 th {
-    text-align: center;
+    vertical-align: bottom;
+    padding-top: 0;
 }
 
 input {
