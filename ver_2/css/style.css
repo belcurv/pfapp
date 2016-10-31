@@ -184,6 +184,14 @@ p {
     margin: .5em 0;
 }
 
+.notify {
+    font-weight: normal;
+    font-size: 12px;
+    font-style: italic;
+    text-align: right;
+    color: #666666;
+}
+
 ul {
     margin: 0 1em 1em 1em;
 }
@@ -210,26 +218,29 @@ h4 {
     font-weight: 500;
 }
 
-.content-box > h1 {
+.content-box h1 {
+    display: inline-block;
     margin: 0;
     padding: 0.25em 0;
     color: #404040;
     font-size: 20px;
     font-weight: 500;
     text-transform: uppercase;
-/*    font-style: italic;*/
-/*    text-align: center;*/
+}
+
+.content-box h1:not(:first-child) {
+    margin-left: 10px;
 }
 
 /* use with Glyphicon toggle */
-.help-toggle {
+.icon-button {
     cursor: pointer;
-    color: #bebbb5;
+/*    color: #bebbb5;*/
 }
 
 /* OLD METHOD: use with custom [?] button toggle */
 /*
-.help-toggle {
+.icon-button {
     display: inline-block;
     line-height: 1.1em;
     width: 19px;
@@ -244,7 +255,6 @@ h4 {
     margin-left: 0.25em;
 }
 */
-
 
 .help {
     padding: 1em;

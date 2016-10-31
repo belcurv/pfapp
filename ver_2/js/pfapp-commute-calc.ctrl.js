@@ -17,8 +17,8 @@
                 service = new google.maps.DistanceMatrixService();
 
             vm.myObj = {
-                origin: "Milwaukee, WI USA",
-                destination: "Chicago, IL USA",
+                origin: "Milwaukee, WI 53207 USA",
+                destination: "New Berlin, WI 53146 USA",
                 mileageRate: .54,
                 calcCommute: calcCommute,
                 costCommute: costCommute
@@ -38,9 +38,13 @@
 
             function callback(response, status) {
                 if (status === "OK") {
-                    vm.myObj.distance = response.rows[0].elements[0].distance.text;
-                    vm.myObj.duration = response.rows[0].elements[0].duration.text;
+                    var meters  = response.rows[0].elements[0].distance.value,
+                        seconds = response.rows[0].elements[0].duration.value;
+                    
+                    vm.myObj.distance = meters  / 1609.344;
+                    vm.myObj.duration = seconds / 3600;
                     vm.myObj.responseObject = JSON.stringify(response, null, '  ');
+                    console.log(JSON.stringify(response, null, '  '));
                 } else {
                     console.log("Error: " + status);
                 }

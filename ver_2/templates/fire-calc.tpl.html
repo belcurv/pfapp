@@ -1,7 +1,20 @@
 <!-- section title -->
 <section>
     <div class="content-box">
-        <h1>FIRE Calculator</h1>
+        <div class="Grid">
+            
+            <div class="Grid-cell">
+                <h1>FIRE Calculator</h1>
+            </div>
+            
+            <div>
+                <h1 title="Save" class="icon-button" ng-click="vm.fcMethods.saveState()">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                </h1>
+            </div>
+            
+        </div>
+        
     </div>
 </section>
 
@@ -17,7 +30,7 @@
                     <h4>INPUTS</h4>
                 </div>
                 <div>
-                    <h4 title="Help" class="help-toggle" ng-click="inputHelpToggle = !inputHelpToggle">
+                    <h4 title="Help" class="icon-button" ng-click="inputHelpToggle = !inputHelpToggle">
                         <span class="glyphicon glyphicon-question-sign"></span>
                     </h4>
                 </div>
@@ -39,46 +52,51 @@
             <div class="Grid Grid--gutters Grid--full med-Grid--1of2 large-Grid--1of3">
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Birth Date</span>
-                    <input class="InputAddOn-field" tabindex="1" type="date" id="birthDate" ng-model="vm.napkin.birthDate">
+                    <input class="InputAddOn-field" tabindex="1" type="date" id="birthDate" ng-model="vm.state.birthDate">
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">FIRE Age</span>
-                    <input class="InputAddOn-field" tabindex="2" type="number" min="1" step="1" id="retirementAge" ng-model="vm.napkin.retirementAge">
+                    <input class="InputAddOn-field" tabindex="2" type="number" min="1" step="1" id="retirementAge" ng-model="vm.state.retirementAge">
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Annual Expenses ($)</span>
-                    <input class="InputAddOn-field" tabindex="3" type="number" min="0.00" step="1" id="annualExpenses" ng-model="vm.napkin.annualExpenses">
+                    <input class="InputAddOn-field" tabindex="3" type="number" min="1.00" step="1" id="annualExpenses" ng-model="vm.state.annualExpenses">
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Withdrawal Rate (%)</span>
-                    <input class="InputAddOn-field" tabindex="4" type="number" min="0.50" max="10.00" step="0.1" id="withdrawalRate" ng-model="vm.napkin.withdrawalRate">
+                    <input class="InputAddOn-field" tabindex="4" type="number" min="0.50" max="10.00" step="0.1" id="withdrawalRate" ng-model="vm.state.withdrawalRate">
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Total Existing Savings ($)</span>
-                    <input class="InputAddOn-field" tabindex="5" type="number" min="0.00" step="0.01" id="FVpv" ng-model="vm.napkin.FVpv">
+                    <input class="InputAddOn-field" tabindex="5" type="number" min="0.00" step="0.01" id="FVpv" ng-model="vm.state.FVpv">
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Rate of Return (%)</span>
-                    <input class="InputAddOn-field" tabindex="6" id="FVrate" type="number" min="0.05" max="20" step="0.05" ng-model="vm.napkin.FVrate">
+                    <input class="InputAddOn-field" tabindex="6" id="FVrate" type="number" min="0.05" max="20" step="0.05" ng-model="vm.state.FVrate">
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Annual Savings ($)</span>
-                    <input class="InputAddOn-field" tabindex="7" type="number" min="0.00" step="0.01" id="FVpmt" ng-model="vm.napkin.FVpmt">
+                    <input class="InputAddOn-field" tabindex="7" type="number" min="0.00" step="0.01" id="FVpmt" ng-model="vm.state.FVpmt">
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Monthly Savings</span>
                     <span class="InputAddOn-field">
-                        {{ (vm.napkin.FVpmt / 12) | currency:"$" }}
+                        {{ (vm.state.FVpmt / 12) | currency:"$" }}
                     </span>
                 </div>
             </div>
+            
+            <!-- Notify initial source of input data -->
+            <p class="notify" ng-if="!vm.isLocalStorage">Using default input values</p>
+            <p class="notify" ng-if="vm.isLocalStorage">Using locally-stored imput values</p>
+            
         </div>
     </section>  <!-- ============== END INPUTS SECTION ============== -->
 </div>
@@ -96,7 +114,7 @@
                     <h4>RESULTS</h4>
                 </div>
                 <div>
-                    <h4 title="Help" class="help-toggle" ng-click="resultsHelpToggle = !resultsHelpToggle">
+                    <h4 title="Help" class="icon-button" ng-click="resultsHelpToggle = !resultsHelpToggle">
                         <span class="glyphicon glyphicon-question-sign"></span>
                     </h4>
                 </div>
@@ -117,7 +135,7 @@
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Current Age</span>
                     <span class="InputAddOn-field">
-                       {{ vm.napkin.calcAge(vm.napkin.birthDate) }}
+                       {{ vm.fcMethods.calcAge(vm.state.birthDate) }}
                     </span>
                 </div>
 
@@ -125,32 +143,31 @@
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Years to FIRE</span>
                     <span class="InputAddOn-field">
-                       {{ vm.napkin.retirementAge - vm.napkin.calcAge(vm.napkin.birthDate) }}
+                       {{ vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate) }}
                     </span>
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Required Savings</span>
                     <span class="InputAddOn-field">
-                       {{ vm.napkin.calcReqSavings(vm.napkin.annualExpenses, vm.napkin.withdrawalRate) | currency:"$" }}
+                       {{ vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate) | currency:"$" }}
                     </span>
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Required Return</span>
                     <span class="InputAddOn-field">
-                       {{ vm.napkin.calcRate(vm.napkin.FVpmt,
-                        vm.napkin.FVpv,
-                        (vm.napkin.retirementAge - vm.napkin.calcAge(vm.napkin.birthDate)),
-                        vm.napkin.calcReqSavings(vm.napkin.annualExpenses, vm.napkin.withdrawalRate)
+                       {{ vm.fcMethods.calcRate(vm.state.FVpmt, vm.state.FVpv,
+                        (vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate)),
+                        vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate)
                         ) | number:3 }} %
                     </span>
                 </div>
             </div>
 
-            <p>Given your expected annual retirement expenses ({{ vm.napkin.annualExpenses | currency }}) and Safe Withdrawal Rate ({{ vm.napkin.withdrawalRate }}%), you will need a total of {{ vm.napkin.calcReqSavings(vm.napkin.annualExpenses, vm.napkin.withdrawalRate) | currency:"$" }} to FIRE.</p>
+            <p>Given your expected annual retirement expenses ({{ vm.state.annualExpenses | currency }}) and Safe Withdrawal Rate ({{ vm.state.withdrawalRate }}%), you will need a total of {{ vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate) | currency:"$" }} to FIRE.</p>
 
-            <p>Given annual contributions of {{ vm.napkin.FVpmt | currency }}, to achieve your required savings in {{ vm.napkin.retirementAge - vm.napkin.calcAge(vm.napkin.birthDate) }} years you need to earn an average return of {{ vm.napkin.calcRate(vm.napkin.FVpmt, vm.napkin.FVpv, (vm.napkin.retirementAge - vm.napkin.calcAge(vm.napkin.birthDate)), vm.napkin.calcReqSavings(vm.napkin.annualExpenses, vm.napkin.withdrawalRate)) | number:3 }}%.</p>
+            <p>Given annual contributions of {{ vm.state.FVpmt | currency }}, to achieve your required savings in {{ vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate) }} years you need to earn an average return of {{ vm.fcMethods.calcRate(vm.state.FVpmt, vm.state.FVpv, (vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate)), vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate)) | number:3 }}%.</p>
 
         </div>
     </section>
@@ -165,7 +182,7 @@
                     <h4>FUTURE VALUE</h4>
                 </div>
                 <div>
-                    <h4 title="Help" class="help-toggle" ng-click="fvHelpToggle = !fvHelpToggle">
+                    <h4 title="Help" class="icon-button" ng-click="fvHelpToggle = !fvHelpToggle">
                         <span class="glyphicon glyphicon-question-sign"></span>
                     </h4>
                 </div>
@@ -180,11 +197,11 @@
                     <span class="InputAddOn-item">Future Value</span>
                     <span class="InputAddOn-field">
                     <!-- calcFutureValue(rate, pmt, pv, nper) -->
-                    {{ vm.napkin.calcFutureValue(vm.napkin.FVrate / 100, vm.napkin.FVpmt, vm.napkin.FVpv, (vm.napkin.retirementAge - vm.napkin.calcAge(vm.napkin.birthDate)) ) | currency:"$"}}
+                    {{ vm.fcMethods.calcFutureValue(vm.state.FVrate / 100, vm.state.FVpmt, vm.state.FVpv, (vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate)) ) | currency:"$"}}
                 </span>
                 </div>
             </div>
-            <p>Given your initial savings of {{vm.napkin.FVpv | currency}}, plus annual contributions of {{vm.napkin.FVpmt | currency }}, earning {{100 * vm.napkin.FVrate / 100}}%, your savings will total {{ vm.napkin.calcFutureValue(vm.napkin.FVrate / 100, vm.napkin.FVpmt, vm.napkin.FVpv, (vm.napkin.retirementAge - vm.napkin.calcAge(vm.napkin.birthDate)) ) | currency:"$"}} after {{ vm.napkin.retirementAge - vm.napkin.calcAge(vm.napkin.birthDate) }} years.</p>
+            <p>Given your initial savings of {{vm.state.FVpv | currency}}, plus annual contributions of {{vm.state.FVpmt | currency }}, earning {{100 * vm.state.FVrate / 100}}%, your savings will total {{ vm.fcMethods.calcFutureValue(vm.state.FVrate / 100, vm.state.FVpmt, vm.state.FVpv, (vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate)) ) | currency:"$"}} after {{ vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate) }} years.</p>
         </div>
     </section>
     <!-- ============== END FUTURE VALUE SECTION ============== -->
