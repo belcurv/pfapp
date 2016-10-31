@@ -84,99 +84,27 @@
             </div>
             
             <!-- note -->
-            <p>This should be a table!</p>
+            <p>One-way results:</p>
             
-            <!-- per day -->
-            <div class="Grid Grid--gutters Grid--full large-Grid--1of2">
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">One-Way</span>
-                    <span class="InputAddOn-field">
-                        {{ vm.myObj.distance | number:2 }} miles,
-                        {{ vm.myObj.duration | number:2 }} hours, and
-                        {{ vm.myObj.costCommute(vm.myObj.distance, vm.myObj.mileageRate) | currency }}
-                        Per Day
-                    </span>
-                </div>
-                
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Round-Trip</span>
-                    <span class="InputAddOn-field">
-                        {{ vm.myObj.distance * 2 | number:2 }} miles,
-                        {{ vm.myObj.duration * 2 | number:2 }} hours, and
-                        {{ vm.myObj.costCommute(vm.myObj.distance, vm.myObj.mileageRate) * 2 | currency }}
-                        Per Day
-                    </span>
-                </div>
-            </div>
-            
-            <!-- per week -->
-            <div class="Grid Grid--gutters Grid--full large-Grid--1of2">
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">One-Way</span>
-                    <span class="InputAddOn-field">
-                        {{ vm.myObj.distance * 5 | number:2 }} miles,
-                        {{ vm.myObj.duration * 5 | number:2 }} hours, and
-                        {{ vm.myObj.costCommute(vm.myObj.distance, vm.myObj.mileageRate) * 5 | currency }}
-                        Per Week
-                    </span>
-                </div>
-                
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Round-Trip</span>
-                    <span class="InputAddOn-field">
-                        {{ vm.myObj.distance * 10 | number:2 }} miles,
-                        {{ vm.myObj.duration * 10 | number:2 }} hours, and
-                        {{ vm.myObj.costCommute(vm.myObj.distance, vm.myObj.mileageRate) * 10 | currency }}
-                        Per Week
-                    </span>
-                </div>
-            </div>
-            
-            <!-- per month -->
-            <div class="Grid Grid--gutters Grid--full large-Grid--1of2">
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">One-Way</span>
-                    <span class="InputAddOn-field">
-                        {{ vm.myObj.distance * 20 | number:2 }} miles,
-                        {{ vm.myObj.duration * 20 | number:2 }} hours, and
-                        {{ vm.myObj.costCommute(vm.myObj.distance, vm.myObj.mileageRate) * 20 | currency }}
-                        Per Month
-                    </span>
-                </div>
-                
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Round-Trip</span>
-                    <span class="InputAddOn-field">
-                        {{ vm.myObj.distance * 40 | number:2 }} miles,
-                        {{ vm.myObj.duration * 40 | number:2 }} hours, and
-                        {{ vm.myObj.costCommute(vm.myObj.distance, vm.myObj.mileageRate) * 40 | currency }}
-                        Per Month
-                    </span>
-                </div>
-            </div>
-            
-            <!-- per year -->
-            <div class="Grid Grid--gutters Grid--full large-Grid--1of2">
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">One-Way</span>
-                    <span class="InputAddOn-field">
-                        {{ vm.myObj.distance * 260 | number:2 }} miles,
-                        {{ vm.myObj.duration * 260 | number:2 }} hours, and
-                        {{ vm.myObj.costCommute(vm.myObj.distance, vm.myObj.mileageRate) * 260 | currency }}
-                        Per Year
-                    </span>
-                </div>
-                
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Round-Trip</span>
-                    <span class="InputAddOn-field">
-                        {{ vm.myObj.distance * 520 | number:2 }} miles,
-                        {{ vm.myObj.duration * 520 | number:2 }} hours, and
-                        {{ vm.myObj.costCommute(vm.myObj.distance, vm.myObj.mileageRate) * 520 | currency }}
-                        Per Year
-                    </span>
-                </div>
-            </div>
+            <!-- table! -->
+            <table>
+                <thead>
+                    <tr>
+                        <td>Per</td>
+                        <td>Time</td>
+                        <td>Distance</td>
+                        <td>Cost</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="n in vm.myObj.commuteArr">
+                        <td>{{ n.per }}</td>
+                        <td>{{ n.time | number:2 }} hours</td>
+                        <td>{{ n.dist | number:2 }} miles</td>
+                        <td>{{ n.cost | currency }}</td>
+                    </tr>
+                </tbody>
+            </table>
             
         </div>
     </section>
