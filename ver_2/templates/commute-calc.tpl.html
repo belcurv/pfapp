@@ -25,18 +25,20 @@
             </div>
 
             <div ng-if="inputsHelpToggle" class="help">
-                <p>Input your start and destination addresses...</p>
+                <p>Notes:</p>
 
                 <ul>
                     <li>Addresses can be as little as ZIP codes, but distance measurements will be more accurate if you input street addresses.</li>
                     <li><em>Origin</em> = The <em>origin</em> address.</li>
                     <li><em>Destination</em> = The <em>destination</em> address.</li>
-                    <li><em>Mileage Rate</em> = The cost per mile driven. The 2016 IRS standard mileage rate for the use of a car is 54 cents per mile (<a href="https://www.irs.gov/uac/newsroom/2016-standard-mileage-rates-for-business-medical-and-moving-announced" target="_blank">source</a>).
+                    <li><em>Mileage Rate</em> = The GSA/IRS federal mileage rate is intended to estimate the costs of operating a car.  It represents the average per-mile cost of standard maintenance, repairs, taxes, gas, insurance, and registration fees.  For 2016 the federal mileage rate is $0.54 per mile (<a href="https://www.irs.gov/uac/newsroom/2016-standard-mileage-rates-for-business-medical-and-moving-announced" target="_blank">IR-2015-137, Dec.17, 2015)</a>.
                     </li>
+                    <li><em>Hourly Rate</em> = The federal mileage rate does not include your time, so we calculate that separately using the duration of the commute and your theoretical hourly wage.  By default we assume your wage (what your free time is worth) to be $20 per hour.  You can adjust this in the inputs section.</li>
+                    <li>Since this calculator is designed to model the costs of commuting to work, it is assumed that you will go home at the end of the day.  Thus, the results displayed are ROUND TRIP values.</li>
                 </ul>
             </div>
 
-            <div class="Grid Grid--gutters Grid--full med-Grid--1of3 large-Grid--1of3">
+            <div class="Grid Grid--gutters Grid--full med-Grid--1of2">
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Origin</span>
                     <input class="InputAddOn-field" tabindex="1" type="text" ng-model="vm.myObj.origin">
@@ -46,10 +48,18 @@
                     <span class="InputAddOn-item">Destination</span>
                     <input class="InputAddOn-field" tabindex="2" type="text" ng-model="vm.myObj.destination">
                 </div>
+            </div>
+                
+            <div class="Grid Grid--gutters Grid--full med-Grid--1of3">
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Mileage Rate</span>
                     <input class="InputAddOn-field" tabindex="3" type="number" min="0.01" max="10.00" step="0.01" ng-model="vm.myObj.mileageRate">
+                </div>
+                
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Hourly Rate</span>
+                    <input class="InputAddOn-field" tabindex="4" type="number" min="7.25" max="100.00" step="0.01" ng-model="vm.myObj.hourlyRate">
                 </div>
                 
                 <div class="Grid-cell InputAddOn">
@@ -83,17 +93,19 @@
                 </ul>
             </div>
             
-            <!-- note -->
-            <p>One-way results:</p>
-            
             <!-- table! -->
             <table>
                 <thead>
                     <tr>
-                        <td>Per</td>
-                        <td>Time</td>
-                        <td>Distance</td>
-                        <td>Cost</td>
+                        <th rowspan="2">Per</th>
+                        <th rowspan="2">Duration</th>
+                        <th rowspan="2">Distance</th>
+                        <th colspan="3">Costs</th>
+                    </tr>
+                    <tr>
+                        <th>Auto</th>
+                        <th>Time</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -101,7 +113,9 @@
                         <td>{{ n.per }}</td>
                         <td>{{ n.time | number:2 }} hours</td>
                         <td>{{ n.dist | number:2 }} miles</td>
-                        <td>{{ n.cost | currency }}</td>
+                        <td>{{ n.carCost | currency }}</td>
+                        <td>{{ n.timeCost | currency }}</td>
+                        <td>{{ n.carCost + n.timeCost | currency }}</td>
                     </tr>
                 </tbody>
             </table>

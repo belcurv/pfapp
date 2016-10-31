@@ -20,6 +20,7 @@
                 origin: "Milwaukee, WI 53207 USA",
                 destination: "New Berlin, WI 53146 USA",
                 mileageRate: 0.54,
+                hourlyRate: 20,
                 roundTripFlag: 1,        // 1 = 1-way, 2 = round-trip
                 commuteArr: [],
                 calcCommute: calcCommute,
@@ -44,6 +45,7 @@
                 var arr = [],
                     rate = vm.myObj.mileageRate,      // mileage rate
                     rtMult = vm.myObj.roundTripFlag,  // round-trip multiplier
+                    wage = vm.myObj.hourlyRate,
                     minutes = seconds / 60,
                     miles = meters / 1609.344;
                 
@@ -52,37 +54,43 @@
                         per: "Day",
                         time: rtMult * minutes / 60,
                         dist: rtMult * miles,
-                        cost: rtMult * miles * rate
+                        carCost: rtMult * miles * rate,
+                        timeCost: (rtMult * minutes / 60) * wage
                     },
                     {
                         per: "Week",
                         time: rtMult * minutes / 12,
                         dist: rtMult * miles * 5,
-                        cost: rtMult * miles * rate * 5
+                        carCost: rtMult * miles * rate * 5,
+                        timeCost: (rtMult * minutes / 12) * wage
                     },
                     {
                         per: "Month",
                         time: rtMult * minutes / 3,
                         dist: rtMult * miles * 20,
-                        cost: rtMult * miles * rate * 20
+                        carCost: rtMult * miles * rate * 20,
+                        timeCost: (rtMult * minutes / 3) * wage
                     },
                     {
                         per: "Year",
                         time: rtMult * (minutes / 12) * 52,
                         dist: rtMult * miles * 260,
-                        cost: rtMult * miles * rate * 260
+                        carCost: rtMult * miles * rate * 260,
+                        timeCost: (rtMult * (minutes / 12) * 52) * wage
                     },
                     {
                         per: "5 Years",
                         time: rtMult * (minutes / 12) * 260,
                         dist: rtMult * miles * 1300,
-                        cost: rtMult * miles * rate * 1300
+                        carCost: rtMult * miles * rate * 1300,
+                        timeCost: (rtMult * (minutes / 12) * 260) * wage
                     },
                     {
                         per: "10 Years",
                         time: rtMult * (minutes / 12) * 520,
                         dist: rtMult * miles * 2600,
-                        cost: rtMult * miles * rate * 2600
+                        carCost: rtMult * miles * rate * 2600,
+                        timeCost: (rtMult * (minutes / 12) * 520) * wage
                     }
                 ];
                 
