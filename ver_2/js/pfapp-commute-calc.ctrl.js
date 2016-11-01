@@ -7,39 +7,47 @@
 
     angular.module('pfapp')
 
-        .controller('pfappCommuteCalcController', [function () {
-            
-            /* Google Maps API - Distance Matrix Service:
-             * https://developers.google.com/maps/documentation/javascript/distancematrix
-            */
+        .controller('pfappCommuteCalcController', ['gmapsDistanceAPI', function (gmapsDistanceAPI) {
 
-            var vm = this,
-                service = new google.maps.DistanceMatrixService();
+            var vm = this;
 
             vm.myObj = {
-                origin: "Milwaukee, WI 53207 USA",
-                destination: "New Berlin, WI 53146 USA",
+                origin: "Brooklyn, NY 11222 USA",
+                destination: "Bryn Mawr, PA 19010 USA",
                 mileageRate: 0.54,
                 hourlyRate: 20,
-                roundTripFlag: 1,        // 1 = 1-way, 2 = round-trip
+                roundTripFlag: 2,  // 1 = 1-way, 2 = round-trip
                 commuteArr: [],
-                calcCommute: calcCommute,
-                costCommute: costCommute
+                calcCommute: calcCommute
             };
+
+
+            /* calcCommute calls Google Maps Distance Matrix Service
+             * using injected gmapsDistanceAPI facory.
+             * gmapsDistanceAPI returns a promise.
+            */
+            function calcCommute(origin, destination) {
+                // call our gmapsDistanceAPI facory
+                gmapsDistanceAPI(origin, destination)
+                    .then(function (response) {
+                        // response values come as meters and seconds
+                        var meters  = response.rows[0].elements[0].distance.value,
+                            seconds = response.rows[0].elements[0].duration.value;
+
+                        // bind response data to model
+                        vm.myObj.distance = meters  / 1609.344;
+                        vm.myObj.duration = seconds / 3600;
+                        vm.myObj.responseObject = JSON.stringify(response, null, '  ');
+                        vm.myObj.commuteArr = commuteArray(meters, seconds);
+                    });
+            }
             
 
-            /* array structure:
-             * hours per ...
-            
-            //        |      time      |   distance     |      cost
-            // ------------------------------------------------------------
-            // day    |  minutes/60    |     miles      |   miles*rate
-            // week   |  minutes/12    |    miles*5     |  5*miles*rate
-            // month  |  minutes/3     |    miles*20    |  20*miles*rate
-            // year   |  (mins/12)*52  |   miles*260    |  260*miles*rate
-            // 5 yrs  |  (mins/12)*260 |   miles*1300   | 1300*miles*rate
-            // 10 yrs |  (mins/12)*520 |   miles*2600   | 2600*miles*rate
-            
+            /* calculate commute stats for various time periods,
+             *
+             * @params  [number]    meters  [distance between origin and dest]
+             * @params  [number]    minutes [duration from origin to dest]
+             * @returns [array]     arr     [array of commute cost stats]
             */
             function commuteArray(meters, seconds) {
                 var arr = [],
@@ -94,40 +102,7 @@
                     }
                 ];
                 
-                console.log(arr);
                 return arr;
-            }
-
-            function calcCommute(origin, destination) {
-                // method taks request object & callback
-                return service.getDistanceMatrix({
-                    origins: [origin],
-                    destinations: [destination],
-                    travelMode: google.maps.TravelMode.DRIVING,
-                    avoidHighways: false,
-                    avoidTolls: false,
-                    unitSystem: google.maps.UnitSystem.IMPERIAL
-                }, callback);
-            }
-
-            function callback(response, status) {
-                if (status === "OK") {
-                    var meters  = response.rows[0].elements[0].distance.value,
-                        seconds = response.rows[0].elements[0].duration.value;
-                    
-                    vm.myObj.distance = meters  / 1609.344;
-                    vm.myObj.duration = seconds / 3600;
-                    vm.myObj.responseObject = JSON.stringify(response, null, '  ');
-//                    console.log(JSON.stringify(response, null, '  '));
-                    vm.myObj.commuteArr = commuteArray(meters, seconds);
-                    
-                } else {
-                    console.log("Error: " + status);
-                }
-            }
-            
-            function costCommute(distance, rate) {
-                return (parseInt(distance, 10) * rate);
             }
             
         }]);

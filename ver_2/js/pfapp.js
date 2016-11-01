@@ -2,6 +2,6 @@
 
     'use strict';
     
-    angular.module('pfapp', ['ngRoute']);
+    angular.module('pfapp', ['ngRoute', 'gmapsDistanceModule']);
     
 }());

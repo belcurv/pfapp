@@ -187,7 +187,7 @@ td, th {
 
 th {
     vertical-align: bottom;
-    padding-top: 0;
+    padding: 0.25rem 0.5rem;
 }
 
 input {
@@ -294,6 +294,20 @@ footer {
     text-align: center;
 }
 
+.inputButton {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    background-color: rgba(255, 178, 73, 0.42);
+    color: black;
+    border: 1px solid rgba(147, 128, 108, 0.25);
+    padding: 0.5em 0.75em;
+    font: inherit;
+    font-weight: normal;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
 .footer-credit {
     display: inline-block;
     margin: .25em;
@@ -331,9 +345,10 @@ footer a:hover {
         font-size: inherit;
     }
     
-    th, td {
+    td {
         padding: 0.5rem;
     }
+    
 }
 
 /* Tiny screens: narrow nav icon spacing & full width content */

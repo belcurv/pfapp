@@ -1,8 +1,7 @@
 <!-- section title -->
 <section>
     <div class="content-box">
-        <h1>Cost of Commuting Calculator</h1>
-        <p><em>Work in progress!</em></p>
+        <h1>Commute Cost Calculator</h1>
     </div>
 </section>
 
@@ -63,7 +62,10 @@
                 </div>
                 
                 <div class="Grid-cell InputAddOn">
-                    <button style="cursor:pointer;" class="InputAddOn-item" type="submit" ng-click="vm.myObj.calcCommute(vm.myObj.origin, vm.myObj.destination)">Calculate (Click twice!)</button>
+                    <button class="inputButton" type="submit"
+                        ng-click="vm.myObj.calcCommute(vm.myObj.origin, vm.myObj.destination)">
+                        Calculate
+                    </button>
                 </div>
                 
             </div>
@@ -74,24 +76,10 @@
     <section class="Grid-cell" ng-if="vm.myObj.responseObject">
         <div class="content-box">
            
-            <div class="Grid">
-                <div class="Grid-cell">
-                    <h4>RESULTS</h4>
-                </div>
-                <div>
-                    <h4 title="Help" class="help-toggle" ng-click="resultsHelpToggle = !resultsHelpToggle">
-                        <span class="glyphicon glyphicon-question-sign"></span>
-                    </h4>
-                </div>
-            </div>
-
-            <div ng-if="resultsHelpToggle" class="help">
-                <p>Results Help...</p>
-
-                <ul>
-                    <li>Results Help...</li>
-                </ul>
-            </div>
+            <h4>RESULTS</h4>            
+            
+            <p>Your <strong>one-way</strong> commute is {{ vm.myObj.distance | number:2 }} miles long and takes approximately {{ vm.myObj.duration | number:2 }} hours.</p>
+            <p>The results below are <strong>round-trip</strong> numbers:</p>
             
             <!-- table! -->
             <table>
