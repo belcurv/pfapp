@@ -1,7 +1,3 @@
-/* 
- * TO-DO: pack distance service into an Angular factory w/$q
- */
-
 (function () {
     'use strict';
 
