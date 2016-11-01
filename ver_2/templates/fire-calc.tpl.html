@@ -93,9 +93,8 @@
                 </div>
             </div>
             
-            <!-- Notify initial source of input data -->
-            <p class="notify" ng-if="!vm.isLocalStorage">Using default input values</p>
-            <p class="notify" ng-if="vm.isLocalStorage">Using locally-stored input values</p>
+            <!-- Advise source of input data -->
+            <alert-message message="{{vm.fireCalcDataSource}}"></alert-message>
             
         </div>
     </section>  <!-- ============== END INPUTS SECTION ============== -->

@@ -50,7 +50,8 @@ footer,
 #navIcons,
 #navIcons a,
 .content-box,
-.container {
+.container,
+alert-message {
     box-sizing: border-box;
 }
 
@@ -203,12 +204,14 @@ p {
     margin: .5em 0;
 }
 
-.notify {
+alert-message {
+    display: block;
     font-weight: normal;
     font-size: 12px;
     font-style: italic;
     text-align: right;
     color: #666666;
+    margin: .75em 0;
 }
 
 ul {

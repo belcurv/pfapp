@@ -24,13 +24,16 @@
             // Load input data from either localStorage or defaults
             function loadState() {
                 if (LS.getData()) {
-                    vm.isLocalStorage = true;
+//                    vm.isLocalStorage = true;
+                    vm.fireCalcDataSource = 'Using locally-stored input values';
                     return LS.getData();
                 } else {
-                    vm.isLocalStorage = false;
+//                    vm.isLocalStorage = false;
+                    vm.fireCalcDataSource = 'Using default input values';
                     return defaults;
                 }
             }
+            
 
             // call loadState, returns array
             arr = loadState();
@@ -45,7 +48,7 @@
                 FVrate: arr[5],
                 FVpmt: arr[6],
                 requiredSavings: 0,
-                FVnper: 0,
+                FVnper: 0
             };
             
             // fcMethods object collects FireCalc utility methods
@@ -63,7 +66,7 @@
             }
             
             // Save current state to local storage
-            function saveState () {
+            function saveState() {
                 LS.setData([
                     vm.state.birthDate,
                     vm.state.retirementAge,
