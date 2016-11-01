@@ -187,7 +187,7 @@ td, th {
 
 th {
     vertical-align: bottom;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem;
 }
 
 input {
@@ -373,5 +373,11 @@ footer a:hover {
     
     th, td {
         padding: 0.1rem;
+    }
+    
+    .sm-col-hide {
+        display: none;
+        width: 0;
+        visibility: collapse;
     }
 }

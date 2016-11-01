@@ -90,7 +90,7 @@
                         <th>Distance<br />(miles)</th>
                         <th>Auto<br />Costs</th>
                         <th>Time<br />Costs</th>
-                        <th>Total<br />Costs</th>
+                        <th class="sm-col-hide">Total<br />Costs</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,7 +100,7 @@
                         <td>{{ n.dist | number:2 }} </td>
                         <td>{{ n.carCost | currency }}</td>
                         <td>{{ n.timeCost | currency }}</td>
-                        <td>{{ n.carCost + n.timeCost | currency }}</td>
+                        <td class="sm-col-hide">{{ n.carCost + n.timeCost | currency }}</td>
                     </tr>
                 </tbody>
             </table>
