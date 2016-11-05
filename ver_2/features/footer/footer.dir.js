@@ -7,7 +7,7 @@
         
             return {
                 restrict: 'E',
-                templateUrl: 'templates/footer.tpl.html'
+                templateUrl: 'features/footer/footer.tpl.html'
             };
 
         });

@@ -7,8 +7,8 @@
         
             return {
                 restrict: 'AE',
-                templateUrl: 'templates/header.tpl.html',
-                controller: 'pfappController'
+                templateUrl: 'features/header/header.tpl.html',
+                controller: 'fireCalcCtrl'
             };
 
         });

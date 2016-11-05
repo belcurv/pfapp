@@ -16,33 +16,42 @@
  * 
  * Not all options/features are used - this is specifically for north-American
  * car drivers.
-*/
+ */
 
 (function () {
     'use strict';
-    
+
     angular.module('gmapsDistanceModule', [])
-    
+
         .factory('gmapsDistanceAPI', ['$rootScope', '$q', function ($rootScope, $q) {
-            
-            return function (o, d) {
-                
-                var deferred = $q.defer(),  // init promise!
-                    service;
-                
-                // Request object for the gMaps Distance Matrix Service
-                var request = {
-                        origins: [o],
+
+            // fetch distance matrix from google.maps
+            // @params  [string] oA    [Origin A address]
+            // @params  [string] oB    [Origin B address]
+            // @params  [string] d     [Destination address]
+            // @returns [object]       [Returns deferred promise]
+            return function (oA, oB, d) {
+
+                // init variables and deferred promise
+                var deferred = $q.defer(),
+                    service,
+
+                    // google maps request object
+                    request = {
+                        origins: [oA, oB],
                         destinations: [d],
                         travelMode: google.maps.TravelMode.DRIVING,
                         avoidHighways: false,
                         avoidTolls: false,
                         unitSystem: google.maps.UnitSystem.IMPERIAL
                     };
-                
-                // Callback for the gMaps Distance Matrix Service
+
+                // Distance Matrix Service callback
+                // @params  [object]   results   [gMaps distance matrix object]
+                // @params  [string]   status    [gMaps response status code]
+                // @returns [object]   deferred.resolve()
                 function callback(results, status) {
-                    if (status === google.maps.DistanceMatrixStatus.OK || status === google.maps.DistanceMatrixStatus.ZERO_RESULTS) {
+                    if (status === 'OK') {
                         $rootScope.$apply(function () {
                             return deferred.resolve(results);
                         });
@@ -52,16 +61,11 @@
                         });
                     }
                 }
-                
+
                 service = new google.maps.DistanceMatrixService();
-                
-                // call service, pass in request and callback from above
                 service.getDistanceMatrix(request, callback);
-                
-                // return what service gives us
                 return deferred.promise;
             };
-            
         }]);
-    
+
 }());

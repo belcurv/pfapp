@@ -3,7 +3,7 @@
     
     angular.module('pfapp')
     
-        .controller('pfappController', ['pfactory', 'LS', function (pfactory, LS) {
+        .controller('fireCalcCtrl', ['pfactory', 'LS', function (pfactory, LS) {
 
             var vm = this,
                 arr = [],

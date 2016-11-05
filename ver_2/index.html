@@ -15,21 +15,32 @@
     <link rel="stylesheet" href="css/style.css" />
 
     <!-- =========================== JAVASCRIPT =========================== -->
+    <!-- third party -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
     <script src="https://code.angularjs.org/1.5.5/angular-route.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk3_2hquoP_fY3MCZ5yYZ9KzHa8Zcz2BU"></script>
-        
-    <script src="js/pfapp.js"></script>
-    <script src="js/pfapp-alert-message.dir.js"></script>
-    <script src="js/pfapp-routes.js"></script>
-    <script src="js/pfapp-header.dir.js"></script>
-    <script src="js/pfapp-footer.dir.js"></script>
-    <script src="js/pfapp.ctrl.js"></script>
-    <script src="js/pfapp-math.fac.js"></script>
-    <script src="js/pfapp-storage.fac.js"></script>
-    <script src="js/pfapp-storage.ctrl.js"></script>
-    <script src="js/pfapp-commute-calc.ctrl.js"></script>
-    <script src="js/gmaps-dist-matrix.js"></script>
+
+    <!-- modules -->
+    <script src="modules/pfapp.js"></script>
+    <script src="modules/gmaps-dist-matrix.js"></script>
+    
+    <!-- routes -->
+    <script src="routes/pfapp-routes.js"></script>
+    
+    <!-- general services -->
+    <script src="services/pfapp-math.fac.js"></script>
+    <script src="services/pfapp-storage.fac.js"></script>
+    
+    <!-- general directives -->
+    <script src="directives/pfapp-alert-message.dir.js"></script>
+    
+    <!-- features -->
+    <script src="features/header/header.dir.js"></script>
+    <script src="features/footer/footer.dir.js"></script>
+    <script src="features/fire-calc/fire-calc.ctrl.js"></script>
+    <script src="features/net-worth/net-worth.ctrl.js"></script>
+    <script src="features/commute-calc/commute-calc.ctrl.js"></script>
+    <script src="features/commute-calc/commute-calc-math.fac.js"></script>
 </head>
 
 <body ng-cloak>

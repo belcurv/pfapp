@@ -63,7 +63,7 @@ alert-message {
 }
 
 .container {
-    max-width: 1024px;
+    max-width: 1080px;
     margin: 0 auto;
     padding: 0 1em;
     height: 100%;
@@ -161,7 +161,7 @@ article {
     margin-top: 54px;
     
     /* limit main content width and center */
-    max-width: 1024px;
+    max-width: 1080px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -311,6 +311,10 @@ footer {
     cursor: pointer;
 }
 
+.inputButton:hover {
+    background-color: rgb(95, 158, 160);
+}
+
 .footer-credit {
     display: inline-block;
     margin: .25em;
@@ -345,7 +349,7 @@ footer a:hover {
     }
     
     table {
-        font-size: inherit;
+/*        font-size: inherit;*/
     }
     
     td {

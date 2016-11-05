@@ -3,7 +3,7 @@
     
     angular.module('pfapp')
     
-        .controller('pfappStorageController', ['LS', function (LS) {
+        .controller('netWorthController', ['LS', function (LS) {
 
             var vm = this;
 
