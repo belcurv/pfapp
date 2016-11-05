@@ -10,6 +10,7 @@
                 scope: {
                     origin: '@',
                     destination: '@',
+                    mileagerate: '=',
                     array: '='
                 },
                 templateUrl: 'features/commute-calc/commute-calc-table.tpl.html'

@@ -14,6 +14,14 @@
                 mileageRate: 0.54,
                 hourlyRate: 20,
                 roundTripFlag: 2, // 1 = 1-way, 2 = round-trip
+                milesPerGallon: 30,
+                gasPrice: 2.139,
+                maintenance: 0.0481,
+                tires: 0.007,
+                insurance: 1169,
+                licenseRegTaxes: 502,
+                depreciation: 2368,
+                finance: 481,
                 commuteArr: [],
                 responseObj: {}
             };
@@ -34,17 +42,37 @@
 
                         // init local variables
                         var milesA, milesB, hoursA, hoursB,
-                            totalCostCommuteA, totalCostCommuteB;
-
+                            totalCostCommuteA, totalCostCommuteB,
+                            
+                            // per mile operating costs
+                            operatingCosts = (vm.myObj.gasPrice / vm.myObj.milesPerGallon) + vm.myObj.maintenance + vm.myObj.tires,
+                            
+                            // annual operating costs
+                            annualOwnershipCosts = vm.myObj.insurance + vm.myObj.licenseRegTaxes + vm.myObj.depreciation + vm.myObj.finance,
+                            
+                            // placeholder for calculated rate
+                            mileageRateA,
+                            mileageRateB;
+                    
                         // capture converted distance & duration
                         milesA = commuteMath.metersToMiles(response.rows[0].elements[0].distance.value);
                         milesB = commuteMath.metersToMiles(response.rows[1].elements[0].distance.value);
                         hoursA = commuteMath.secondsToHours(response.rows[0].elements[0].duration.value);
                         hoursB = commuteMath.secondsToHours(response.rows[1].elements[0].duration.value);
-
+                    
+                        // calculate per mile rates
+                        // = oper cost per mile + (annual ownership costs / annual miles)
+                        // annual miles = commute miles * 2 ways * 260 work-days per year
+                        mileageRateA = operatingCosts + (annualOwnershipCosts / (milesA * 520));
+                        mileageRateB = operatingCosts + (annualOwnershipCosts / (milesB * 520));
+                    
+                        // bind above per-mile rates to model
+                        vm.myObj.mileageRateA = mileageRateA;
+                        vm.myObj.mileageRateB = mileageRateB;
+                            
                         // determine which commute is cheaper and bind to model
-                        totalCostCommuteA = commuteMath.oneOriginTotalCost(milesA, hoursA, vm.myObj.mileageRate, vm.myObj.hourlyRate);
-                        totalCostCommuteB = commuteMath.oneOriginTotalCost(milesB, hoursB, vm.myObj.mileageRate, vm.myObj.hourlyRate);
+                        totalCostCommuteA = commuteMath.oneOriginTotalCost(milesA, hoursA, mileageRateA, vm.myObj.hourlyRate);
+                        totalCostCommuteB = commuteMath.oneOriginTotalCost(milesB, hoursB, mileageRateB, vm.myObj.hourlyRate);
                         if (totalCostCommuteA < totalCostCommuteB) {
                             // A is cheaper
                             vm.myObj.closerOrigin = {
