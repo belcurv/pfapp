@@ -20,7 +20,7 @@
         </div>
 
         <div ng-if="inputsHelpToggle" class="help">
-            <p><strong>What is this?</strong>  This calculator compares the total costs of driving from two origin address (two potential apartments, for example) and a destination (your job).  Upon hitting 'Calculate', the calculator will return a little bit of analysis and tables of each commutes costs.</p>
+            <p><strong>What is this?</strong> This calculator compares the total costs of driving from two origin address (two potential apartments, for example) and a destination (your job). Upon hitting 'Calculate', the calculator will return a little bit of analysis and tables of each commutes costs.</p>
 
             <ul>
                 <li>The input addresses can be as little as ZIP codes, but you will get more accurate measurements from more detailed inputs.</li>
@@ -77,7 +77,7 @@
 <section ng-if="vm.myObj.responseObject">
     <div class="content-box">
         <h4>Analysis</h4>
-        <p>Given the two origin addresses input above, commuting from {{ vm.myObj.closerOrigin.address }} will save you approximately {{ vm.myObj.costDiff | currency }} per month. This means that, in theory, you should be willing to pay up to {{ vm.myObj.costDiff | currency }} more per month (rent, mortgage, property taxes, etc.) to live at {{ vm.myObj.closerOrigin.id }}.</p>
+        <p>Given the two origin addresses input above, commuting from {{ vm.myObj.closerOrigin.address }} will save you approximately {{ vm.myObj.costDiff | currency }} per month. You should be willing to pay up to {{ vm.myObj.costDiff | currency }} more per month (rent, mortgage, utilities, property taxes, etc.) to live at {{ vm.myObj.closerOrigin.id }}.</p>
     </div>
 </section>
 
@@ -88,71 +88,25 @@
         <!-- TABLE A -->
         <div class="Grid-cell">
             <div class="content-box">
-                <p>Round-trip from {{vm.myObj.originA}} to {{vm.myObj.destination}}:</p>
+                <commute-calc-table
+                    origin="{{vm.myObj.originA}}"
+                    destination="{{vm.myObj.destination}}"
+                    array="vm.myObj.commuteArrA">
+                </commute-calc-table>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Per</th>
-                            <th>Duration
-                                <br />(hours)</th>
-                            <th>Distance
-                                <br />(miles)</th>
-                            <th>Auto
-                                <br />Costs</th>
-                            <th>Time
-                                <br />Costs</th>
-                            <th>Total
-                                <br />Costs</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="n in vm.myObj.commuteArrA">
-                            <td>{{ n.per }}</td>
-                            <td>{{ n.time | number:2 }} </td>
-                            <td>{{ n.dist | number:2 }} </td>
-                            <td>{{ n.carCost | currency }}</td>
-                            <td>{{ n.timeCost | currency }}</td>
-                            <td>{{ n.carCost + n.timeCost | currency }}</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
 
-        <!-- TABEL B -->
+        <!-- TABLE B -->
         <div class="Grid-cell">
             <div class="content-box">
-                <p>Round-trip from {{vm.myObj.originB}} to {{vm.myObj.destination}}:</p>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Per</th>
-                            <th>Duration
-                                <br />(hours)</th>
-                            <th>Distance
-                                <br />(miles)</th>
-                            <th>Auto
-                                <br />Costs</th>
-                            <th>Time
-                                <br />Costs</th>
-                            <th>Total
-                                <br />Costs</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="n in vm.myObj.commuteArrB">
-                            <td>{{ n.per }}</td>
-                            <td>{{ n.time | number:2 }} </td>
-                            <td>{{ n.dist | number:2 }} </td>
-                            <td>{{ n.carCost | currency }}</td>
-                            <td>{{ n.timeCost | currency }}</td>
-                            <td>{{ n.carCost + n.timeCost | currency }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <commute-calc-table
+                    origin="{{vm.myObj.originB}}"
+                    destination="{{vm.myObj.destination}}"
+                    array="vm.myObj.commuteArrB">
+                </commute-calc-table>
             </div>
         </div>
+        
     </div>
 </section>

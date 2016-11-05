@@ -1,0 +1,30 @@
+<p>Round-trip stats from {{origin}} to {{destination}}</p>
+<hr />
+
+<table>
+    <thead>
+        <tr>
+            <th>Per</th>
+            <th>Duration
+                <br />(hours)</th>
+            <th>Distance
+                <br />(miles)</th>
+            <th>Auto
+                <br />Costs</th>
+            <th>Time
+                <br />Costs</th>
+            <th>Total
+                <br />Costs</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="n in array">
+            <td>{{ n.per }}</td>
+            <td>{{ n.time | number:2 }} </td>
+            <td>{{ n.dist | number:2 }} </td>
+            <td>{{ n.carCost | currency }}</td>
+            <td>{{ n.timeCost | currency }}</td>
+            <td>{{ n.carCost + n.timeCost | currency }}</td>
+        </tr>
+    </tbody>
+</table>
