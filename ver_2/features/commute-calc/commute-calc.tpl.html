@@ -1,11 +1,24 @@
-<!-- ======= TITLE SECTION ======= -->
+<!-- ======================= TITLE SECTION ======================== -->
 <section>
     <div class="content-box">
-        <h1>Commute Cost Calculator</h1>
+        <div class="Grid">
+            
+            <div class="Grid-cell">
+                <h1>Commute Calculator</h1>
+            </div>
+            
+            <div>
+                <h1 title="Save" class="icon-button" ng-click="vm.fcMethods.saveState()">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                </h1>
+            </div>
+            
+        </div>
     </div>
 </section>
+<!-- ===================== END TITLE SECTION ====================== -->
 
-<!-- ======= INPUTS SECTION ======= -->
+<!-- ====================== INPUTS SECTION ======================== -->
 <section>
     <div class="content-box">
         <div class="Grid">
@@ -13,9 +26,10 @@
                 <h4>INPUTS</h4>
             </div>
             <div>
+                <h4><input type="checkbox" name="toggle-advanced" ng-model="vm.myObj.advancedToggle">Advanced</h4>
                 <h4 title="Help" class="icon-button" ng-click="inputsHelpToggle = !inputsHelpToggle">
-                        <span class="glyphicon glyphicon-question-sign"></span>
-                    </h4>
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                </h4>
             </div>
         </div>
 
@@ -34,123 +48,185 @@
             </ul>
         </div>
 
-
-        <p>Addresses:</p>
-        <!-- Addresses -->
-        <div class="Grid Grid--gutters Grid--full">
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Origin A</span>
-                <input class="InputAddOn-field" tabindex="1" type="text" ng-model="vm.myObj.originA">
-            </div>
-
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Origin B</span>
-                <input class="InputAddOn-field" tabindex="2" type="text" ng-model="vm.myObj.originB">
-            </div>
-
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Destination</span>
-                <input class="InputAddOn-field" tabindex="3" type="text" ng-model="vm.myObj.destination">
-            </div>
-        </div>
-        
-        <p>Operating Costs Per Mile</p>
-        <div class="Grid Grid--gutters Grid--full med-Grid--1of3">
-            <!-- gas -->
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Gas Price ($)</span>
-                <input class="InputAddOn-field" tabindex="4" type="number" min="0.01" max="10.00" step="0.01" ng-model="vm.myObj.gasPrice">
-            </div>
-              
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Miles Per Gallon</span>
-                <input class="InputAddOn-field" tabindex="5" type="number" min="1" max="100" step="1" ng-model="vm.myObj.milesPerGallon">
-            </div>
-              
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Gas Cost / Mile</span>
-                <span class="InputAddOn-field">{{ vm.myObj.gasPrice / vm.myObj.milesPerGallon | currency:'$':4 }}</span>
-            </div>
- 
-            <!-- maint -->
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">General Maintenance ($)</span>
-                <input class="InputAddOn-field" tabindex="6" type="number" min="0.01" max="10.00" step="0.0001" ng-model="vm.myObj.maintenance">
+        <!-- ========= basic inputs ========= -->
+        <div ng-if="!vm.myObj.advancedToggle">
+            <!-- Addresses -->
+            <p>Addresses:</p>
+            <div class="Grid Grid--gutters Grid--full">
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Origin A</span>
+                    <input type="text" class="InputAddOn-field" tabindex="1" ng-model="vm.myObj.originA">
+                </div>
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Origin B</span>
+                    <input type="text" class="InputAddOn-field" tabindex="2" ng-model="vm.myObj.originB">
+                </div>
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Destination</span>
+                    <input type="text" class="InputAddOn-field" tabindex="3" ng-model="vm.myObj.destination">
+                </div>
             </div>
             
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Tires ($)</span>
-                <input class="InputAddOn-field" tabindex="7" type="number" min="0.01" max="10.00" step="0.0001" ng-model="vm.myObj.tires">
-            </div>
-        </div>
-        
-        <!-- total operating cost per mile -->
-        <div class="Grid Grid--gutters Grid--full med-Grid--1of2">
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Total Operating Cost Per Mile</span>
-                <span class="InputAddOn-field">
-                    {{ (vm.myObj.gasPrice / vm.myObj.milesPerGallon) + vm.myObj.maintenance + vm.myObj.tires | currency:"$":4 }}                    
-                </span>
-            </div>
-        </div>
-
-        <p>Ownership Costs Per Year</p>
-        <div class="Grid Grid--gutters Grid--full med-Grid--1of2">
-            <!-- insurance -->
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Insurance ($)</span>
-                <input class="InputAddOn-field" tabindex="8" type="number" min="0" max="10000.00" step="1" ng-model="vm.myObj.insurance">
-            </div>
-            
-            <!-- license, registration, taxes -->
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">License, Registration, Taxes ($)</span>
-                <input class="InputAddOn-field" tabindex="9" type="number" min="0" max="10000.00" step="1" ng-model="vm.myObj.licenseRegTaxes">
-            </div>
-            
-            <!-- depreciation -->
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Depreciation (10k miles / yr) ($)</span>
-                <input class="InputAddOn-field" tabindex="10" type="number" min="0" max="50000.00" step="1" ng-model="vm.myObj.depreciation">
-            </div>
-            
-            <!-- finance charge -->
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Finance Charge ($)</span>
-                <input class="InputAddOn-field" tabindex="11" type="number" min="0" max="50000.00" step="1" ng-model="vm.myObj.finance">
-            </div>
-        </div>
-        
-        <!-- total ownership cost -->
-        <div class="Grid Grid--gutters Grid--full med-Grid--1of2">            
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Total Ownership Cost</span>
-                <span class="InputAddOn-field">
-                    {{ (vm.myObj.insurance + vm.myObj.licenseRegTaxes + vm.myObj.depreciation + vm.myObj.finance) / 8760 | currency:"$":4 }} / hour ({{vm.myObj.insurance + vm.myObj.licenseRegTaxes + vm.myObj.depreciation + vm.myObj.finance | currency:"$":2}} / year)
-                </span>
-            </div>
-        </div>
-
-         
-        <hr />
-        <div class="Grid Grid--gutters Grid--full med-Grid--1of2">
-            
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Value of Your Time ($ per hour)</span>
-                <input class="InputAddOn-field" tabindex="12" type="number" min="0" max="500.00" step="0.5" ng-model="vm.myObj.hourlyRate">
-            </div>
-            
-            <div class="Grid-cell InputAddOn">
-                <button class="inputButton" tabindex="13" type="submit" ng-click="vm.calcCommute(vm.myObj.originA, vm.myObj.originB, vm.myObj.destination)">
+            <!-- rates -->
+            <p>Rates:</p>
+            <div class="Grid Grid--gutters Grid--full med-Grid--1of2">
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Mileage Rate ($)</span>
+                    <input class="InputAddOn-field" type="number" tabindex="4"
+                        min="0.01" max="10.00" step="0.01"
+                        ng-model="vm.myObj.mileageRate">
+                </div>
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Hourly Rate ($)</span>
+                    <input class="InputAddOn-field" tabindex="5" min="0" max="100.00" step="0.01"
+                        ng-model="vm.myObj.hourlyRate" type="number">
+                </div>
+                <div class="Grid-cell InputAddOn">
+                    <button class="inputButton" tabindex="6" type="submit"
+                        ng-click="vm.calcCommute(vm.myObj.originA, vm.myObj.originB, vm.myObj.destination)">
                     Calculate
-                </button>
+                    </button>
+                </div>
+                <div class="Grid-cell InputAddOn">
+                    <button class="inputButton" tabindex="14" type="submit" ng-click="vm.myObj.responseObject = '' ">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- ========= end basic inputs ========= -->
+        
+        
+        <!-- ========= advanged inputs ========= -->
+        <div ng-if="vm.myObj.advancedToggle">
+            
+            <!-- Addresses -->
+            <p>Addresses:</p>
+            <div class="Grid Grid--gutters Grid--full">
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Origin A</span>
+                    <input class="InputAddOn-field" tabindex="1" type="text" ng-model="vm.myObj.originA">
+                </div>
+
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Origin B</span>
+                    <input class="InputAddOn-field" tabindex="2" type="text" ng-model="vm.myObj.originB">
+                </div>
+
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Destination</span>
+                    <input class="InputAddOn-field" tabindex="3" type="text" ng-model="vm.myObj.destination">
+                </div>
             </div>
 
+            <p>Operating Costs Per Mile</p>
+            <div class="Grid Grid--gutters Grid--full med-Grid--1of3">
+                <!-- gas -->
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Gas Price ($)</span>
+                    <input class="InputAddOn-field" tabindex="4" type="number" min="0.01" max="10.00" step="0.01" ng-model="vm.myObj.gasPrice">
+                </div>
+
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Miles Per Gallon</span>
+                    <input class="InputAddOn-field" tabindex="5" type="number" min="1" max="100" step="1" ng-model="vm.myObj.milesPerGallon">
+                </div>
+
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Gas Cost / Mile</span>
+                    <span class="InputAddOn-field">{{ vm.myObj.gasPrice / vm.myObj.milesPerGallon | currency:'$':4 }}</span>
+                </div>
+
+                <!-- maint -->
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">General Maintenance ($)</span>
+                    <input class="InputAddOn-field" tabindex="6" type="number" min="0.01" max="10.00" step="0.0001" ng-model="vm.myObj.maintenance">
+                </div>
+
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Tires ($)</span>
+                    <input class="InputAddOn-field" tabindex="7" type="number" min="0.001" max="10.00" step="0.0001" ng-model="vm.myObj.tires">
+                </div>
+            </div>
+
+            <!-- total operating cost per mile -->
+            <div class="Grid Grid--gutters Grid--full med-Grid--1of2">
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Total Operating Cost Per Mile</span>
+                    <span class="InputAddOn-field">
+                        {{ (vm.myObj.gasPrice / vm.myObj.milesPerGallon) + vm.myObj.maintenance + vm.myObj.tires | currency:"$":4 }}                    
+                    </span>
+                </div>
+            </div>
+
+            <p>Ownership Costs Per Year</p>
+            <div class="Grid Grid--gutters Grid--full med-Grid--1of2">
+                <!-- insurance -->
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Insurance ($)</span>
+                    <input class="InputAddOn-field" tabindex="8" type="number" min="0" max="10000.00" step="1" ng-model="vm.myObj.insurance">
+                </div>
+
+                <!-- license, registration, taxes -->
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">License, Registration, Taxes ($)</span>
+                    <input class="InputAddOn-field" tabindex="9" type="number" min="0" max="10000.00" step="1" ng-model="vm.myObj.licenseRegTaxes">
+                </div>
+
+                <!-- depreciation -->
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Depreciation (10k miles / yr) ($)</span>
+                    <input class="InputAddOn-field" tabindex="10" type="number" min="0" max="50000.00" step="1" ng-model="vm.myObj.depreciation">
+                </div>
+
+                <!-- finance charge -->
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Finance Charge ($)</span>
+                    <input class="InputAddOn-field" tabindex="11" type="number" min="0" max="50000.00" step="1" ng-model="vm.myObj.finance">
+                </div>
+            </div>
+
+            <!-- total ownership cost -->
+            <div class="Grid Grid--gutters Grid--full med-Grid--1of2">            
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Total Ownership Cost</span>
+                    <span class="InputAddOn-field">
+                        {{ (vm.myObj.insurance + vm.myObj.licenseRegTaxes + vm.myObj.depreciation + vm.myObj.finance) / 8760 | currency:"$":4 }} / hour ({{vm.myObj.insurance + vm.myObj.licenseRegTaxes + vm.myObj.depreciation + vm.myObj.finance | currency:"$":2}} / year)
+                    </span>
+                </div>
+            </div>
+        
+            <hr />
+
+            <div class="Grid Grid--gutters Grid--full">
+
+                <div class="Grid-cell InputAddOn">
+                    <span class="InputAddOn-item">Value of Your Time ($ per hour)</span>
+                    <input class="InputAddOn-field" tabindex="12" type="number" min="0" max="500.00" step="0.5" ng-model="vm.myObj.hourlyRate">
+                </div>
+            </div>
+                
+            <div class="Grid Grid--gutters Grid--full med-Grid--1of2">
+                <div class="Grid-cell InputAddOn">
+                    <button class="inputButton" tabindex="13" type="submit" ng-click="vm.calcCommute(vm.myObj.originA, vm.myObj.originB, vm.myObj.destination)">
+                        Calculate
+                    </button>
+                </div>
+                
+                <div class="Grid-cell InputAddOn">
+                    <button class="inputButton" tabindex="14" type="submit" ng-click="vm.myObj.responseObject = '' ">
+                        Reset
+                    </button>
+                </div>
+
+            </div>
         </div>
+        <!-- ========= end advanced inputs ========= -->
     </div>
 </section>
+<!-- ==================== END INPUTS SECTION ====================== -->
 
-<!-- ======= RESULTS SECTION ======= -->
+<!-- ====================== RESULTS SECTION ======================= -->
 <section ng-if="vm.myObj.responseObject">
     <div class="content-box">
         <h4>Analysis</h4>
@@ -158,10 +234,9 @@
     </div>
 </section>
 
+<!-- TABLES -->
 <section ng-if="vm.myObj.responseObject">
-    <!-- TABLES -->
     <div class="Grid Grid--gutters Grid--full small-Grid--1of2">
-
         <!-- TABLE A -->
         <div class="Grid-cell">
             <div class="content-box">
@@ -174,7 +249,6 @@
 
             </div>
         </div>
-
         <!-- TABLE B -->
         <div class="Grid-cell">
             <div class="content-box">
@@ -189,3 +263,4 @@
         
     </div>
 </section>
+<!-- ==================== END RESULTS SECTION ===================== -->

@@ -47,6 +47,7 @@ header h4,
 article,
 input,
 footer,
+hr,
 #navIcons,
 #navIcons a,
 .content-box,
@@ -139,7 +140,8 @@ header h1:hover,
 }
 
 #navIcons a:active,
-header h4:active {
+header h4:active,
+header h1:active{
     color: white;
 }
 
@@ -154,7 +156,7 @@ article {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    padding: 0.5em;
+    padding: 0.25em;
     width: 100%;
     
     /* push article beneath header */
@@ -174,7 +176,7 @@ hr {
     line-height:0;
     page-break-after:always;
     width: 100%;
-    margin-bottom: 0.5em;
+    margin-bottom: 1em;
 }
 
 table {
@@ -243,12 +245,16 @@ section {
 
 h4 {
     display: inline-block;
-    line-height: 1.1em;
+    height: 1.1em;
     margin: 0;
     padding: 0.5em 0 0.5em 0;
     color: #404040;
     font-size: 18px;
     font-weight: 500;
+}
+
+a {
+    color: inherit;
 }
 
 .content-box h1 {
@@ -380,9 +386,12 @@ footer a:hover {
         padding: 15px .5em;
     }
     
-    article,
-    section{
-        padding: 0.5em 0;
+    article {
+        padding: 0 0 0.5em 0;
+    }
+    
+    section {
+        padding: 0.5em 0 0 0;
     }
     
     .container {

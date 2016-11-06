@@ -1,4 +1,4 @@
-<!-- section title -->
+<!-- ===================== TITLE SECTION ====================== -->
 <section>
     <div class="content-box">
         <div class="Grid">
@@ -17,97 +17,97 @@
         
     </div>
 </section>
+<!-- =================== END TITLE SECTION ==================== -->
 
-<!-- ============== INPUTS ============== -->
-<div class="Grid Grid--full">
+<!-- ===================== INPUTS SECTION ===================== -->
+<section class=Grid-cell>
+    <div class="content-box">
 
-    <!-- ============== INPUTS SECTION ============== -->
-    <section class="Grid-cell">
-        <div class="content-box">
-
-            <div class="Grid">
-                <div class="Grid-cell">
-                    <h4>INPUTS</h4>
-                </div>
-                <div>
-                    <h4 title="Help" class="icon-button" ng-click="inputHelpToggle = !inputHelpToggle">
-                        <span class="glyphicon glyphicon-question-sign"></span>
-                    </h4>
-                </div>
+        <!-- inputs title -->
+        <div class="Grid">
+            <div class="Grid-cell">
+                <h4>INPUTS</h4>
             </div>
-
-            <div ng-if="inputHelpToggle" class="help">
-                <p>The purpose of this section is to input your personal data for use in the calculations below.</p>
-
-                <ul>
-                    <li><em>FIRE</em> = Financial Independence / Retire Early. <em>FIRE Age</em> is the age you expect to retire.</li>
-                    <li><em>Annual expenses</em> = your expected annual household expenses on year 1 of retirement. </li>
-                    <li><em>Withdrawal rate</em> = your personal safe withdrawal rate, as a persentage (eg. "4" = 4%)</li>
-                    <li><em>Rate of Return</em> = The average return on investment you expect on your retirement savings, as a persentage (eg. "7" = 7%).</li>
-                    <li><em>Annual Savings</em> = Your total annual retirement savings.</li>
-                    <li><em>Monthly Savings</em> = Calculated from your annual contributions.</li>
-                </ul>
+            <div>
+                <h4 title="Help" class="icon-button" ng-click="inputHelpToggle = !inputHelpToggle">
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                </h4>
             </div>
-
-            <div class="Grid Grid--gutters Grid--full med-Grid--1of2 large-Grid--1of3">
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Birth Date</span>
-                    <input class="InputAddOn-field" tabindex="1" type="date" id="birthDate" ng-model="vm.state.birthDate">
-                </div>
-
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">FIRE Age</span>
-                    <input class="InputAddOn-field" tabindex="2" type="number" min="1" step="1" id="retirementAge" ng-model="vm.state.retirementAge">
-                </div>
-
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Annual Expenses ($)</span>
-                    <input class="InputAddOn-field" tabindex="3" type="number" min="1.00" step="1" id="annualExpenses" ng-model="vm.state.annualExpenses">
-                </div>
-
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Withdrawal Rate (%)</span>
-                    <input class="InputAddOn-field" tabindex="4" type="number" min="0.50" max="10.00" step="0.1" id="withdrawalRate" ng-model="vm.state.withdrawalRate">
-                </div>
-
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Total Existing Savings ($)</span>
-                    <input class="InputAddOn-field" tabindex="5" type="number" min="0.00" step="0.01" id="FVpv" ng-model="vm.state.FVpv">
-                </div>
-
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Rate of Return (%)</span>
-                    <input class="InputAddOn-field" tabindex="6" id="FVrate" type="number" min="0.05" max="20" step="0.05" ng-model="vm.state.FVrate">
-                </div>
-
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Annual Savings ($)</span>
-                    <input class="InputAddOn-field" tabindex="7" type="number" min="0.00" step="0.01" id="FVpmt" ng-model="vm.state.FVpmt">
-                </div>
-
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Monthly Savings</span>
-                    <span class="InputAddOn-field">
-                        {{ (vm.state.FVpmt / 12) | currency:"$" }}
-                    </span>
-                </div>
-            </div>
-            
-            <!-- Advise source of input data -->
-            <alert-message message="{{vm.fireCalcDataSource}}"></alert-message>
-            
         </div>
-    </section>  <!-- ============== END INPUTS SECTION ============== -->
-</div>
-<!-- ============== END INPUTS ============== -->
 
-<!-- ============== OUTPUTS ============== -->
+        <!-- help -->
+        <div ng-if="inputHelpToggle" class="help">
+            <p>The purpose of this section is to input your personal data for use in the calculations below.</p>
+
+            <ul>
+                <li><em>FIRE</em> = Financial Independence / Retire Early. <em>FIRE Age</em> is the age you expect to retire.</li>
+                <li><em>Annual expenses</em> = your expected annual household expenses on year 1 of retirement. </li>
+                <li><em>Withdrawal rate</em> = your personal safe withdrawal rate, as a persentage (eg. "4" = 4%)</li>
+                <li><em>Rate of Return</em> = The average return on investment you expect on your retirement savings, as a persentage (eg. "7" = 7%).</li>
+                <li><em>Annual Savings</em> = Your total annual retirement savings.</li>
+                <li><em>Monthly Savings</em> = Calculated from your annual contributions.</li>
+            </ul>
+        </div>
+
+        <!-- Inputs -->
+        <div class="Grid Grid--gutters Grid--full med-Grid--1of2 large-Grid--1of3">
+            <div class="Grid-cell InputAddOn">
+                <span class="InputAddOn-item">Birth Date</span>
+                <input class="InputAddOn-field" tabindex="1" type="date" id="birthDate" ng-model="vm.state.birthDate">
+            </div>
+
+            <div class="Grid-cell InputAddOn">
+                <span class="InputAddOn-item">FIRE Age</span>
+                <input class="InputAddOn-field" tabindex="2" type="number" min="1" step="1" id="retirementAge" ng-model="vm.state.retirementAge">
+            </div>
+
+            <div class="Grid-cell InputAddOn">
+                <span class="InputAddOn-item">Annual Expenses ($)</span>
+                <input class="InputAddOn-field" tabindex="3" type="number" min="1.00" step="1" id="annualExpenses" ng-model="vm.state.annualExpenses">
+            </div>
+
+            <div class="Grid-cell InputAddOn">
+                <span class="InputAddOn-item">Withdrawal Rate (%)</span>
+                <input class="InputAddOn-field" tabindex="4" type="number" min="0.50" max="10.00" step="0.1" id="withdrawalRate" ng-model="vm.state.withdrawalRate">
+            </div>
+
+            <div class="Grid-cell InputAddOn">
+                <span class="InputAddOn-item">Total Existing Savings ($)</span>
+                <input class="InputAddOn-field" tabindex="5" type="number" min="0.00" step="0.01" id="FVpv" ng-model="vm.state.FVpv">
+            </div>
+
+            <div class="Grid-cell InputAddOn">
+                <span class="InputAddOn-item">Rate of Return (%)</span>
+                <input class="InputAddOn-field" tabindex="6" id="FVrate" type="number" min="0.05" max="20" step="0.05" ng-model="vm.state.FVrate">
+            </div>
+
+            <div class="Grid-cell InputAddOn">
+                <span class="InputAddOn-item">Annual Savings ($)</span>
+                <input class="InputAddOn-field" tabindex="7" type="number" min="0.00" step="0.01" id="FVpmt" ng-model="vm.state.FVpmt">
+            </div>
+
+            <div class="Grid-cell InputAddOn">
+                <span class="InputAddOn-item">Monthly Savings</span>
+                <span class="InputAddOn-field">
+                    {{ (vm.state.FVpmt / 12) | currency:"$" }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Advise source of input data -->
+        <alert-message message="{{vm.fireCalcDataSource}}"></alert-message>
+
+    </div>
+</section>
+<!-- ======================= END INPUTS ======================= -->
+
+<!-- ========================= OUTPUTS ======================== -->
 <div class="Grid Grid--full large-Grid--1of2">
-
-    <!-- ============== RESULTS SECTION ============== -->
-    <section class="Grid-cell">
+    <!-- ================== RESULTS SECTION =================== -->
+    <section class=Grid-cell>
         <div class="content-box">
 
+            <!-- results title -->
             <div class="Grid">
                 <div class="Grid-cell">
                     <h4>RESULTS</h4>
@@ -119,6 +119,7 @@
                 </div>
             </div>
 
+            <!-- help -->
             <div ng-if="resultsHelpToggle" class="help">
                 <p>These results are based on the number enterred above.</p>
 
@@ -130,9 +131,10 @@
                 </ul>
             </div>
 
+            <!-- results -->
             <div class="Grid Grid--gutters Grid--full med-Grid--1of2 large-Grid--full">
                 <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Current Age</span>
+                    <span class="InputAddOn-item">Calculated Age</span>
                     <span class="InputAddOn-field">
                        {{ vm.fcMethods.calcAge(vm.state.birthDate) }}
                     </span>
@@ -170,12 +172,13 @@
 
         </div>
     </section>
-    <!-- ============== END RESULTS SECTION ============== -->
+    <!-- ================ END RESULTS SECTION ================= -->
 
-    <!-- ============== FUTURE VALUE SECTION ============== -->   
-    <section class="Grid-cell">
+    <!-- ================ FUTURE VALUE SECTION ================ -->   
+    <section class=Grid-cell>
         <div class="content-box">
 
+            <!-- section title -->
             <div class="Grid">
                 <div class="Grid-cell">
                     <h4>FUTURE VALUE</h4>
@@ -187,10 +190,12 @@
                 </div>
             </div>
 
+            <!-- help -->
             <div ng-if="fvHelpToggle" class="help">
                 <p>This is the calculated future value of your current savings, given your expected average rate of return, continued annual savings and years to FIRE.</p>
             </div>
 
+            <!-- future value section -->
             <div class="Grid Grid--gutters Grid--full med-Grid--1of2 large-Grid--full">
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Future Value</span>
@@ -200,10 +205,10 @@
                 </span>
                 </div>
             </div>
+
             <p>Given your initial savings of {{vm.state.FVpv | currency}}, plus annual contributions of {{vm.state.FVpmt | currency }}, earning {{100 * vm.state.FVrate / 100}}%, your savings will total {{ vm.fcMethods.calcFutureValue(vm.state.FVrate / 100, vm.state.FVpmt, vm.state.FVpv, (vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate)) ) | currency:"$"}} after {{ vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate) }} years.</p>
         </div>
     </section>
     <!-- ============== END FUTURE VALUE SECTION ============== -->
-
 </div>
-<!-- ============== END OUTPUTS ============== -->
+<!-- ====================== END OUTPUTS ======================= -->

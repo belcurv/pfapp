@@ -5,7 +5,7 @@
 
         .module('pfapp')
 
-        .factory('commuteMath', [function () {
+        .factory('ccMath', [function () {
 
             // calculate total round-trip cost from one origin to destination
             // @params  [number] miles       [one-way distance from origin to dest]
@@ -39,6 +39,30 @@
             function costDiff(costA, costB) {
                 return (260 / 12) * (Math.abs(costA - costB));
             }
+            
+            // calculate per-mile OPERATING costs
+            // @params  [number] gasPrice   [gas price per gallon]
+            // @params  [number] mpg        [fuel efficiency in miles per gallon]
+            // @params  [number] maint      [avg maintenance cost per mile]
+            // @params  [number] tires      [avg tire cost per mile]
+            // @returns [number]            [sum of per-mile OPERATING costs]
+            function perMileOperatingCosts(gasPrice, mpg, maint, tires) {
+                return (gasPrice / mpg) + maint + tires;
+            }
+            
+            // calculate per-mile OWNERSHIP costs
+            // @params  [number] insurance      [gas price per gallon]
+            // @params  [number] licenseRegTax  [fuel efficiency in miles per gallon]
+            // @params  [number] depreciation   [avg maintenance cost per mile]
+            // @params  [number] finance        [avg tire cost per mile]
+            // @params  [number] miles          [1-way commute miles]
+            // @returns [number]                [sum of per-mile OWNERSHIP costs]
+            function perMileOwnershipCosts(insurance, licenseRegTax, depreciation, finance, miles) {
+                var annualCosts = insurance + licenseRegTax + depreciation + finance,
+                    annualMiles = miles * 2 * 260;
+                return annualCosts / annualMiles;
+            }
+            
 
             // build array from distance and duration.
             // multiplier array elements are function of 260 week days per year.
@@ -75,6 +99,8 @@
                 metersToMiles: metersToMiles,
                 secondsToHours: secondsToHours,
                 costDiff: costDiff,
+                perMileOperatingCosts: perMileOperatingCosts,
+                perMileOwnershipCosts: perMileOwnershipCosts,
                 buildArray: buildArray
             };
         
