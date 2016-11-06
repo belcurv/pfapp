@@ -18,7 +18,7 @@
                 ];
             
             
-            // Load input data from either localStorage or defaults
+            // fetch input data from either localStorage or defaults
             function loadState() {
                 if (LS.getData('fire-calc-storage')) {
                     // when true;
@@ -31,22 +31,28 @@
                 }
             }
             
-
-            // call loadState, returns array
-            arr = loadState();
             
-            // state object represents the FireCalc inputs
-            vm.state = {
-                birthDate: new Date(arr[0]),
-                retirementAge: arr[1],
-                annualExpenses: arr[2],
-                withdrawalRate: arr[3],
-                FVpv: arr[4],
-                FVrate: arr[5],
-                FVpmt: arr[6],
-                requiredSavings: 0,
-                FVnper: 0
-            };
+            // bind input data to model
+            function setState() {
+                // call loadState, which returns array
+                var arr = loadState();
+                // bind
+                vm.state = {
+                    birthDate: new Date(arr[0]),
+                    retirementAge: arr[1],
+                    annualExpenses: arr[2],
+                    withdrawalRate: arr[3],
+                    FVpv: arr[4],
+                    FVrate: arr[5],
+                    FVpmt: arr[6],
+                    requiredSavings: 0,
+                    FVnper: 0
+                };
+            }
+            
+            // call on first hit
+            setState();
+
             
             // fcMethods object collects FireCalc utility methods
             vm.fcMethods = {
@@ -78,7 +84,10 @@
             
             // delete personal FIRE calc info from local storage
             function deleteData() {
-                 LS.deleteData('fire-calc-storage');
+                // delete personal fire calc data
+                LS.deleteData('fire-calc-storage');
+                // reset state to defaults
+                setState();
             };
             
         }]);

@@ -25,7 +25,7 @@
                 ];
 
             
-            // Load input data from either localStorage or defaults
+            // fetch input data from either localStorage or defaults
             function loadState() {
                 if (LS.getData('commute-storage')) {
                     // when vtrue;
@@ -38,29 +38,35 @@
                 }
             }
             
-            // call loadState, returns array
-            arr = loadState();
             
-            // state object represents the Commute Calc inputs
-            // populate state values using 'arr' index
-            vm.state = {
-                originA: arr[0],
-                originB: arr[1],
-                destination: arr[2],
-                mileageRate: arr[3],
-                hourlyRate: arr[4],
-                milesPerGallon: arr[5],
-                gasPrice: arr[6],
-                maintenance: arr[7],
-                tires: arr[8],
-                insurance: arr[9],
-                licenseRegTaxes: arr[10],
-                depreciation: arr[11],
-                finance: arr[12],
-                advancedToggle: arr[13],
-                roundTripFlag: 2
-            };
+            // bind input data to model
+            function setState() {
+                // call loadState, which returns array
+                var arr = loadState();
+                // bind
+                vm.state = {
+                    originA: arr[0],
+                    originB: arr[1],
+                    destination: arr[2],
+                    mileageRate: arr[3],
+                    hourlyRate: arr[4],
+                    milesPerGallon: arr[5],
+                    gasPrice: arr[6],
+                    maintenance: arr[7],
+                    tires: arr[8],
+                    insurance: arr[9],
+                    licenseRegTaxes: arr[10],
+                    depreciation: arr[11],
+                    finance: arr[12],
+                    advancedToggle: arr[13],
+                    roundTripFlag: 2
+                };
+            }
             
+            // call on first hit
+            setState();
+            
+            // public methods
             vm.ccMethods = {
                 saveState: saveState,
                 deleteData: deleteData,
@@ -93,7 +99,10 @@
             
             // wipe personal commute calc info from local storage
             function deleteData() {
-                 LS.deleteData('commute-storage');
+                // delete personal fire calc data
+                LS.deleteData('commute-storage');
+                // reset state to defaults
+                setState();
             };
             
             // Reset app
