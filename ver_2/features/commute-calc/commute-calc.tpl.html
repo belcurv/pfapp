@@ -8,8 +8,11 @@
             </div>
             
             <div>
-                <h1 title="Save" class="icon-button" ng-click="vm.fcMethods.saveState()">
+                <h1 title="Save your input data" class="icon-button" ng-click="vm.ccMethods.saveState()">
                     <span class="glyphicon glyphicon-floppy-disk"></span>
+                </h1>
+                <h1 title="Erase your input data" class="icon-button" ng-click="vm.ccMethods.deleteData()">
+                    <span class="glyphicon glyphicon-floppy-remove"></span>
                 </h1>
             </div>
             
@@ -26,7 +29,7 @@
                 <h4>INPUTS</h4>
             </div>
             <div>
-                <h4><input type="checkbox" name="toggle-advanced" ng-model="vm.myObj.advancedToggle">Advanced</h4>
+                <h4><input type="checkbox" name="toggle-advanced" ng-model="vm.state.advancedToggle">Advanced</h4>
                 <h4 title="Help" class="icon-button" ng-click="inputsHelpToggle = !inputsHelpToggle">
                     <span class="glyphicon glyphicon-question-sign"></span>
                 </h4>
@@ -49,21 +52,21 @@
         </div>
 
         <!-- ========= basic inputs ========= -->
-        <div ng-if="!vm.myObj.advancedToggle">
+        <div ng-if="!vm.state.advancedToggle">
             <!-- Addresses -->
             <p>Addresses:</p>
             <div class="Grid Grid--gutters Grid--full">
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Origin A</span>
-                    <input type="text" class="InputAddOn-field" tabindex="1" ng-model="vm.myObj.originA">
+                    <input type="text" class="InputAddOn-field" tabindex="1" ng-model="vm.state.originA">
                 </div>
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Origin B</span>
-                    <input type="text" class="InputAddOn-field" tabindex="2" ng-model="vm.myObj.originB">
+                    <input type="text" class="InputAddOn-field" tabindex="2" ng-model="vm.state.originB">
                 </div>
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Destination</span>
-                    <input type="text" class="InputAddOn-field" tabindex="3" ng-model="vm.myObj.destination">
+                    <input type="text" class="InputAddOn-field" tabindex="3" ng-model="vm.state.destination">
                 </div>
             </div>
             
@@ -74,21 +77,21 @@
                     <span class="InputAddOn-item">Mileage Rate ($)</span>
                     <input class="InputAddOn-field" type="number" tabindex="4"
                         min="0.01" max="10.00" step="0.01"
-                        ng-model="vm.myObj.mileageRate">
+                        ng-model="vm.state.mileageRate">
                 </div>
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Hourly Rate ($)</span>
                     <input class="InputAddOn-field" tabindex="5" min="0" max="100.00" step="0.01"
-                        ng-model="vm.myObj.hourlyRate" type="number">
+                        ng-model="vm.state.hourlyRate" type="number">
                 </div>
                 <div class="Grid-cell InputAddOn">
                     <button class="inputButton" tabindex="6" type="submit"
-                        ng-click="vm.calcCommute(vm.myObj.originA, vm.myObj.originB, vm.myObj.destination)">
+                        ng-click="vm.ccMethods.calcCommute(vm.state.originA, vm.state.originB, vm.state.destination)">
                     Calculate
                     </button>
                 </div>
                 <div class="Grid-cell InputAddOn">
-                    <button class="inputButton" tabindex="14" type="submit" ng-click="vm.myObj.responseObject = '' ">
+                    <button class="inputButton" tabindex="14" type="submit" ng-click="vm.ccMethods.reset()">
                         Reset
                     </button>
                 </div>
@@ -98,24 +101,24 @@
         
         
         <!-- ========= advanged inputs ========= -->
-        <div ng-if="vm.myObj.advancedToggle">
+        <div ng-if="vm.state.advancedToggle">
             
             <!-- Addresses -->
             <p>Addresses:</p>
             <div class="Grid Grid--gutters Grid--full">
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Origin A</span>
-                    <input class="InputAddOn-field" tabindex="1" type="text" ng-model="vm.myObj.originA">
+                    <input class="InputAddOn-field" tabindex="1" type="text" ng-model="vm.state.originA">
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Origin B</span>
-                    <input class="InputAddOn-field" tabindex="2" type="text" ng-model="vm.myObj.originB">
+                    <input class="InputAddOn-field" tabindex="2" type="text" ng-model="vm.state.originB">
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Destination</span>
-                    <input class="InputAddOn-field" tabindex="3" type="text" ng-model="vm.myObj.destination">
+                    <input class="InputAddOn-field" tabindex="3" type="text" ng-model="vm.state.destination">
                 </div>
             </div>
 
@@ -124,28 +127,28 @@
                 <!-- gas -->
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Gas Price ($)</span>
-                    <input class="InputAddOn-field" tabindex="4" type="number" min="0.01" max="10.00" step="0.01" ng-model="vm.myObj.gasPrice">
+                    <input class="InputAddOn-field" tabindex="4" type="number" min="1" max="20.00" step="0.001" ng-model="vm.state.gasPrice">
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Miles Per Gallon</span>
-                    <input class="InputAddOn-field" tabindex="5" type="number" min="1" max="100" step="1" ng-model="vm.myObj.milesPerGallon">
+                    <input class="InputAddOn-field" tabindex="5" type="number" min="1" max="100" step="1" ng-model="vm.state.milesPerGallon">
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Gas Cost / Mile</span>
-                    <span class="InputAddOn-field">{{ vm.myObj.gasPrice / vm.myObj.milesPerGallon | currency:'$':4 }}</span>
+                    <span class="InputAddOn-field">{{ vm.state.gasPrice / vm.state.milesPerGallon | currency:'$':4 }}</span>
                 </div>
 
                 <!-- maint -->
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">General Maintenance ($)</span>
-                    <input class="InputAddOn-field" tabindex="6" type="number" min="0.01" max="10.00" step="0.0001" ng-model="vm.myObj.maintenance">
+                    <input class="InputAddOn-field" tabindex="6" type="number" min="0.01" max="10.00" step="0.0001" ng-model="vm.state.maintenance">
                 </div>
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Tires ($)</span>
-                    <input class="InputAddOn-field" tabindex="7" type="number" min="0.001" max="10.00" step="0.0001" ng-model="vm.myObj.tires">
+                    <input class="InputAddOn-field" tabindex="7" type="number" min="0.001" max="10.00" step="0.0001" ng-model="vm.state.tires">
                 </div>
             </div>
 
@@ -154,7 +157,7 @@
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Total Operating Cost Per Mile</span>
                     <span class="InputAddOn-field">
-                        {{ (vm.myObj.gasPrice / vm.myObj.milesPerGallon) + vm.myObj.maintenance + vm.myObj.tires | currency:"$":4 }}                    
+                        {{ (vm.state.gasPrice / vm.state.milesPerGallon) + vm.state.maintenance + vm.state.tires | currency:"$":4 }}                    
                     </span>
                 </div>
             </div>
@@ -164,25 +167,25 @@
                 <!-- insurance -->
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Insurance ($)</span>
-                    <input class="InputAddOn-field" tabindex="8" type="number" min="0" max="10000.00" step="1" ng-model="vm.myObj.insurance">
+                    <input class="InputAddOn-field" tabindex="8" type="number" min="0" max="10000.00" step="1" ng-model="vm.state.insurance">
                 </div>
 
                 <!-- license, registration, taxes -->
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">License, Registration, Taxes ($)</span>
-                    <input class="InputAddOn-field" tabindex="9" type="number" min="0" max="10000.00" step="1" ng-model="vm.myObj.licenseRegTaxes">
+                    <input class="InputAddOn-field" tabindex="9" type="number" min="0" max="10000.00" step="1" ng-model="vm.state.licenseRegTaxes">
                 </div>
 
                 <!-- depreciation -->
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Depreciation (10k miles / yr) ($)</span>
-                    <input class="InputAddOn-field" tabindex="10" type="number" min="0" max="50000.00" step="1" ng-model="vm.myObj.depreciation">
+                    <input class="InputAddOn-field" tabindex="10" type="number" min="0" max="50000.00" step="1" ng-model="vm.state.depreciation">
                 </div>
 
                 <!-- finance charge -->
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Finance Charge ($)</span>
-                    <input class="InputAddOn-field" tabindex="11" type="number" min="0" max="50000.00" step="1" ng-model="vm.myObj.finance">
+                    <input class="InputAddOn-field" tabindex="11" type="number" min="0" max="50000.00" step="1" ng-model="vm.state.finance">
                 </div>
             </div>
 
@@ -191,7 +194,7 @@
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Total Ownership Cost</span>
                     <span class="InputAddOn-field">
-                        {{ (vm.myObj.insurance + vm.myObj.licenseRegTaxes + vm.myObj.depreciation + vm.myObj.finance) / 8760 | currency:"$":4 }} / hour ({{vm.myObj.insurance + vm.myObj.licenseRegTaxes + vm.myObj.depreciation + vm.myObj.finance | currency:"$":2}} / year)
+                        {{ (vm.state.insurance + vm.state.licenseRegTaxes + vm.state.depreciation + vm.state.finance) / 8760 | currency:"$":4 }} / hour ({{vm.state.insurance + vm.state.licenseRegTaxes + vm.state.depreciation + vm.state.finance | currency:"$":2}} / year)
                     </span>
                 </div>
             </div>
@@ -202,19 +205,19 @@
 
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Value of Your Time ($ per hour)</span>
-                    <input class="InputAddOn-field" tabindex="12" type="number" min="0" max="500.00" step="0.5" ng-model="vm.myObj.hourlyRate">
+                    <input class="InputAddOn-field" tabindex="12" type="number" min="0" max="500.00" step="0.5" ng-model="vm.state.hourlyRate">
                 </div>
             </div>
                 
             <div class="Grid Grid--gutters Grid--full med-Grid--1of2">
                 <div class="Grid-cell InputAddOn">
-                    <button class="inputButton" tabindex="13" type="submit" ng-click="vm.calcCommute(vm.myObj.originA, vm.myObj.originB, vm.myObj.destination)">
+                    <button class="inputButton" tabindex="13" type="submit" ng-click="vm.ccMethods.calcCommute(vm.state.originA, vm.state.originB, vm.state.destination)">
                         Calculate
                     </button>
                 </div>
                 
                 <div class="Grid-cell InputAddOn">
-                    <button class="inputButton" tabindex="14" type="submit" ng-click="vm.myObj.responseObject = '' ">
+                    <button class="inputButton" tabindex="14" type="submit" ng-click="vm.ccMethods.reset()">
                         Reset
                     </button>
                 </div>
@@ -227,24 +230,24 @@
 <!-- ==================== END INPUTS SECTION ====================== -->
 
 <!-- ====================== RESULTS SECTION ======================= -->
-<section ng-if="vm.myObj.responseObject">
+<section ng-if="vm.results.responseObject">
     <div class="content-box">
         <h4>Analysis</h4>
-        <p>Given the two origin addresses input above, commuting from {{ vm.myObj.closerOrigin.address }} will save you approximately {{ vm.myObj.costDiff | currency }} per month. You should be willing to pay up to {{ vm.myObj.costDiff | currency }} more per month (rent, mortgage, utilities, property taxes, etc.) to live at {{ vm.myObj.closerOrigin.id }}.</p>
+        <p>Given the two origin addresses input above, commuting from {{ vm.results.closerOrigin.address }} will save you approximately {{ vm.results.costDiff | currency }} per month. You should be willing to pay up to {{ vm.results.costDiff | currency }} more per month (rent, mortgage, utilities, property taxes, etc.) to live at {{ vm.results.closerOrigin.id }}.</p>
     </div>
 </section>
 
 <!-- TABLES -->
-<section ng-if="vm.myObj.responseObject">
+<section ng-if="vm.results.responseObject">
     <div class="Grid Grid--gutters Grid--full small-Grid--1of2">
         <!-- TABLE A -->
         <div class="Grid-cell">
             <div class="content-box">
                 <commute-calc-table
-                    origin="{{vm.myObj.originA}}"
-                    destination="{{vm.myObj.destination}}"
-                    mileagerate="vm.myObj.mileageRateA"
-                    array="vm.myObj.commuteArrA">
+                    origin="{{vm.state.originA}}"
+                    destination="{{vm.state.destination}}"
+                    mileagerate="vm.results.mileageRateA"
+                    array="vm.results.commuteArrA">
                 </commute-calc-table>
 
             </div>
@@ -253,10 +256,10 @@
         <div class="Grid-cell">
             <div class="content-box">
                 <commute-calc-table
-                    origin="{{vm.myObj.originB}}"
-                    destination="{{vm.myObj.destination}}"
-                    mileagerate="vm.myObj.mileageRateB"
-                    array="vm.myObj.commuteArrB">
+                    origin="{{vm.state.originB}}"
+                    destination="{{vm.state.destination}}"
+                    mileagerate="vm.results.mileageRateB"
+                    array="vm.results.commuteArrB">
                 </commute-calc-table>
             </div>
         </div>

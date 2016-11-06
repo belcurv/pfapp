@@ -3,29 +3,103 @@
 
     angular.module('pfapp')
 
-        .controller('commuteCalcController', ['gmapsDistanceAPI', 'ccMath', function (gmapsDistanceAPI, ccMath) {
+        .controller('commuteCalcController', ['gmapsDistanceAPI', 'LS', 'ccMath', function (gmapsDistanceAPI, LS, ccMath) {
 
-            var vm = this;
+            var vm = this,
+                arr = [],
+                ccDefaults = [
+                    "53207",   // originA
+                    "53005",   // originB
+                    "53154",   // destination
+                    0.54,      // mileageRate
+                    20,        // hourlyRate
+                    30,        // milesPerGallon
+                    2.139,     // gasPrice
+                    0.0481,    // maintenance
+                    0.007,     // tires
+                    1169,      // insurance
+                    502,       // licenseRegTaxes
+                    2368,      // depreciation
+                    481,       // finance
+                    false      // advancedToggle
+                ];
 
-            vm.myObj = {
-                originA: "53207",
-                originB: "53005",
-                destination: "53154",
-                mileageRate: 0.54,
-                hourlyRate: 20,
-                roundTripFlag: 2, // 1 = 1-way, 2 = round-trip
-                milesPerGallon: 30,
-                gasPrice: 2.139,
-                maintenance: 0.0481,
-                tires: 0.007,
-                insurance: 1169,
-                licenseRegTaxes: 502,
-                depreciation: 2368,
-                finance: 481,
-                advancedToggle: false,
-                commuteArr: [],
-                responseObj: {}
+            
+            // Load input data from either localStorage or defaults
+            function loadState() {
+                if (LS.getData('commute-storage')) {
+                    // when vtrue;
+                    vm.commuteCalcDataSource = 'Using locally-stored input values';
+                    return LS.getData('commute-storage');
+                } else {
+                    // when false;
+                    vm.commuteCalcDataSource = 'Using default input values';
+                    return ccDefaults;
+                }
+            }
+            
+            // call loadState, returns array
+            arr = loadState();
+            
+            // state object represents the Commute Calc inputs
+            // populate state values using 'arr' index
+            vm.state = {
+                originA: arr[0],
+                originB: arr[1],
+                destination: arr[2],
+                mileageRate: arr[3],
+                hourlyRate: arr[4],
+                milesPerGallon: arr[5],
+                gasPrice: arr[6],
+                maintenance: arr[7],
+                tires: arr[8],
+                insurance: arr[9],
+                licenseRegTaxes: arr[10],
+                depreciation: arr[11],
+                finance: arr[12],
+                advancedToggle: arr[13],
+                roundTripFlag: 2
             };
+            
+            vm.ccMethods = {
+                saveState: saveState,
+                deleteData: deleteData,
+                reset: reset,
+                calcCommute: calcCommute
+            }
+            
+            // placeholder for results calculated below
+            vm.results = {};
+            
+            // Save current state to local storage
+            function saveState() {
+                LS.setData('commute-storage', [
+                    vm.state.originA,
+                    vm.state.originB,
+                    vm.state.destination,
+                    vm.state.mileageRate,
+                    vm.state.hourlyRate,
+                    vm.state.milesPerGallon,
+                    vm.state.gasPrice,
+                    vm.state.maintenance,
+                    vm.state.tires,
+                    vm.state.insurance,
+                    vm.state.licenseRegTaxes,
+                    vm.state.depreciation,
+                    vm.state.finance,
+                    vm.state.advancedToggle
+                ]);
+            }
+            
+            // wipe personal commute calc info from local storage
+            function deleteData() {
+                 LS.deleteData('commute-storage');
+            };
+            
+            // Reset app
+            function reset() {
+                vm.results.responseObject = '';
+            }
 
             // main exec block
             // Calls gmapsDistanceAPI factory, which returns a promise.
@@ -34,12 +108,12 @@
             // @params  [string] originA     [origin address A]
             // @params  [string] originB     [origin address B]
             // @params  [string] destination [destination address]
-            vm.calcCommute = function (originA, originB, destination) {
+            function calcCommute(originA, originB, destination) {
                 gmapsDistanceAPI(originA, originB, destination)
                     .then(function (response) {
 
                         // bind whole response to model
-                        vm.myObj.responseObject = response;
+                        vm.results.responseObject = response;
 
                         // init local variables
                         var milesA, milesB,
@@ -64,64 +138,65 @@
                         /*  mileageRateA and mileageRateA depend on which path the user picks:
                         /  1. Basic path mileageRates = the federal mileage rate 
                         /  2. Advanced path mileageRates have to be calulated  */
-                        if (vm.myObj.advancedToggle === false) {
+                        if (vm.state.advancedToggle === false) {
                             /* ===== BASIC PATH ===== //
                             /  mileageRateA = mileageRateB = vm.myObj.mileageRate */
-                            mileageRateA = vm.myObj.mileageRate;
-                            mileageRateB = vm.myObj.mileageRate;
+                            mileageRateA = vm.state.mileageRate;
+                            mileageRateB = vm.state.mileageRate;
                             // bind above per-mile rates to model. Used in table output
-                            vm.myObj.mileageRateA = mileageRateA;
-                            vm.myObj.mileageRateB = mileageRateB;
+                            vm.results.mileageRateA = mileageRateA;
+                            vm.results.mileageRateB = mileageRateB;
                         } else {
                             /* ===== ADVANCED PATH ===== //
                             /  mileage rate depends on operating costs, ownership costs
                             /  and miles driven  */
                             
                             // per-mile OPERATING costs are the same for both commutes
-                            perMileOperatingCosts = ccMath.perMileOperatingCosts(vm.myObj.gasPrice, vm.myObj.milesPerGallon, vm.myObj.maintenance, vm.myObj.tires);
+                            perMileOperatingCosts = ccMath.perMileOperatingCosts(vm.state.gasPrice, vm.state.milesPerGallon, vm.state.maintenance, vm.state.tires);
 
                             // per-mile OWNERSHIP costs depend on variable miles driven
-                            perMileOwnershipCostsA = ccMath.perMileOwnershipCosts(vm.myObj.insurance, vm.myObj.licenseRegTaxes, vm.myObj.depreciation, vm.myObj.finance, milesA);
-                            perMileOwnershipCostsB = ccMath.perMileOwnershipCosts(vm.myObj.insurance, vm.myObj.licenseRegTaxes, vm.myObj.depreciation, vm.myObj.finance, milesB);
+                            perMileOwnershipCostsA = ccMath.perMileOwnershipCosts(vm.state.insurance, vm.state.licenseRegTaxes, vm.state.depreciation, vm.state.finance, milesA);
+                            perMileOwnershipCostsB = ccMath.perMileOwnershipCosts(vm.state.insurance, vm.state.licenseRegTaxes, vm.state.depreciation, vm.state.finance, milesB);
 
                             // total per-mile rate = sum of operating + ownership costs
                             mileageRateA = perMileOperatingCosts + perMileOwnershipCostsA;
                             mileageRateB = perMileOperatingCosts + perMileOwnershipCostsB;
                             
                             // bind above per-mile rates to model
-                            vm.myObj.mileageRateA = mileageRateA;
-                            vm.myObj.mileageRateB = mileageRateB;
+                            vm.results.mileageRateA = mileageRateA;
+                            vm.results.mileageRateB = mileageRateB;
                         }
                         /* ========== END BASIC vs ADVANCED paths ========== */
                     
                         
                         // calculate total cost for each commute
-                        totalCostCommuteA = ccMath.oneOriginTotalCost(milesA, hoursA, mileageRateA, vm.myObj.hourlyRate);
-                        totalCostCommuteB = ccMath.oneOriginTotalCost(milesB, hoursB, mileageRateB, vm.myObj.hourlyRate);
+                        totalCostCommuteA = ccMath.oneOriginTotalCost(milesA, hoursA, mileageRateA, vm.state.hourlyRate);
+                        totalCostCommuteB = ccMath.oneOriginTotalCost(milesB, hoursB, mileageRateB, vm.state.hourlyRate);
                     
                         // determine which commute is cheaper and bind to model
                         if (totalCostCommuteA < totalCostCommuteB) {
                             // then A is cheaper
-                            vm.myObj.closerOrigin = {
+                            vm.results.closerOrigin = {
                                 id: "Origin A",
                                 address: response.originAddresses[0]
                             };
                         } else {
                             // then B is cheaper
-                            vm.myObj.closerOrigin = {
+                            vm.results.closerOrigin = {
                                 id: "Origin B",
                                 address: response.originAddresses[1]
                             };
                         }
 
                         // calculate total monthly cost difference & bind to model
-                        vm.myObj.costDiff = ccMath.costDiff(totalCostCommuteA, totalCostCommuteB);
+                        vm.results.costDiff = ccMath.costDiff(totalCostCommuteA, totalCostCommuteB);
 
                         // build arrays for results tables and bind to model
-                        vm.myObj.commuteArrA = ccMath.buildArray(milesA, hoursA, mileageRateA, vm.myObj.roundTripFlag, vm.myObj.hourlyRate);
-                        vm.myObj.commuteArrB = ccMath.buildArray(milesB, hoursB, mileageRateB, vm.myObj.roundTripFlag, vm.myObj.hourlyRate);
+                        vm.results.commuteArrA = ccMath.buildArray(milesA, hoursA, mileageRateA, vm.state.roundTripFlag, vm.state.hourlyRate);
+                        vm.results.commuteArrB = ccMath.buildArray(milesB, hoursB, mileageRateB, vm.state.roundTripFlag, vm.state.hourlyRate);
 
                     });
-            };
+            }
+            
         }]);
 }());

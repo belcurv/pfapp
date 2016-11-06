@@ -17,18 +17,15 @@
                     10000   // annual savings
                 ];
             
-            // boolean set by loadState function
-            // for ng-if displaying of data source
-            vm.isLocalStorage = null;
             
             // Load input data from either localStorage or defaults
             function loadState() {
-                if (LS.getData()) {
-//                    vm.isLocalStorage = true;
+                if (LS.getData('fire-calc-storage')) {
+                    // when true;
                     vm.fireCalcDataSource = 'Using locally-stored input values';
-                    return LS.getData();
+                    return LS.getData('fire-calc-storage');
                 } else {
-//                    vm.isLocalStorage = false;
+                    // when false;
                     vm.fireCalcDataSource = 'Using default input values';
                     return defaults;
                 }
@@ -57,7 +54,8 @@
                 calcFutureValue: pfactory.calcFV,
                 calcAge: pfactory.calcAge,
                 calcRate: calcRATE,
-                saveState: saveState
+                saveState: saveState,
+                deleteData: deleteData
             };
 
             // RATE calculator
@@ -67,7 +65,7 @@
             
             // Save current state to local storage
             function saveState() {
-                LS.setData([
+                LS.setData('fire-calc-storage', [
                     vm.state.birthDate,
                     vm.state.retirementAge,
                     vm.state.annualExpenses,
@@ -77,6 +75,11 @@
                     vm.state.FVpmt
                 ]);
             }
+            
+            // delete personal FIRE calc info from local storage
+            function deleteData() {
+                 LS.deleteData('fire-calc-storage');
+            };
             
         }]);
     

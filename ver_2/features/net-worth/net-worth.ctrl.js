@@ -8,25 +8,25 @@
             var vm = this;
 
             // localStorage!
-            vm.value = LS.getData();
+            vm.value = LS.getData('fire-calc-storage');
             
-            vm.storageArray = LS.getData() || [];
+            vm.storageArray = LS.getData('fire-calc-storage') || [];
             
             vm.latestData = function () {
-                return LS.getData();
+                return LS.getData('fire-calc-storage');
             };
             
-            vm.update = function (val) {
-                return LS.setData(val);
+            vm.update = function (loc, val) {
+                return LS.setData(loc, val);
             };
             
             vm.pushToArray = function (val) {
                 vm.storageArray.push(val);
-                LS.setData(vm.storageArray);
+                LS.setData('pfapp-storage', vm.storageArray);
             };
             
             vm.clearStorage = function () {
-                LS.deleteData();
+                LS.clearData();
                 vm.storageArray.length = 0;
             };
             

@@ -26,41 +26,57 @@
             
             /** 
              * Store item in local storage if storage exists
-             * @param       [function]  storage     [localStorage feature detect & local ref]
              * @param       [string]    val         [string to be stored]
+             * @param       [string]    loc         [local storage sub-location]
+             * @param       [function]  storage     [localStorage feature detect & local ref]
              */
-            function setData(val) {
+            function setData(loc, val) {
                 if (storage) {
-                    storage.setItem('pfapp-storage', JSON.stringify(val));
+                    storage.setItem(loc, JSON.stringify(val));
                 }
             }
             
             /** 
              * Get local storage if storage exists
+             * @param       [string]    loc         [local storage sub-location]
              * @param       [function]  storage     [localStorage feature detect & local ref]
              * @returns     [JSON string]           [fetch stored string, return JSON]
              */
-            function getData() {
+            function getData(loc) {
                 if (storage) {
-                    return JSON.parse(storage.getItem('pfapp-storage'));
+                    return JSON.parse(storage.getItem(loc));
                 }
             }
             
             /** 
-             * Delete local storage if pass
+             * Delete ALL keys from local storage if pass
              * @param       [function]  storage     [localStorage feature detect & local ref]
              * @returns     [function]  .clear      [wipes local storage]
              */
-            function deleteData() {
+            function clearData() {
                 if (storage) {
                     return storage.clear();
-                }                
+                }
             }
+            
+            /** 
+             * Delete ONE key from local storage if pass
+             * @param       [string]    loc         [the key to delete from localStorage]
+             * @param       [function]  storage     [localStorage feature detect & local ref]
+             * @returns     [function]  .clear      [wipes local storage]
+             */
+            function deleteData(loc) {
+                if (storage) {
+                    return storage.removeItem(loc);
+                }
+            }
+            
 
             return {
                 setData: setData,
                 getData: getData,
-                deleteData: deleteData
+                deleteData: deleteData,
+                clearData: clearData
             };
             
         }]);
