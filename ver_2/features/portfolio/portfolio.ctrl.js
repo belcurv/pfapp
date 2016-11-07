@@ -7,7 +7,9 @@
 
             var vm = this,
                 arr = [],
-                pfDefaults = [];
+                pfDefaults = [
+                    []
+                ];
 
         
             // fetch input data from either localStorage or defaults
@@ -30,7 +32,8 @@
                 var arr = loadState();
                 // bind
                 vm.state = {
-                    
+                    investments: arr[0],
+                    newTickerType: "stock"
                 };
             }
             
@@ -41,14 +44,41 @@
             vm.pfMethods = {
                 saveState: saveState,
                 deleteData: deleteData,
-                reset: reset
+                addInvestment: addInvestment,
+                deleteInvestment: deleteInvestment,
+                sumInvestmentValue: sumInvestmentValue
             };
             
+            
+            // add investment to the array
+            function addInvestment(ticker, val, type) {
+                // push new investment to model array
+                vm.state.investments.push({
+                    ticker: ticker,
+                    value: val,
+                    type: type
+                });
+                // save state
+                saveState();
+                // clear input fields
+                vm.state.newTicker = '';
+                vm.state.newTickerValue = '';
+            }
+            
+                       
+            // delete single investment
+            function deleteInvestment(index) {
+                // index comes from view ng-repeat $index
+                vm.state.investments.splice(index, 1);
+                // fire a save after removing the item
+                // saveState() triggers a setState() which refreshes view
+                saveState();
+            }
             
             // Save current state to local storage
             function saveState() {
                 LS.setData('portfolio-storage', [
-                    //vm.state...
+                    vm.state.investments
                 ]);
                 // reset state; will use local storage values
                 setState();
@@ -62,9 +92,18 @@
                 setState();
             }
             
-            // Reset app
-            function reset() {
-                vm.results.responseObject = '';
+            function sumInvestmentValue(type) {
+                var sum = 0,
+                    i;
+                // loop through investments
+                for (i = 0; i < vm.state.investments.length; i += 1) {
+                    // add each investment's value to sum
+                    if (vm.state.investments[i].type === type) {
+                        sum += vm.state.investments[i].value;
+                    }
+                }
+                // return the sum
+                return sum;
             }
 
             

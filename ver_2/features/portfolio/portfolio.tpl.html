@@ -49,18 +49,21 @@
         </div>
 
         <!-- Inputs -->
-        <div class="Grid Grid--gutters Grid--full Grid--1of3">
+        <div class="Grid Grid--gutters Grid--1of4">
             <div class="Grid-cell InputAddOn">
                 <span class="InputAddOn-item">Ticker</span>
-                <input class="InputAddOn-field" tabindex="1" type="text">
-            </div>
-
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Shares</span>
-                <input class="InputAddOn-field" tabindex="2" type="number">
-            </div>
-            <div class="Grid-cell" style="flex:0">
-                <button class="inputButton" tabindex="3" type="submit">
+                <input class="InputAddOn-field" tabindex="1" type="text" ng-model="vm.state.newTicker">
+            
+                <span class="InputAddOn-item">Value</span>
+                <input class="InputAddOn-field" tabindex="2" type="number" ng-model="vm.state.newTickerValue">
+                
+                <span class="InputAddOn-item">Type</span>
+                <select class="InputAddOn-field" tabindex="3" ng-model="vm.state.newTickerType">
+                    <option value="Stock">Stock</option>
+                    <option value="Bond">Bond</option>
+                </select>
+                
+                <button class="inputButton" tabindex="4" type="submit" ng-click="vm.pfMethods.addInvestment(vm.state.newTicker, vm.state.newTickerValue, vm.state.newTickerType)">
                     Add
                 </button>
             </div>
@@ -70,4 +73,47 @@
         <alert-message message="{{vm.portfolioDataSource}}"></alert-message>
 
     </div>
+</section>
+
+
+<section>
+    <div class="content-box">
+        <p>Holdings:</p>
+        <div class="Grid Grid--gutters Grid--full small-Grid--1of3">
+                <div class="Grid-cell InputAddOn" ng-repeat="e in vm.state.investments track by $index">
+                    <span class="InputAddOn-item">Ticker</span>
+                    <input class="InputAddOn-field" tabindex="5" type="text" ng-model="e.ticker">
+
+                    <span class="InputAddOn-item">Value</span>
+                    <input class="InputAddOn-field" tabindex="6" type="number" ng-model="e.value">
+                    
+                    <span class="InputAddOn-item">Type</span>
+                    <input class="InputAddOn-field" tabindex="6" type="text" ng-model="e.type">
+                    
+                    <button class="inputButton" tabindex="7" type="submit" ng-click="vm.pfMethods.saveState()">
+                        Update
+                    </button>
+                    
+                    <button class="inputButton" tabindex="8" type="submit" ng-click="vm.pfMethods.deleteInvestment($index)">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+
+<section>
+    <div class="content-box">
+        
+        <p>Sum of asset class: Stocks {{ vm.pfMethods.sumInvestmentValue("Stock") }}</p>
+        
+        <p>Sum of asset class: Bonds {{ vm.pfMethods.sumInvestmentValue("Bond") }}</p>
+
+        
+    </div>
+    
+    
 </section>
