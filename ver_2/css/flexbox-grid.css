@@ -41,22 +41,11 @@ header .Grid-cell {
 /* Gutters */
 
 .Grid--gutters {
-    margin: -1em 0 1em -1em;
+    margin: -0.5em 0 0.5em -0.5em; /* origin values: -1em 0 1em -1em; */
 }
 
 .Grid--gutters > .Grid-cell {
-    padding: 1em 0 0 1em;
-}
-
-/* custom Grid--gutters for tiny screens*/
-@media all and (max-width: 360px) {
-    .Grid--gutters {
-    margin: -0.5em 0 0.5em -0.5em;
-    }
-
-    .Grid--gutters > .Grid-cell {
-        padding: .5em 0 0 .5em;
-    }
+    padding: .5em 0 0 .5em;  /* origin values: 1em 0 0 1em; */
 }
 
 .Grid--guttersLg {
