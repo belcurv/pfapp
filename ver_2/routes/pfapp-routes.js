@@ -29,7 +29,7 @@
 
             .when('/portfolio', {
                 templateUrl: 'features/portfolio/portfolio.tpl.html',
-                controller: 'fireCalcCtrl as vm'
+                controller: 'portfolioController as vm'
             });
 
     });

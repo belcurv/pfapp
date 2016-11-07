@@ -95,13 +95,15 @@
                     vm.state.finance,
                     vm.state.advancedToggle
                 ]);
+                // reset state, which will use local storage data
+                setState();
             }
             
             // wipe personal commute calc info from local storage
             function deleteData() {
-                // delete personal fire calc data
+                // delete personal commute calc data
                 LS.deleteData('commute-storage');
-                // reset state to defaults
+                // reset state, which will now use defaults
                 setState();
             };
             

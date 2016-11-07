@@ -80,13 +80,15 @@
                     vm.state.FVrate,
                     vm.state.FVpmt
                 ]);
+                // reset state; will use local storage data
+                setState();
             }
             
             // delete personal FIRE calc info from local storage
             function deleteData() {
                 // delete personal fire calc data
                 LS.deleteData('fire-calc-storage');
-                // reset state to defaults
+                // reset state; will use defaults
                 setState();
             };
             
