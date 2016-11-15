@@ -29,7 +29,7 @@
         <!-- inputs title -->
         <div class="Grid">
             <div class="Grid-cell">
-                <h4>INPUTS</h4>
+                <h4>HOLDINGS</h4>
             </div>
             <div>
                 <h4 title="Help" class="icon-button" ng-click="inputHelpToggle = !inputHelpToggle">
@@ -48,26 +48,62 @@
             </ul>
         </div>
 
-        <!-- Inputs -->
-        <div class="Grid Grid--gutters Grid--1of4">
-            <div class="Grid-cell InputAddOn">
-                <span class="InputAddOn-item">Ticker</span>
-                <input class="InputAddOn-field" tabindex="1" type="text" ng-model="vm.state.newTicker">
-            
-                <span class="InputAddOn-item">Value</span>
-                <input class="InputAddOn-field" tabindex="2" type="number" ng-model="vm.state.newTickerValue">
-                
-                <span class="InputAddOn-item">Type</span>
-                <select class="InputAddOn-field" tabindex="3" ng-model="vm.state.newTickerType">
-                    <option value="Stock">Stock</option>
-                    <option value="Bond">Bond</option>
-                </select>
-                
-                <button class="inputButton" tabindex="4" type="submit" ng-click="vm.pfMethods.addInvestment(vm.state.newTicker, vm.state.newTickerValue, vm.state.newTickerType)">
-                    Add
-                </button>
-            </div>
-        </div>
+        <!-- Table -->
+        <table>
+            <thead>
+                <th>Ticker</th>
+                <th>Value</th>
+                <th>Class</th>
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="e in vm.state.investments track by $index">
+                    <td>
+                        <input class="" type="text" ng-model="e.ticker">
+                    </td>
+                    <td>
+                        <input class="" type="number" ng-model="e.value">
+                    </td>
+                    <td>
+                        <select name="class" tabindex="3" ng-model="e.type">
+                            <option value="Stock">Stock</option>
+                            <option value="Bond">Bond</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="" type="submit" ng-click="vm.pfMethods.saveState()">
+                            Update
+                        </button>
+                    </td>
+                    <td>
+                        <button class="" type="submit" ng-click="vm.pfMethods.deleteInvestment($index)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input name="ticker" tabindex="1" type="text" ng-model="vm.state.newTicker">
+                    </td>
+                    <td>
+                        <input name="value" tabindex="2" type="number" ng-model="vm.state.newTickerValue">
+                    </td>
+                    <td>
+                        <select name="class" tabindex="3" ng-model="vm.state.newTickerType">
+                            <option value="Stock">Stock</option>
+                            <option value="Bond">Bond</option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td>
+                        <button tabindex="4" type="submit" ng-click="vm.pfMethods.addInvestment(vm.state.newTicker, vm.state.newTickerValue, vm.state.newTickerType)">
+                            Add
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         
         <!-- Advise source of input data -->
         <alert-message message="{{vm.portfolioDataSource}}"></alert-message>
@@ -78,39 +114,12 @@
 
 <section>
     <div class="content-box">
-        <p>Holdings:</p>
-        <div class="Grid Grid--gutters Grid--full small-Grid--1of3">
-                <div class="Grid-cell InputAddOn" ng-repeat="e in vm.state.investments track by $index">
-                    <span class="InputAddOn-item">Ticker</span>
-                    <input class="InputAddOn-field" tabindex="5" type="text" ng-model="e.ticker">
-
-                    <span class="InputAddOn-item">Value</span>
-                    <input class="InputAddOn-field" tabindex="6" type="number" ng-model="e.value">
-                    
-                    <span class="InputAddOn-item">Type</span>
-                    <input class="InputAddOn-field" tabindex="6" type="text" ng-model="e.type">
-                    
-                    <button class="inputButton" tabindex="7" type="submit" ng-click="vm.pfMethods.saveState()">
-                        Update
-                    </button>
-                    
-                    <button class="inputButton" tabindex="8" type="submit" ng-click="vm.pfMethods.deleteInvestment($index)">
-                        Delete
-                    </button>
-                </div>
-            </div>
-        </div>
         
-    </div>
-</section>
-
-
-<section>
-    <div class="content-box">
+        <p>Sum of asset class 'Stocks': {{ vm.pfMethods.sumInvestmentValue("Stock") | currency }}</p>
         
-        <p>Sum of asset class: Stocks {{ vm.pfMethods.sumInvestmentValue("Stock") }}</p>
+        <p>Sum of asset class 'Bonds': {{ vm.pfMethods.sumInvestmentValue("Bond") | currency }}</p>
         
-        <p>Sum of asset class: Bonds {{ vm.pfMethods.sumInvestmentValue("Bond") }}</p>
+        <p>Allocation Ratio: {{ (100 * vm.pfMethods.allocationRatio()) | number:1 }}% / {{ (100 * (1 - vm.pfMethods.allocationRatio())) | number:1 }}% (stocks / bonds)</p>
 
         
     </div>

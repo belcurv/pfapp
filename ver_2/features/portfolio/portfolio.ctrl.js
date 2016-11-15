@@ -16,11 +16,11 @@
             function loadState() {
                 if (LS.getData('portfolio-storage')) {
                     // when vtrue;
-                    vm.portfolioDataSource = 'Using locally-stored input values';
+                    vm.portfolioDataSource = 'Using saved data from local storage';
                     return LS.getData('portfolio-storage');
                 } else {
                     // when false;
-                    vm.portfolioDataSource = 'Using default input values';
+                    vm.portfolioDataSource = 'No data in local storage';
                     return pfDefaults;
                 }
             }
@@ -46,7 +46,8 @@
                 deleteData: deleteData,
                 addInvestment: addInvestment,
                 deleteInvestment: deleteInvestment,
-                sumInvestmentValue: sumInvestmentValue
+                sumInvestmentValue: sumInvestmentValue,
+                allocationRatio: allocationRatio
             };
             
             
@@ -104,6 +105,19 @@
                 }
                 // return the sum
                 return sum;
+            }
+            
+            function allocationRatio() {
+                var sumBonds = sumInvestmentValue("Bond"),
+                    sumStocks = sumInvestmentValue("Stock"),
+                    sumTotal = 0,
+                    ratioStocks;
+                
+                sumTotal += sumBonds + sumStocks;
+                
+                ratioStocks = sumStocks / sumTotal;
+                
+                return ratioStocks;
             }
 
             
