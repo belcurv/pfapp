@@ -51,11 +51,12 @@
         <!-- Table -->
         <table class="pf-table">
             <thead>
-                <th>Holding</th>
-                <th>Value ($)</th>
+                <th style="">Holding</th>
+                <th style="">Value ($)</th>
                 <th>Class</th>
-                <th>10-yr Return (%)</th>
-                <th colspan="2"></th>
+                <th style="">10-yr Return (%)</th>
+                <th style="width: 18px"></th>
+                <th style="width: 18px"></th>
             </thead>
             <tbody>
                 <tr ng-repeat="e in vm.state.investments track by $index">
@@ -74,20 +75,22 @@
                     <td>
                         <input tabindex="{{$index + 1}}" type="number" min="0.00" max="100.00" step="0.0001" ng-model="e.avgReturn">
                     </td>
-                    <td>
-                        <button tabindex="{{$index + 1}}" type="submit" ng-click="vm.pfMethods.saveState()">
-                            Update
+                    <td title="Update holding" class="icon-button"
+                           tabindex="{{$index + 1}}"
+                           ng-click="vm.pfMethods.saveState()">
+                            <!-- Update -->
+                            <span class="glyphicon glyphicon-floppy-disk"></span>
                         </button>
                     </td>
-                    <td>
-                        <button tabindex="{{$index + 1}}" type="submit" ng-click="vm.pfMethods.deleteInvestment($index)">
-                            Delete
-                        </button>
+                    <td title="Delete holding" class="icon-button" tabindex="{{$index + 1}}"
+                           ng-click="vm.pfMethods.deleteInvestment($index)">
+                            <!-- Delete -->
+                            <span class="glyphicon glyphicon-trash"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input name="ticker" tabindex="999" type="text" ng-model="vm.state.newTicker">
+                        <input name="ticker" tabindex="999" type="text" ng-model="vm.state.newTicker" placeholder="New holding...">
                     </td>
                     <td>
                         <input name="value" tabindex="999" type="number" ng-model="vm.state.newTickerValue">
@@ -102,10 +105,10 @@
                         <input name="avgReturn" tabindex="999" type="number" min="0.00" max="100.00" step="0.0001" ng-model="vm.state.newAvgReturn">
                     </td>
                     <td></td>
-                    <td>
-                        <button tabindex="999" type="submit" ng-click="vm.pfMethods.addInvestment(vm.state.newTicker, vm.state.newTickerValue, vm.state.newTickerType, vm.state.newAvgReturn)">
-                            Add
-                        </button>
+                    <td title="Add new holding" class="icon-button" tabindex="999" 
+                        ng-click="vm.pfMethods.addInvestment(vm.state.newTicker, vm.state.newTickerValue, vm.state.newTickerType, vm.state.newAvgReturn)">
+                        <!-- ADD -->
+                        <span class="glyphicon glyphicon-plus"></span>
                     </td>
                 </tr>
             </tbody>
