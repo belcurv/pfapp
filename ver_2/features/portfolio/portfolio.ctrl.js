@@ -3,37 +3,43 @@
 
     angular.module('pfapp')
 
-        .controller('portfolioController', ['LS', function (LS) {
+        .controller('portfolioController', ['LS', 'pfMath', function (LS, pfMath) {
 
             var vm = this,
-                arr = [],
                 pfDefaults = [
                     []
                 ];
 
         
-            // fetch input data from either localStorage or defaults
+            /*
+             * fetch input data from either localStorage or defaults
+             * @params  [none]
+             * @returns [array of portfolio holdings or blank defaults]
+            */
             function loadState() {
                 if (LS.getData('portfolio-storage')) {
-                    // when vtrue;
                     vm.portfolioDataSource = 'Using saved data from local storage';
+                    console.log(LS.getData('portfolio-storage'));
                     return LS.getData('portfolio-storage');
                 } else {
-                    // when false;
                     vm.portfolioDataSource = 'No data in local storage';
                     return pfDefaults;
                 }
             }
             
             
-            // bind input data to model
+            /*
+             * bind input data to model
+             * @params  [none]
+             * @returns [none]
+            */
             function setState() {
                 // call loadState, which returns array
                 var arr = loadState();
                 // bind
                 vm.state = {
                     investments: arr[0],
-                    newTickerType: "stock"
+                    newTickerType: "Stock"
                 };
             }
             
@@ -46,28 +52,43 @@
                 deleteData: deleteData,
                 addInvestment: addInvestment,
                 deleteInvestment: deleteInvestment,
-                sumInvestmentValue: sumInvestmentValue,
-                allocationRatio: allocationRatio
+                sumPortfolioValue: pfMath.sumPortfolioValue,
+                sumInvestmentValue: pfMath.sumInvestmentValue,
+                ratioStocks: pfMath.ratioStocks,
+                avgPortfolioReturn: pfMath.avgPortfolioReturn
             };
             
             
-            // add investment to the array
-            function addInvestment(ticker, val, type) {
+            /*
+             * add investment to the array
+             * @params  [string]    ticker      [name of the hoding]
+             * @params  [number]    val         [dollar value of the holding]
+             * @params  [string]    type        [asset class: Stock or Bond]
+             * @params  [number]    avgReturn   [10-yr avg return of the holding]
+             * @returns                         [bunch o' bindings]
+             */
+            function addInvestment(ticker, val, type, avgReturn) {
                 // push new investment to model array
                 vm.state.investments.push({
                     ticker: ticker,
                     value: val,
-                    type: type
+                    type: type,
+                    avgReturn: avgReturn
                 });
                 // save state
                 saveState();
                 // clear input fields
                 vm.state.newTicker = '';
                 vm.state.newTickerValue = '';
+                vm.state.newAvgReturn = '';
             }
             
                        
-            // delete single investment
+            /*
+             * delete a single investment
+             * @params  [number]    index       [the index of the array element to remove]
+             * @returns                         [none]
+            */
             function deleteInvestment(index) {
                 // index comes from view ng-repeat $index
                 vm.state.investments.splice(index, 1);
@@ -76,50 +97,33 @@
                 saveState();
             }
             
-            // Save current state to local storage
+            
+            /*
+             * Save current state to local storage
+             * @params  [none]
+             * @returns [none]
+            */
             function saveState() {
-                LS.setData('portfolio-storage', [
-                    vm.state.investments
-                ]);
+                var avgReturn = vm.pfMethods.avgPortfolioReturn(vm.state.investments);
+                LS.setData('portfolio-storage', [vm.state.investments]);
+                LS.setData('pfapp-storage', avgReturn);
                 // reset state; will use local storage values
                 setState();
             }
             
-            // wipe personal portfolio info from local storage
+            
+            /*
+             * wipe personal portfolio info from local storage
+             * @params  [none]
+             * @returns [none]
+            */
             function deleteData() {
                 // delete personal portfolio data
                 LS.deleteData('portfolio-storage');
+                LS.deleteData('pfapp-storage');
                 // reset state; will use defaults
                 setState();
             }
-            
-            function sumInvestmentValue(type) {
-                var sum = 0,
-                    i;
-                // loop through investments
-                for (i = 0; i < vm.state.investments.length; i += 1) {
-                    // add each investment's value to sum
-                    if (vm.state.investments[i].type === type) {
-                        sum += vm.state.investments[i].value;
-                    }
-                }
-                // return the sum
-                return sum;
-            }
-            
-            function allocationRatio() {
-                var sumBonds = sumInvestmentValue("Bond"),
-                    sumStocks = sumInvestmentValue("Stock"),
-                    sumTotal = 0,
-                    ratioStocks;
-                
-                sumTotal += sumBonds + sumStocks;
-                
-                ratioStocks = sumStocks / sumTotal;
-                
-                return ratioStocks;
-            }
-
             
             
         }]);

@@ -26,8 +26,8 @@
             
             /** 
              * Store item in local storage if storage exists
-             * @param       [string]    val         [string to be stored]
              * @param       [string]    loc         [local storage sub-location]
+             * @param       [string]    val         [string to be stored]
              * @param       [function]  storage     [localStorage feature detect & local ref]
              */
             function setData(loc, val) {

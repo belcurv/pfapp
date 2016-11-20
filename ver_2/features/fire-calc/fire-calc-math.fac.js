@@ -4,7 +4,7 @@
     
     angular.module('pfapp')
         
-        .factory('pfactory', function () {
+        .factory('fireMath', function () {
         
             // Required savings
             function calcReqSavings(annualExpenses, withdrawalRate) {
@@ -76,7 +76,8 @@
                     y1 = y;
                     i += 1;
                 }
-                return rate;
+                // return rate as whole percent (ie. 7 ... not .07)
+                return 100 * rate;
             }
         
             // return the thing

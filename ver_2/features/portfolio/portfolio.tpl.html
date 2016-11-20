@@ -49,55 +49,61 @@
         </div>
 
         <!-- Table -->
-        <table>
+        <table class="pf-table">
             <thead>
-                <th>Ticker</th>
-                <th>Value</th>
+                <th>Holding</th>
+                <th>Value ($)</th>
                 <th>Class</th>
-                <th></th>
-                <th></th>
+                <th>10-yr Return</th>
+                <th colspan="2"></th>
             </thead>
             <tbody>
                 <tr ng-repeat="e in vm.state.investments track by $index">
                     <td>
-                        <input class="" type="text" ng-model="e.ticker">
+                        <input tabindex="{{$index + 1}}" type="text" ng-model="e.ticker">
                     </td>
                     <td>
-                        <input class="" type="number" ng-model="e.value">
+                        <input tabindex="{{$index + 1}}" type="number" ng-model="e.value">
                     </td>
                     <td>
-                        <select name="class" tabindex="3" ng-model="e.type">
+                        <select name="class" tabindex="{{$index + 1}}" ng-model="e.type">
                             <option value="Stock">Stock</option>
                             <option value="Bond">Bond</option>
                         </select>
                     </td>
                     <td>
-                        <button class="" type="submit" ng-click="vm.pfMethods.saveState()">
+                        <input tabindex="{{$index + 1}}" type="number" ng-model="e.avgReturn">
+                    </td>
+                    <td>
+                        <button tabindex="{{$index + 1}}" type="submit" ng-click="vm.pfMethods.saveState()">
                             Update
                         </button>
                     </td>
                     <td>
-                        <button class="" type="submit" ng-click="vm.pfMethods.deleteInvestment($index)">
+                        <button tabindex="{{$index + 1}}" type="submit" ng-click="vm.pfMethods.deleteInvestment($index)">
                             Delete
                         </button>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input name="ticker" tabindex="1" type="text" ng-model="vm.state.newTicker">
+                        <input name="ticker" tabindex="999" type="text" ng-model="vm.state.newTicker">
                     </td>
                     <td>
-                        <input name="value" tabindex="2" type="number" ng-model="vm.state.newTickerValue">
+                        <input name="value" tabindex="999" type="number" ng-model="vm.state.newTickerValue">
                     </td>
                     <td>
-                        <select name="class" tabindex="3" ng-model="vm.state.newTickerType">
+                        <select name="class" tabindex="999" ng-model="vm.state.newTickerType">
                             <option value="Stock">Stock</option>
                             <option value="Bond">Bond</option>
                         </select>
                     </td>
+                    <td>
+                        <input name="avgReturn" tabindex="999" type="number" ng-model="vm.state.newAvgReturn">
+                    </td>
                     <td></td>
                     <td>
-                        <button tabindex="4" type="submit" ng-click="vm.pfMethods.addInvestment(vm.state.newTicker, vm.state.newTickerValue, vm.state.newTickerType)">
+                        <button tabindex="999" type="submit" ng-click="vm.pfMethods.addInvestment(vm.state.newTicker, vm.state.newTickerValue, vm.state.newTickerType, vm.state.newAvgReturn)">
                             Add
                         </button>
                     </td>
@@ -114,13 +120,16 @@
 
 <section>
     <div class="content-box">
+       
+        <p>Total Value of Portfolio: {{vm.pfMethods.sumPortfolioValue(vm.state.investments) | currency }}</p>
         
-        <p>Sum of asset class 'Stocks': {{ vm.pfMethods.sumInvestmentValue("Stock") | currency }}</p>
+        <p>Sum of asset class 'Stocks': {{ vm.pfMethods.sumInvestmentValue(vm.state.investments, "Stock") | currency }}</p>
         
-        <p>Sum of asset class 'Bonds': {{ vm.pfMethods.sumInvestmentValue("Bond") | currency }}</p>
+        <p>Sum of asset class 'Bonds': {{ vm.pfMethods.sumInvestmentValue(vm.state.investments, "Bond") | currency }}</p>
         
-        <p>Allocation Ratio: {{ (100 * vm.pfMethods.allocationRatio()) | number:1 }}% / {{ (100 * (1 - vm.pfMethods.allocationRatio())) | number:1 }}% (stocks / bonds)</p>
+        <p>Allocation Ratio: {{ (100 * vm.pfMethods.ratioStocks(vm.state.investments)) | number:1 }}% / {{ (100 * (1 - vm.pfMethods.ratioStocks(vm.state.investments))) | number:1 }}% (stocks / bonds)</p>
 
+        <p>Aggregate total return: {{vm.pfMethods.avgPortfolioReturn(vm.state.investments) * 100 | number:2 }}%</p>
         
     </div>
     

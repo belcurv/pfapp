@@ -179,30 +179,100 @@ hr {
     margin-bottom: 1em;
 }
 
-table {
+/* styles for commute calc tables */
+.cc-table {
     border-collapse: collapse;
     font-size: 10px;
     color: #404040;
     width: 100%;
 }
 
-thead {
+.cc-table thead {
     border-bottom: 2px solid #404040;
 }
 
-tbody tr:nth-child(odd) {
+.cc-table tbody tr:nth-child(odd) {
     background: #eee;
 }
 
-td, th {
+.cc-table td,
+.cc-table th {
     text-align: left;
     padding: 0.5rem 0.25rem;
 }
 
-th {
+.cc-table th {
     vertical-align: bottom;
     padding: 0.25rem;
 }
+/* end styles for commute calc tables */
+
+/* styles for portfolio tables */
+.pf-table {
+    border-collapse: collapse;
+    font-size: 14px;
+    color: #404040;
+    width: 100%;
+}
+
+.pf-table thead {
+    border-bottom: 2px solid #404040;
+}
+
+.pf-table tr {
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pf-table th {
+    text-align: left;
+    vertical-align: bottom;
+    padding: 0.25rem 0.5rem;
+}
+
+.pf-table td {
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    padding: 0;
+    height: 2.75rem;
+}
+
+.pf-table td input {
+    height: 100%;
+    width: 100%;
+    font-size: 14px;
+    padding: 0 .5em; 
+}
+
+.pf-table td input:hover {
+    background: rgba(95, 158, 160,.1);
+}
+
+.pf-table td input:focus {
+    background: rgba(95, 158, 160,.1);
+}
+
+.pf-table td select,
+.pf-table td button {
+    height: 80%;
+    width: 90%;
+    margin: 0 .5em;
+    padding: .25em .5em;
+    background-color: rgba(255, 178, 73, 0.35);
+    border: 1px solid rgba(147, 128, 108, 0.25);
+    font: inherit;
+    font-weight: normal;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.pf-table td button:hover {
+    background-color: rgb(95, 158, 160);
+    color: white;
+}
+
+/* end styles for portfolio tables */
+
 
 input {
     min-width: 1em;
@@ -277,24 +347,6 @@ a {
 /*    color: #bebbb5;*/
 }
 
-/* OLD METHOD: use with custom [?] button toggle */
-/*
-.icon-button {
-    display: inline-block;
-    line-height: 1.1em;
-    width: 19px;
-    border-radius: 2px;
-    text-align: center;
-    vertical-align: bottom;
-    font-weight: normal;
-    background-color: rgba(147, 128, 108, 0.1);
-    border: 1px solid rgba(147, 128, 108, 0.25);
-    color: #666666;
-    cursor: pointer;
-    margin-left: 0.25em;
-}
-*/
-
 .help {
     padding: 1em;
     margin: .25em 0 1em 0;
@@ -318,7 +370,7 @@ footer {
     -webkit-box-flex: 1;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    background-color: rgba(255, 178, 73, 0.42);
+    background-color: rgba(255, 178, 73, 0.35);
     color: black;
     border: 1px solid rgba(147, 128, 108, 0.25);
     padding: 0.5em 0.75em;
@@ -330,6 +382,7 @@ footer {
 
 .inputButton:hover {
     background-color: rgb(95, 158, 160);
+    color: white;
 }
 
 .footer-credit {
@@ -364,16 +417,12 @@ footer a:hover {
     #navIcons {
         display: none;
     }
-    
-    table {
-/*        font-size: inherit;*/
-    }
-    
-    td {
+        
+    .cc-table td {
         padding: 0.5rem;
     }
     
-    th {
+    .cc-table th {
         padding: 0.15rem 0.5rem;
     }
     
@@ -402,7 +451,8 @@ footer a:hover {
         font-size: 13px;
     }
     
-    th, td {
+    .cc-table th,
+    .cc-table td {
         padding: 0.5rem 0.1rem;
     }
     
