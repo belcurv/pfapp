@@ -54,7 +54,7 @@
                 <th>Holding</th>
                 <th>Value ($)</th>
                 <th>Class</th>
-                <th>10-yr Return</th>
+                <th>10-yr Return (%)</th>
                 <th colspan="2"></th>
             </thead>
             <tbody>
@@ -72,7 +72,7 @@
                         </select>
                     </td>
                     <td>
-                        <input tabindex="{{$index + 1}}" type="number" ng-model="e.avgReturn">
+                        <input tabindex="{{$index + 1}}" type="number" min="0.00" max="100.00" step="0.0001" ng-model="e.avgReturn">
                     </td>
                     <td>
                         <button tabindex="{{$index + 1}}" type="submit" ng-click="vm.pfMethods.saveState()">
@@ -99,7 +99,7 @@
                         </select>
                     </td>
                     <td>
-                        <input name="avgReturn" tabindex="999" type="number" ng-model="vm.state.newAvgReturn">
+                        <input name="avgReturn" tabindex="999" type="number" min="0.00" max="100.00" step="0.0001" ng-model="vm.state.newAvgReturn">
                     </td>
                     <td></td>
                     <td>
