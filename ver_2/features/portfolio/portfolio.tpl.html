@@ -49,7 +49,8 @@
         </div>
 
         <!-- Table -->
-        <table class="pf-table">
+        <div class="horiz-scroll">
+            <table class="pf-table">
             <thead>
                 <th style="">Holding</th>
                 <th style="">Value ($)</th>
@@ -113,6 +114,7 @@
                 </tr>
             </tbody>
         </table>
+        </div>
         
         <!-- Advise source of input data -->
         <alert-message message="{{vm.portfolioDataSource}}"></alert-message>

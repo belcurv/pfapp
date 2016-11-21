@@ -281,7 +281,6 @@ hr {
 
 /* end styles for portfolio tables */
 
-
 input {
     min-width: 1em;
 }
@@ -438,6 +437,14 @@ footer a:hover {
 
 /* Tiny screens: narrow nav icon spacing & full width content */
 @media all and (max-width: 360px) {
+    
+    .horiz-scroll {
+        overflow-x: scroll;
+    }
+    
+    .content-box {
+        padding: .25em .5em;
+    }
 
     #navIcons a {
         padding: 15px .5em;
