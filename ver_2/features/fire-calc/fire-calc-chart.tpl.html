@@ -1,37 +1,59 @@
-<div class="icon--rate1"></div>
-<p> Rate 1: {{inputs.rate1}}</p>
-
-<div class="icon--rate2"></div>
-<p> Rate 2: {{inputs.rate2}}</p>
-
-<svg class="chart--content" width="100%" height="100%" viewbox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+<svg class="chart--content"
+     width="100%" height="100%"
+     viewBox="{{viewBoxAttrs}}"
+     xmlns="http://www.w3.org/2000/svg">
 
     <!-- axis lines -->
     <g class="chart--x-grid">
-        <line ng-attr-x1="{{xMargin}}" ng-attr-y1="{{spacer}}" ng-attr-x2="{{xMargin}}" ng-attr-y2="{{height - yMargin}}"></line>
+        <line ng-attr-x1="{{xMargin}}"
+              ng-attr-y1="{{spacer}}"
+              ng-attr-x2="{{xMargin}}"
+              ng-attr-y2="{{height - yMargin}}">
+        </line>
     </g>
     <g class="chart--y-grid">
-        <line ng-attr-x1="{{xMargin}}" ng-attr-y1="{{height - yMargin}}" ng-attr-x2="{{width - spacer}}" ng-attr-y2="{{height - yMargin}}"></line>
+        <line ng-attr-x1="{{xMargin}}"
+              ng-attr-y1="{{height - yMargin}}"
+              ng-attr-x2="{{width - spacer}}"
+              ng-attr-y2="{{height - yMargin}}">
+        </line>
     </g>
 
     <!-- axis labels -->
-    <g class="labels x-labels" ng-repeat="x in xAxisLabels track by $index">
-        <line class="tick" ng-attr-x1="{{ x[0] + xMargin }}" ng-attr-y1="{{ height - yMargin }}" ng-attr-x2="{{ x[0] + xMargin }}" ng-attr-y2="{{ height - yMargin + 2 }}">
+    <g class="labels x-labels"
+       ng-repeat="x in xAxisLabels track by $index" >
+        <line class="tick"
+              ng-attr-x1="{{ x[0] + xMargin }}"
+              ng-attr-y1="{{ height - yMargin }}"
+              ng-attr-x2="{{ x[0] + xMargin }}"
+              ng-attr-y2="{{ height - yMargin + 2 }}">
         </line>
         <text ng-attr-x="{{ x[0] + xMargin }}" y="395">
             {{ x[1] }}
         </text>
     </g>
 
-    <g class="labels y-labels" ng-repeat="y in yAxisLabels track by $index">
-        <line class="horiz-rule" ng-attr-x1="{{ xMargin }}" ng-attr-y1="{{ y[0] - yMargin }}" ng-attr-x2="{{ width - spacer }}" ng-attr-y2="{{ y[0]  - yMargin }}">
+    <g class="labels y-labels"
+       ng-repeat="y in yAxisLabels track by $index">
+        <line class="horiz-rule"
+              ng-attr-x1="{{ xMargin }}"
+              ng-attr-y1="{{ y[0] - yMargin }}"
+              ng-attr-x2="{{ width - spacer }}"
+              ng-attr-y2="{{ y[0]  - yMargin }}">
         </line>
-        <text ng-attr-x="{{xMargin - 5}}" ng-attr-y="{{ y[0] - yMargin + 4 }}">
+        <text ng-attr-x="{{xMargin - 5}}"
+              ng-attr-y="{{ y[0] - yMargin + 4 }}">
             {{ y[1] | currency }}
         </text>
     </g>
 
-    <path class="chart--line1" ng-attr-d="{{ linePath(points) }}"></path>
-    <path class="chart--line2" ng-attr-d="{{ linePath2(points2) }}"></path>
+    <!-- series 1 path -->
+    <path class="chart--line1"
+          ng-attr-d="{{ linePath(points) }}">
+    </path>
 
+    <!-- series 2 path -->
+    <path class="chart--line2"
+          ng-attr-d="{{ linePath2(points2) }}">
+    </path>
 </svg>
