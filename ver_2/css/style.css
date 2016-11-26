@@ -435,20 +435,21 @@ footer a:hover {
 }
 
 .icon--rate2 {
-    background: rgba(217, 116, 0, .15);
-    border: 1px solid rgba(217, 116, 0, .3);
+    background: rgba(255, 178, 73, 0.3);
+    border: 1px solid rgba(255, 178, 73, 0.7);
+    margin-left: 1.5em;
 }
 
 .chart--line1 {
-    fill: rgba(0, 116, 217, .15);
-    stroke: rgba(0, 116, 217, .3);
+    fill: rgba(95, 158, 160, 0.3);
+    stroke: rgba(95, 158, 160, 0.7);
     stroke-width: 1px;
 }
 
 .chart--line2 {
-    fill: rgba(217, 116, 0, .15);
-    stroke: rgba(217, 116, 0, .3);
-    stroke-width: 1px;
+    fill: rgba(255, 178, 73, 0.3);
+    stroke: rgba(255, 178, 73, 0.7);
+    stroke-width: 1px;    
 }
 
 .chart--x-grid,

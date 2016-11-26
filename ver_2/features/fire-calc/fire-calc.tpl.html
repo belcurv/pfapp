@@ -236,8 +236,20 @@
                 </div>
             </div>
             
-            <!-- chart section -->
-            <!-- generateChart(rate, pmt, pv, nper) -->
+            <!-- chart legend -->
+            <p>
+                <div class="icon--rate1"></div> {{ vm.state.FVrate | number:3 }}%
+                <div class="icon--rate2"></div> {{ vm.fcMethods.calcRate(
+                               vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate),
+                               -vm.state.FVpmt,
+                               -vm.state.FVpv,
+                               vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate),
+                               null,
+                               null
+                            ) | number:3 }} %
+            </p>
+            
+            <!-- chart directive -->            
             <fire-calc-chart fire-state="vm.state"
                              nper="(vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate))"
                              required-rate="(vm.fcMethods.calcRate(vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate), -vm.state.FVpmt, -vm.state.FVpv, vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate), null, null))">
@@ -247,8 +259,6 @@
         </div>
     </section>
     <!-- ================ END CHARTS SECTION ================ -->   
-
-    
     
 </div>
 <!-- ====================== END OUTPUTS ======================= -->

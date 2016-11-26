@@ -7,32 +7,38 @@
             
             var link = function (scope, elem, attrs) {
                 
-                // make sure link function received directive's attributes
-                console.log('FVrate: ', scope.fireState.FVrate,
-                            '\nFVpmt: ', scope.fireState.FVpmt,
-                            '\nFVpv: ', scope.fireState.FVpv,
-                            '\nnper: ', scope.nper,
-                            '\nrequiredRate: ', scope.requiredRate);
 
-                // bind 'global' chart layout attributes
-                scope.width = 600;
-                scope.height = 400;
+                // bind chart layout attributes to scope
+                scope.width   = 600;
+                scope.height  = 400;
                 scope.xMargin = 90;
                 scope.yMargin = 20;
-                scope.spacer = 10;
+                scope.spacer  = 10;
                 
-                // example SVG viewBox string syntax = "0 0 600 400"
-                scope.viewBoxAttrs = "0 0 " + scope.width + ' ' + scope.height;
+                // init and bind axis label arrays
+                scope.xAxisLabels = [];
+                scope.yAxisLabels = [];
+                
 
+                // add SVG viewBox attributes string to <svg id="svg">
+                // string syntax: "0 0 600 400"            
+                angular.element(document.getElementById('svg'))
+                    .attr('viewBox', '0 0 ' + scope.width + ' ' + scope.height);
+
+                
+                // watch 'fireState' (the inputs) for changes.
+                // on changes, update points and axis labels
                 scope.$watchCollection('fireState', function () {
-                    scope.points  = buildArr(scope.fireState.FVrate, scope.fireState.FVpmt, scope.fireState.FVpv, scope.nper);
+                    scope.points = buildArr(scope.fireState.FVrate, scope.fireState.FVpmt, scope.fireState.FVpv, scope.nper);
+                    
                     scope.points2 = buildArr(scope.requiredRate, scope.fireState.FVpmt, scope.fireState.FVpv, scope.nper);
+                    
                     genXLabels(scope.points);
                     genYLabels(scope.points);
                 });
                 
                 
-                // future value calculator
+                // standard future value calculator
                 function calcFv(rate, pmt, pv, nper) {
                     
                     // check whether rate is decimal or fraction, convert if nec
@@ -46,7 +52,7 @@
                 }
 
 
-                // build array of time,value pairs
+                // build array of time-value pairs
                 // uses FV calc, iterating nper from 0 to nper
                 function buildArr(rate, pmt, pv, nper) {
                     var outputArr = [],
@@ -61,10 +67,10 @@
                 }
 
 
-                // coord array for FV inputs & FVrate
+                // build and bind coord array from FV inputs w/ FVrate
                 scope.points = buildArr(scope.fireState.FVrate, scope.fireState.FVpmt, scope.fireState.FVpv, scope.nper);
                 
-                // coord array for FV inputs & requiredRate
+                // build and bind coord array from FV inputs w/ requiredRate
                 scope.points2 = buildArr(scope.requiredRate, scope.fireState.FVpmt, scope.fireState.FVpv, scope.nper);
 
                 // build SVG path string
@@ -138,7 +144,6 @@
                     return path;
                 };
 
-                scope.xAxisLabels = [];
 
                 // generate x axis label matrix
                 // each array element consists of two values:
@@ -171,33 +176,45 @@
                 }
                 genXLabels(scope.points);
 
-                scope.yAxisLabels = [];
 
                 // generate y axis label matrix
                 // each array element consists of two values:
                 //   1) the SVG y value for positioning axis label text in the SVG graph
                 //   2) the actual FV value for each label
                 function genYLabels(points) {
-                    var numPoints = points.length - 1,
+                    var numPoints,
                         yMargin = scope.yMargin,
                         spacer = scope.spacer,
-                        yspacing = (scope.height - yMargin - spacer) / numPoints,
+                        yspacing,
                         yMax = points[points.length - 1][1],
                         yValue,
                         yPos,
                         i;
-
-                    // clear
+                    
+                    // limit qty of Y axis labels to 10
+                    // points.length is 1 more than the number of years to FIRE
+                    // because it includes year 0
+                    if (points.length > 10) {
+                        numPoints = 10;
+                    } else {
+                        numPoints = points.length - 1;
+                    }
+                    
+                    // calculate relative space between each Y axis label
+                    yspacing = (scope.height - yMargin - spacer) / numPoints;
+                    
+                    // clear the array before each rebuild
                     scope.yAxisLabels.length = 0;
 
+                    // loop through points and push axis labels to yAxisLabels array
                     for (i = 0; i < points.length; i += 1) {
-                        // calculate y axis label values
+                        // calculate y axis label value
                         yValue = i * yMax / numPoints;
 
-                        // calculate y position
+                        // calculate y axis label position
                         yPos = scope.height - yspacing * i;
 
-                        // push
+                        // push yPos & yValue to yAxisLabels array
                         scope.yAxisLabels.push([yPos, yValue]);
                     }
 
