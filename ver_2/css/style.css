@@ -414,6 +414,69 @@ footer a:hover {
     text-decoration: underline;
 }
 
+/* CHART STUFF */
+.chart--content {
+    background: rgba(190, 190, 190, .1);
+    margin: 0;
+    padding: 0;
+}
+
+.icon--rate1,
+.icon--rate2 {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+}
+
+.icon--rate1 {
+    border: 1px solid rgba(0, 116, 217, .3);
+    background: rgba(0, 116, 217, .15);
+}
+
+.icon--rate2 {
+    background: rgba(217, 116, 0, .15);
+    border: 1px solid rgba(217, 116, 0, .3);
+}
+
+.chart--line1 {
+    fill: rgba(0, 116, 217, .15);
+    stroke: rgba(0, 116, 217, .3);
+    stroke-width: 1px;
+}
+
+.chart--line2 {
+    fill: rgba(217, 116, 0, .15);
+    stroke: rgba(217, 116, 0, .3);
+    stroke-width: 1px;
+}
+
+.chart--x-grid,
+.chart--y-grid,
+.tick {
+    stroke: black;
+    stroke-dasharray: 0;
+    stroke-width: 1;
+}
+
+.horiz-rule {
+    stroke: rgba(60,60,60,.3);
+    stroke-dasharray: 0;
+    stroke-width: 1px;
+}
+
+.labels.x-labels {
+    text-anchor: middle;
+}
+
+.labels.y-labels {
+    text-anchor: end;
+}
+
+.labels {
+    font-size: 12px;
+}
+
 
 /* Greater than 640x, show nav text & hide icons */
 @media all and (min-width: 640px) {
