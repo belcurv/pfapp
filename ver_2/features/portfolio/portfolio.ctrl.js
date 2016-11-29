@@ -11,8 +11,8 @@
                 ];
 
         
-            /*
-             * fetch input data from either localStorage or defaults
+            /* fetch input data from either localStorage or defaults
+             *
              * @params  [none]
              * @returns [array of portfolio holdings or blank defaults]
             */
@@ -28,8 +28,8 @@
             }
             
             
-            /*
-             * bind input data to model
+            /* bind input data to model
+             *
              * @params  [none]
              * @returns [none]
             */
@@ -42,9 +42,8 @@
                     newTickerType: "Stock"
                 };
             }
-            
-            // call on first hit
-            setState();
+            setState();  // call on first hit
+
             
             // public methods
             vm.pfMethods = {
@@ -59,8 +58,8 @@
             };
             
             
-            /*
-             * add investment to the array
+            /* add investment to the array
+             *
              * @params  [string]    ticker      [name of the hoding]
              * @params  [number]    val         [dollar value of the holding]
              * @params  [string]    type        [asset class: Stock or Bond]
@@ -84,8 +83,8 @@
             }
             
                        
-            /*
-             * delete a single investment
+            /* delete a single investment
+             *
              * @params  [number]    index       [the index of the array element to remove]
              * @returns                         [none]
             */
@@ -98,8 +97,8 @@
             }
             
             
-            /*
-             * Save current state to local storage
+            /* Save current state to local storage
+             *
              * @params  [none]
              * @returns [none]
             */
@@ -112,8 +111,8 @@
             }
             
             
-            /*
-             * wipe personal portfolio info from local storage
+            /* wipe personal portfolio info from local storage
+             *
              * @params  [none]
              * @returns [none]
             */

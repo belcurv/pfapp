@@ -59,10 +59,7 @@
                 vm.fireCalcDataSource = obtainDataSource();
                 
                 // loadState returns our array of values
-                var arr = loadState(),
-                    
-                    // loadRor() returns aggregate portfolio return or default return
-                    rateOfReturn = loadRoR();
+                var arr = loadState();
                 
                 // bind array values to model
                 vm.state = {

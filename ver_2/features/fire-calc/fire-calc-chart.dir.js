@@ -11,29 +11,28 @@
             var link = function (scope, elem, attrs) {
 
                 // define chart layout attributes
-                var width = 600,
-                    height = 300,
+                var width   = 600,
+                    height  = 300,
                     xMargin = 80,
                     yMargin = 20,
-                    spacer = 10,
+                    spacer  = 10,
 
-                    // init empty coord point containers
+                    // init empty coord point container
                     points = [],
 
                     // capture SVG element
                     svgElem = angular.element(document.getElementById('svg'));
 
 
-                // add CSS class and attributes to SVG element
+                // add CSS class, namespace and attributes to main <svg> element
                 svgElem.addClass('chart--content')
+                    .attr('xmlns', ns)
                     .attr('width', '100%')
                     .attr('height', '100%')
-                    .attr('xmlns', 'http://www.w3.org/2000/svg')
                     .attr('viewBox', '0 0 ' + width + ' ' + height);
 
 
-                // watch isolate scope paramters for changes.
-                // On changes, update points and re-render chart
+                // watch isolate scope paramters for changes & re-render chart
                 scope.$watchGroup([
                     'fireState.FVrate',
                     'fireState.FVpmt',
@@ -41,39 +40,46 @@
                     'nper',
                     'requiredSavings'
                 ], function () {
-                    
-                    points = buildArr(scope.fireState.FVrate, scope.fireState.FVpmt, scope.fireState.FVpv, scope.nper);
-                    
                     render();
-                
                 });
                 
 
-                // build array of time-value pairs
-                // uses FV calc, iterating nper from 0 to nper
+                /* BUILD ARRAY OF TIME-VALUE PAIRS
+                 * Uses calcFV from fireMath factory
+                 *
+                 * @params   [number]   rate   [annual interest rate]
+                 * @params   [number]   pmt    [annual contribution]
+                 * @params   [number]   pv     [present account value]
+                 * @params   [number]   nper   [number of periods in years]
+                 * @returns  [array]           [array of time-value pairs]
+                */
                 function buildArr(rate, pmt, pv, nper) {
                     var outputArr = [],
-                        j,
-                        y;
+                        time,
+                        value;
+                    
+                    // avoid zero or negative nper values
+                    if (nper <= 1) {
+                        nper = 1;
+                    }
 
-                    for (j = 0; j < nper + 1; j += 1) {
-                        y = fireMath.calcFV(rate, pmt, pv, j);
-                        outputArr.push([j, y]);
+                    for (time = 0; time < nper + 1; time += 1) {
+                        value = fireMath.calcFV(rate, pmt, pv, time);
+                        outputArr.push([time, value]);
                     }
                     return outputArr;
                 }
                 
 
-                // build and bind coord array from FV inputs w/ FVrate
-                points = buildArr(scope.fireState.FVrate, scope.fireState.FVpmt, scope.fireState.FVpv, scope.nper);
-                
-
-                // Calculate maximum vertical (Y) chart axis value.
-                // Max value is multiple of $50,000
+                /* CALCULATE MAXIMUM VERTICAL (Y) CHART AXIS VALUE
+                 * Max Y value is multiple of $50,000 to make the chart look nice
+                 *
+                 * @params    [array]   points   [array of time-value pairs]
+                 * @returns   [number]           [maximum chart Y axis value]
+                */
                 function getChartYMax(points) {
                     var reqSavings = scope.requiredSavings,
                         maxYPoint = points[points.length - 1][1],
-                        largerVal,
                         howManyFiftys;
 
                     if (reqSavings > maxYPoint) {
@@ -82,13 +88,19 @@
                         howManyFiftys = Math.floor(maxYPoint / 50000);
                     }
 
+                    // return 1 more than the quotient, times 50000
                     return ((howManyFiftys + 1) * 50000);
                 }
 
-
-                // build SVG path string
-                var linePath = function (points) {
-                    var path,
+                
+                /* GENERATE SVG PATH
+                 *
+                 * @params    [array]   points   [array of time-value pairs]
+                 * @returns   [object]           [complete SVG <path> element]
+                */
+                function genPath(points) {
+                    var pathElem = angular.element(document.createElementNS(ns, 'path')),
+                        pathString,                        
                         pathParts = [],
                         currentPoint,
                         i,
@@ -100,33 +112,38 @@
                         xMultiple = (width - xMargin - spacer) / numPoints,
                         yMultiple = (height - yMargin - spacer) / chartYMax,
 
-                        // convert y values to start at chart bottom
+                        // format values to align with chart extents
                         formattedPoints = points.map(function (point) {
                             return [
                                 (point[0] * xMultiple) + xMargin,
                                 (height - (point[1] * yMultiple)) - yMargin
                             ];
                         });
-
-                    // build path array
+                    
+                    // loop through points array to build pathParts array
                     for (i = 0; i < formattedPoints.length; i += 1) {
                         currentPoint = formattedPoints[i];
 
                         pathParts.push(currentPoint[0] + ',' + currentPoint[1]);
                     }
 
-                    // convert path array to string
-                    // because SVG path 'd' attr expects a string
-                    path = 'M' + pathParts.join(' L') +
+                    // join all pathParts elements with directions to enclose the shape
+                    pathString = 'M' + pathParts.join(' L') +
                         ' L' + (width - spacer) + ',' + (height - yMargin) +
                         ' L' + xMargin + ',' + (height - yMargin) +
                         ' Z';
+                    
+                    // add CSS class and path 'd' attribute to <path> element
+                    pathElem
+                        .addClass('chart--line1')
+                        .attr('d', pathString);
 
-                    return path;
-                };
+                    return pathElem;
+                }
 
 
-                /* GENERATE GOAL LINE 
+                /* GENERATE GOAL LINE
+                 *
                  * @params  [array]  points   [array of coordinate points]
                  * @params  [number] goal     [target savings goal from controller]
                  * @returns [object]          [<g>roup of axis <line> and <text> els]
@@ -139,7 +156,7 @@
                         yMultiple = goal / chartYMax,
                         goalYVal = height - yMargin - ((height - yMargin - spacer) * yMultiple);
 
-                    // add attributes to axis elements
+                    // add attributes to goal <line> element
                     group.addClass('goal-line');
                     line.attr('x1', xMargin)
                         .attr('y1', goalYVal)
@@ -152,7 +169,7 @@
                         .attr('y', (goalYVal + 12))
                         .html('Goal: ' + $filter('currency')(goal));
 
-                    // append the <line> and <text> to the <g>
+                    // append goal <line> and <text> to the <g>roup
                     group.append(line);
                     group.append(text);
 
@@ -162,13 +179,14 @@
 
                 /* GENERATE AXIS LABELS
                  *
-                 * @params  [array]     points  [array of coordinate points]
-                 * @params  [string]    axis    ['y' or 'x' specifies conditional path]
-                 * @returns [object]            [<g>roup of axis <line> and <text> els]
+                 * 'ns' (namespace) comes from our angular.constant()
+                 *
+                 * @params  [array]    points  [array of coordinate points]
+                 * @params  [string]   axis    ['y' or 'x' specifies conditional path]
+                 * @returns [object]           [<g>roup of axis <line> and <text> els]
                  */
                 function genAxisLabels(points, axis) {
 
-                    // ns comes from our angular.constant()
                     var group = angular.element(document.createElementNS(ns, 'g')),
                         line, // placeholder for <line> element built in loop
                         text, // placeholder for <text> element built in loop
@@ -198,13 +216,13 @@
                         ySpacing = (height - yMargin - spacer) / numPoints;
 
                         // loop through points, generate <line> and <text> elements,
-                        // and append each of them to our <g> group
+                        // and append each of them to our <g>roup
                         for (i = 0; i < points.length; i += 1) {
                             // calculate y axis label value
                             yValue = i * chartYMax / numPoints;
 
                             // calculate y axis label position
-                            yPos = height - ySpacing * i;
+                            yPos = height - yMargin - (ySpacing * i);
 
                             // create new <line> element
                             line = angular.element(document.createElementNS(ns, 'line'));
@@ -212,9 +230,9 @@
                             // add attributes to <line> element
                             line.addClass('horiz-rule')
                                 .attr('x1', xMargin)
-                                .attr('y1', yPos - yMargin)
+                                .attr('y1', yPos)
                                 .attr('x2', (width - spacer))
-                                .attr('y2', yPos - yMargin);
+                                .attr('y2', yPos);
 
                             // create new <text> element
                             text = angular.element(document.createElementNS(ns, 'text'));
@@ -222,7 +240,7 @@
                             // add attributes to <text> element
                             text
                                 .attr('x', (xMargin - 5))
-                                .attr('y', (yPos - yMargin + 4))
+                                .attr('y', (yPos + 4))
                                 .html($filter('currency')(yValue));
 
                             group
@@ -278,6 +296,8 @@
 
 
                 /* GENERATE AXIS LINES
+                 *
+                 * 'ns' (namespace) comes from our angular.constant()
                  * 
                  * @param   [string]    cssClass    [the CSS class selector]
                  * @param   [number]    x1          [starting x coord]
@@ -287,7 +307,7 @@
                  * @returns [object]                [SVG <g> DOM group object]
                  */
                 function genAxisLine(cssClass, x1, y1, x2, y2) {
-                    // ns comes from our angular.constant()
+
                     var group = angular.element(document.createElementNS(ns, 'g')),
                         line = angular.element(document.createElementNS(ns, 'line'));
 
@@ -305,39 +325,39 @@
                 }
 
 
-                // MAIN RENDERER
+                /* MAIN RENDERER
+                 * 'ns' (namespace) comes from our angular.constant()
+                */
                 function render() {
+                    
+                    // build coord points array from fireState inputs and nper
+                    points = buildArr(scope.fireState.FVrate, scope.fireState.FVpmt, scope.fireState.FVpv, scope.nper);
 
-                    // empty containing svgElem before refilling it
-                    svgElem.empty();
-
-                    // ns comes from our angular.constant()
-                    var pathElem = document.createElementNS(ns, 'path');
-
-                    // ! no idea why the first param is 'null' !
-                    // Changing it to 'ns' breaks ?!  WTF XMLSVG?
-                    pathElem.setAttributeNS(null, 'class', 'chart--line1');
-                    pathElem.setAttributeNS(null, 'd', linePath(points));
-
-                    // append paths
+                    // empty parent <svg> element before each render
                     svgElem
-                        .append(pathElem);
+                        .empty();
 
-                    // append goal line
+                    // append <path>
+                    svgElem
+                        .append(genPath(points));
+
+                    // append goal <line> and <text> <g>roup
                     svgElem
                         .append(genGoalLine(points, scope.requiredSavings));
 
-                    // append axis lines
+                    // append axis <line> and <text> <g>roups
                     svgElem
                         .append(genAxisLine('chart--x-grid', xMargin, spacer, xMargin, (height - yMargin)))
                         .append(genAxisLine('chart--y-grid', xMargin, (height - yMargin), (width - spacer), (height - yMargin)));
 
-                    // append axis labels
+                    // append axis label <text> <g>roups
                     svgElem
                         .append(genAxisLabels(points, 'y'))
                         .append(genAxisLabels(points, 'x'));
 
                 }
+                
+                // call immediately on page load
                 render();
 
             };

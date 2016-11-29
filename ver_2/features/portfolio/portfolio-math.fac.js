@@ -4,9 +4,10 @@
     angular.module('pfapp')
     
     .factory('pfMath', [function () {
+
         
-        /*
-         * Sum the whole portfolio
+        /* Sum the whole portfolio
+         *
          * @params  [array]     investments     [all investments]
          * @returns [number]                    [sum of all holdings]
         */
@@ -22,8 +23,8 @@
         }
         
         
-        /*
-         * Sum holdings of a single asset class
+        /* Sum holdings of a single asset class
+         *
          * @params  [array]     investments     [all investments]
          * @params  [string]    type            [asset flass to sum]
          * @returns [number]                    [sum of single asset class]
@@ -42,8 +43,8 @@
         }
 
         
-        /*
-         * Calculate the percentage of Stocks held in portfolio
+        /* Calculate the percentage of Stocks held in portfolio
+         *
          * @params  [array]     investments     [all investments]
          * @returns [number]                    [percentage of stocks held]
         */
@@ -54,9 +55,10 @@
                 
                 return (sumStocks / sumTotal);
         }
+
         
-        /*
-         * Calculate aggregate average portfolio returns
+        /* Calculate aggregate average portfolio returns
+         *
          * @params  [array]     investments     [all investments]
          * @returns [number]                    [average portfolio return]
         */
@@ -85,7 +87,7 @@
         }
 
         
-        // export the methods
+        // export the thing
         return {
             sumPortfolioValue: sumPortfolioValue,
             sumInvestmentValue: sumInvestmentValue,
