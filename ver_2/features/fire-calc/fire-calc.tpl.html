@@ -40,14 +40,14 @@
 
         <!-- help -->
         <div ng-if="inputHelpToggle" class="help">
-            <p>The purpose of this section is to input your personal data for use in the calculations below.</p>
+            <p>Input your specific data for use in the calculations below.</p>
 
             <ul>
-                <li><em>FIRE</em> = Financial Independence / Retire Early. <em>FIRE Age</em> is the age you expect to retire.</li>
-                <li><em>Annual expenses</em> = your expected annual household expenses on year 1 of retirement. </li>
-                <li><em>Withdrawal rate</em> = your personal safe withdrawal rate, as a persentage (eg. "4" = 4%)</li>
-                <li><em>Rate of Return</em> = The average return on investment you expect on your retirement savings, as a persentage (eg. "7" = 7%).</li>
-                <li><em>Annual Savings</em> = Your total annual retirement savings.</li>
+                <li><em>FIRE</em> = Financial Independence / Retire Early. <em>FIRE Age</em>: the age you expect to achieve FI.</li>
+                <li><em>Annual expenses</em> = your expected annual household expenses on year 1 of FI. </li>
+                <li><em>Withdrawal rate</em> = your personal safe withdrawal rate, as a percentage (eg. "4" = 4%). See, for exmample, the Trinity Study for more on how this number was arrived at.</li>
+                <li><em>Rate of Return</em> = The average rate of return earned by your retirement savings, as a percentage (eg. "7" = 7%).</li>
+                <li><em>Annual Savings</em> = Your recurring annual retirement savings amount.</li>
                 <li><em>Monthly Savings</em> = Calculated from your annual contributions.</li>
             </ul>
         </div>
@@ -92,7 +92,7 @@
             <div class="Grid-cell InputAddOn">
                 <span class="InputAddOn-item">Monthly Savings</span>
                 <span class="InputAddOn-field">
-                    {{ (vm.state.FVpmt / 12) | currency:"$" }}
+                    {{ (vm.state.FVpmt / 12) | currency }}
                 </span>
             </div>
         </div>
@@ -105,7 +105,7 @@
 <!-- ======================= END INPUTS ======================= -->
 
 <!-- ========================= OUTPUTS ======================== -->
-<div class="Grid Grid--full large-Grid--1of2">
+<div class="Grid Grid--full">
     <!-- ================== RESULTS SECTION =================== -->
     <section class=Grid-cell>
         <div class="content-box">
@@ -124,18 +124,18 @@
 
             <!-- help -->
             <div ng-if="resultsHelpToggle" class="help">
-                <p>These results are based on the number enterred above.</p>
+                <p>These results are based on the inputs entered above.</p>
 
                 <ul>
-                    <li><em>Current Age</em> = Calculated from your birth date.</li>
-                    <li><em>Years to FIRE</em> = Years until you anticipate retirement. Calculated from your FIRE age and today's date. </li>
+                    <li><em>Current Age</em> = Your age based in birth date and today's date.</li>
+                    <li><em>Years to FIRE</em> = Years between today and your anticipated retirement age.</li>
                     <li><em>Required Savings</em> = The total you need to save based on your expected annual expenses and your safe withdrawal rate.</li>
-                    <li><em>Required Return</em> = The average your investments need to return to achieve our target savings given the years to FIRE.</li>
+                    <li><em>Required Return</em> = The average rate your investments need to return to achieve your target savings given the years to FIRE.</li>
                 </ul>
             </div>
 
             <!-- results -->
-            <div class="Grid Grid--gutters Grid--full med-Grid--1of2 large-Grid--full">
+            <div class="Grid Grid--gutters Grid--full med-Grid--1of2 ">
                 <div class="Grid-cell InputAddOn">
                     <span class="InputAddOn-item">Calculated Age</span>
                     <span class="InputAddOn-field">
@@ -184,13 +184,7 @@
                            null,
                            null) | number:3 }}%.</p>
 
-        </div>
-    </section>
-    <!-- ================ END RESULTS SECTION ================= -->
-
-    <!-- ================ FUTURE VALUE SECTION ================ -->   
-    <section class=Grid-cell>
-        <div class="content-box">
+        
 
             <!-- section title -->
             <div class="Grid">
@@ -228,37 +222,23 @@
     <!-- ================ CHARTS SECTION ================ -->   
     <section class=Grid-cell>
         <div class="content-box">
-
-            <!-- section title -->
+           
+            <!-- results title -->
             <div class="Grid">
                 <div class="Grid-cell">
-                    <h4>LOOK, A CHART!</h4>
+                    <h4>CHART!</h4>
                 </div>
             </div>
             
-            <!-- chart legend -->
-            <p>
-                <div class="icon--rate1"></div> {{ vm.state.FVrate | number:3 }}%
-                <div class="icon--rate2"></div> {{ vm.fcMethods.calcRate(
-                               vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate),
-                               -vm.state.FVpmt,
-                               -vm.state.FVpv,
-                               vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate),
-                               null,
-                               null
-                            ) | number:3 }} %
-            </p>
-            
             <!-- chart directive -->            
             <fire-calc-chart fire-state="vm.state"
-                             nper="(vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate))"
-                             required-rate="(vm.fcMethods.calcRate(vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate), -vm.state.FVpmt, -vm.state.FVpv, vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate), null, null))">
-                Loading SVG Chart...
+                        nper="vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate)"
+                        required-savings="vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate)">         
             </fire-calc-chart>
 
         </div>
     </section>
-    <!-- ================ END CHARTS SECTION ================ -->   
-    
+    <!-- ================ END CHARTS SECTION ================ -->
+
 </div>
 <!-- ====================== END OUTPUTS ======================= -->

@@ -6,12 +6,22 @@
         
         .factory('fireMath', function () {
         
-            // Required savings
+            /* Required savings
+             *
+             * @params  [number]  annualExpenses  [annual retirement expenses]
+             * @params  [number]  withdrawalRate  [safe withdrawal rate]
+             * @returns [number]                  [total required savings]
+            */
             function calcReqSavings(annualExpenses, withdrawalRate) {
                 return annualExpenses / (withdrawalRate / 100);
             }
         
-            // Age
+            
+            /* Calculate Age
+             *
+             * @params  [object]    birthdate   [date object]
+             * @returns [number]                [age in years]
+            */
             function calcAge(birthDate) {
                 var today = new Date();
                 
@@ -19,16 +29,41 @@
                 return (Math.floor((today - birthDate) / 31536000000));
             }
         
-            // Future Value
+            
+            /* Future Value
+             *
+             * @params  [number]    rate    [annual interest rate]
+             * @params  [number]    pmt     [annual contribution]
+             * @params  [number]    pv      [present account value]
+             * @params  [number]    nper    [number of periods in years]
+             * @returns [number]            [account value at time nper]
+            */
             function calcFV(rate, pmt, pv, nper) {
+                
+                // if rate is whole percent, convert to decimal
+                if (rate > 1) {
+                    rate = rate / 100;
+                }
                 
                 var fv = ((pmt * (Math.pow(1 + rate, nper) - 1) / rate) + (pv * Math.pow(1 + rate, nper)));
                 
                 return Math.abs(fv);
             }
 
-            // Rate solver
-            // credit: http://stackoverflow.com/questions/12064793/simple-financial-rate-function-in-javascript
+
+            /* Rate solver
+             *
+             * @params  [number]    nper    [number of periods in years]
+             * @params  [number]    pmt     [annual contribution]
+             * @params  [number]    pv      [present account value]
+             * @params  [number]    fv      [target future value]
+             * @params  [number]    type    [TVM FV type]
+             * @params  [number]    guess   [rate launch point]
+             * @returns [number]            [interest rate required to meet goal]
+             *
+             * credit: http://stackoverflow.com/questions/12064793/simple-financial-rate-function-in-javascript
+             * 
+            */
             function solveRate(nper, pmt, pv, fv, type, guess) {
                 
                 if (guess === null) {
@@ -80,6 +115,7 @@
                 return 100 * rate;
             }
         
+
             // return the thing
             return {
                 calcReqSavings: calcReqSavings,

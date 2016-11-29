@@ -137,6 +137,7 @@ header h1:hover,
 #navIcons a:hover {
     border-bottom: 3px solid rgb(95, 158, 160);   
     cursor: pointer;
+    color: white;
 }
 
 #navIcons a:active,
@@ -416,66 +417,72 @@ footer a:hover {
 
 /* CHART STUFF */
 .chart--content {
-    background: rgba(190, 190, 190, .1);
-    margin: 0;
-    padding: 0;
+   background: rgba(190, 190, 190, .1);
+   margin: 0.25em 0 0.75em;
+   padding: 0;
 }
 
 .icon--rate1,
 .icon--rate2 {
-    display: inline-block;
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
+   display: inline-block;
+   height: 12px;
+   width: 12px;
+   border-radius: 50%;
 }
 
 .icon--rate1 {
-    border: 1px solid rgba(0, 116, 217, .3);
-    background: rgba(0, 116, 217, .15);
+   border: 1px solid rgba(0, 116, 217, .3);
+   background: rgba(0, 116, 217, .15);
 }
 
 .icon--rate2 {
-    background: rgba(255, 178, 73, 0.3);
-    border: 1px solid rgba(255, 178, 73, 0.7);
-    margin-left: 1.5em;
+   background: rgba(217, 116, 0, .15);
+   border: 1px solid rgba(217, 116, 0, .3);
 }
 
 .chart--line1 {
-    fill: rgba(95, 158, 160, 0.3);
-    stroke: rgba(95, 158, 160, 0.7);
-    stroke-width: 1px;
-}
-
-.chart--line2 {
-    fill: rgba(255, 178, 73, 0.3);
-    stroke: rgba(255, 178, 73, 0.7);
-    stroke-width: 1px;    
+   fill: rgba(0, 116, 217, .15);
+   stroke: rgba(0, 116, 217, .3);
+   stroke-width: 1px;
 }
 
 .chart--x-grid,
 .chart--y-grid,
 .tick {
-    stroke: black;
-    stroke-dasharray: 0;
-    stroke-width: 1;
+   stroke: black;
+   stroke-dasharray: 0;
+   stroke-width: 1;
 }
 
 .horiz-rule {
-    stroke: rgba(60,60,60,.3);
-    stroke-dasharray: 0;
-    stroke-width: 1px;
+   stroke: rgba(60, 60, 60, .3);
+   stroke-dasharray: 0;
+   stroke-width: 1px;
+}
+
+.goal-line {
+   stroke: rgba(217, 116, 0, .75);
+   stroke-dasharray: 3 2;
+   stroke-width: 1px;
+}
+
+.goal-text {
+   font-size: 10px;
+   fill: rgba(217, 116, 0, .75);
+   stroke: none;
+   text-anchor: start;
 }
 
 .labels.x-labels {
-    text-anchor: middle;
+   text-anchor: middle;
 }
 
 .labels.y-labels {
-    text-anchor: end;
+   text-anchor: end;
 }
 
 .labels {
-    font-size: 12px;
+   font-size: 10px;
 }
 
 

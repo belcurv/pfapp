@@ -74,7 +74,7 @@
                     FVrate: loadRoR(),
                     FVpmt: arr[5],
                     requiredSavings: 0,
-                    FVnper: 0
+                    FVnper: 10
                 };
             }
             
@@ -101,7 +101,6 @@
                     vm.state.annualExpenses,
                     vm.state.withdrawalRate,
                     vm.state.FVpv,
-//                    vm.state.FVrate,
                     vm.state.FVpmt
                 ]);
                 // re-set state using newly-loaded values from local storage
