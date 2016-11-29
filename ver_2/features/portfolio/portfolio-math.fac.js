@@ -6,7 +6,7 @@
     .factory('pfMath', [function () {
 
         
-        /* Sum the whole portfolio
+        /* SUM THE WHOLE PORTFOLIO
          *
          * @params  [array]     investments     [all investments]
          * @returns [number]                    [sum of all holdings]
@@ -23,7 +23,7 @@
         }
         
         
-        /* Sum holdings of a single asset class
+        /* SUM HOLDINGS OF A SINGLE ASSET CLASS
          *
          * @params  [array]     investments     [all investments]
          * @params  [string]    type            [asset flass to sum]
@@ -43,7 +43,7 @@
         }
 
         
-        /* Calculate the percentage of Stocks held in portfolio
+        /* CALCULATE PERCENTAGE OF STOCKS IN PORTFOLIO
          *
          * @params  [array]     investments     [all investments]
          * @returns [number]                    [percentage of stocks held]
@@ -57,7 +57,7 @@
         }
 
         
-        /* Calculate aggregate average portfolio returns
+        /* CALCULATE AGGREGATE AVERAGE PORTFOLIO RATE OF RETURN
          *
          * @params  [array]     investments     [all investments]
          * @returns [number]                    [average portfolio return]

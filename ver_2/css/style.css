@@ -250,12 +250,11 @@ hr {
     background: rgba(95, 158, 160,.1);
 }
 
-.pf-table td select,
-.pf-table td button {
+.pf-table td select {
     height: 80%;
     width: 90%;
-    margin: 0 .5em;
-    padding: .25em .5em;
+    margin: 0;
+    padding: .2em .2em;
     background-color: rgba(95, 158, 160,.1);
     border: 1px solid rgba(95, 158, 160,.7);
     font: inherit;
@@ -264,19 +263,17 @@ hr {
     cursor: pointer;
 }
 
-.pf-table td button:hover {
-    background-color: rgb(95, 158, 160);
-    color: white;
-}
-
-.pf-table td.icon-button {
+.pf-table td > button.icon-button {
+    height: 100%;
     text-align: center;
-    padding: 0 0.5em;
+    padding: 0 0.8em;
     font-size: 17px;
+    border: none;
+    background: none;
 }
 
-.pf-table td.icon-button:focus,
-.pf-table td.icon-button:hover {
+.pf-table td > button.icon-button:focus,
+.pf-table td > button.icon-button:hover {
     background: rgba(95, 158, 160,.1);
 }
 

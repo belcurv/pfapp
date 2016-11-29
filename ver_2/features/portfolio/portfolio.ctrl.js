@@ -11,7 +11,7 @@
                 ];
 
         
-            /* fetch input data from either localStorage or defaults
+            /* FETCH INPUT DATA FROM EITHER localStorage OR vm.pfDefaults
              *
              * @params  [none]
              * @returns [array of portfolio holdings or blank defaults]
@@ -19,7 +19,6 @@
             function loadState() {
                 if (LS.getData('portfolio-storage')) {
                     vm.portfolioDataSource = 'Using saved data from local storage';
-                    console.log(LS.getData('portfolio-storage'));
                     return LS.getData('portfolio-storage');
                 } else {
                     vm.portfolioDataSource = 'No data in local storage';
@@ -28,7 +27,7 @@
             }
             
             
-            /* bind input data to model
+            /* BIND INPUT DATA TO MODEL
              *
              * @params  [none]
              * @returns [none]
@@ -42,7 +41,7 @@
                     newTickerType: "Stock"
                 };
             }
-            setState();  // call on first hit
+            setState();  // call on page load
 
             
             // public methods
@@ -58,7 +57,7 @@
             };
             
             
-            /* add investment to the array
+            /* ADD SINGLE HOLDING TO INVESTMENTS ARRAY
              *
              * @params  [string]    ticker      [name of the hoding]
              * @params  [number]    val         [dollar value of the holding]
@@ -83,7 +82,7 @@
             }
             
                        
-            /* delete a single investment
+            /* DELETE SINGLE INVESTMENT
              *
              * @params  [number]    index       [the index of the array element to remove]
              * @returns                         [none]
@@ -97,7 +96,7 @@
             }
             
             
-            /* Save current state to local storage
+            /* SAVE CURRENT STATE IN LOCAL STORAGE
              *
              * @params  [none]
              * @returns [none]
@@ -111,7 +110,7 @@
             }
             
             
-            /* wipe personal portfolio info from local storage
+            /* WIPE PERSONAL PORTFOLIO DATA FROM LOCAL STORAGE
              *
              * @params  [none]
              * @returns [none]
