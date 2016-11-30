@@ -93,19 +93,19 @@
                 }
 
                 
-                /* GENERATE SVG PATH
+                /* GENERATE SVG POLYGONS
                  *
                  * @params    [array]   points   [array of time-value pairs]
-                 * @returns   [object]           [complete SVG <path> element]
-                */
-                function genPath(points) {
-                    var pathElem = angular.element(document.createElementNS(ns, 'path')),
-                        pathString,                        
-                        pathParts = [],
+                 * @returns   [object]           [<g>roup of SVG <polygon> els]
+                 */
+                function genPolygon(points) {
+                    var group = angular.element(document.createElementNS(ns, 'g')),
+                        polygon,
+                        pointsString,                
                         currentPoint,
+                        formattedPoints,
                         i,
                         numPoints = points.length - 1,
-                        yMax = points[points.length - 1][1],
                         chartYMax = getChartYMax(points),
 
                         // multipliers scale the output x & y coords
@@ -113,32 +113,62 @@
                         yMultiple = (height - yMargin - spacer) / chartYMax,
 
                         // format values to align with chart extents
-                        formattedPoints = points.map(function (point) {
-                            return [
-                                (point[0] * xMultiple) + xMargin,
-                                (height - (point[1] * yMultiple)) - yMargin
-                            ];
+                        formattedPoints = points.map(function(point) {
+                           return [
+                              (point[0] * xMultiple) + xMargin,
+                              (height - (point[1] * yMultiple)) - yMargin
+                           ];
                         });
-                    
+
                     // loop through points array to build pathParts array
                     for (i = 0; i < formattedPoints.length; i += 1) {
-                        currentPoint = formattedPoints[i];
 
-                        pathParts.push(currentPoint[0] + ',' + currentPoint[1]);
+                        polygon = angular.element(document.createElementNS(ns, 'polygon'));
+
+                        var title = angular.element(document.createElementNS(ns, 'title'));
+
+                        // <polygon> wants a 'points' attr, consisting of x,y pairs
+                        var x1 = formattedPoints[i][0],
+                            y1 = height - yMargin,
+
+                            x2 = formattedPoints[i][0],
+                            y2 = formattedPoints[i][1],
+
+                            x3 = formattedPoints[i][0] + xMultiple,
+                            y3, // tricky - see below conditional
+
+                            x4 = formattedPoints[i][0] + xMultiple,
+                            y4 = height - yMargin;
+
+                        // y3 is trickier since there is no (i + 1) for the last element
+                        if (i < formattedPoints.length - 1) {
+                            y3 = formattedPoints[i + 1][1];
+                            // <title> adds 'tool tip' on hover
+                            title.text($filter('currency')(points[i + 1][1]));
+                        } else {
+                            y3 = formattedPoints[formattedPoints.length];
+                            // <title> adds 'tool tip' on hover
+                            title.text($filter('currency')(points[points.length]));
+                        }
+
+                        // assemble 'points' attr as a giant string
+                        pointsString = x1 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x3 + ',' + y3 + ' ' + x4 + ',' + y4;
+
+                        // add 'points' attribute to <polygon>
+                        polygon.attr('points', pointsString);
+
+                        // add <title> child elements for hover events
+                        polygon.append(title);
+
+                        // add assembled <polygon> object to the <g>roup
+                        group.append(polygon);
                     }
 
-                    // join all pathParts elements with directions to enclose the shape
-                    pathString = 'M' + pathParts.join(' L') +
-                        ' L' + (width - spacer) + ',' + (height - yMargin) +
-                        ' L' + xMargin + ',' + (height - yMargin) +
-                        ' Z';
-                    
-                    // add CSS class and path 'd' attribute to <path> element
-                    pathElem
-                        .addClass('chart--line1')
-                        .attr('d', pathString);
+                    // add CSS class to <g>roup element
+                    group.addClass('chart--polygon');
 
-                    return pathElem;
+                    // return the whole <g>roup object
+                    return group;
                 }
 
 
@@ -337,9 +367,9 @@
                     svgElem
                         .empty();
 
-                    // append <path>
+                    // append <polygon> <g>roup
                     svgElem
-                        .append(genPath(points));
+                        .append(genPolygon(points));
 
                     // append goal <line> and <text> <g>roup
                     svgElem

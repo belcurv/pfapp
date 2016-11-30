@@ -427,20 +427,20 @@ footer a:hover {
    border-radius: 50%;
 }
 
-.icon--rate1 {
-   border: 1px solid rgba(0, 116, 217, .3);
-   background: rgba(0, 116, 217, .15);
+
+.chart--polygon {
+   
 }
 
-.icon--rate2 {
-   background: rgba(217, 116, 0, .15);
-   border: 1px solid rgba(217, 116, 0, .3);
-}
-
-.chart--line1 {
+.chart--polygon > polygon {
    fill: rgba(0, 116, 217, .15);
-   stroke: rgba(0, 116, 217, .3);
-   stroke-width: 1px;
+   stroke: none;
+   transition: fill .3s ease;
+}
+
+.chart--polygon > polygon:hover,
+.chart--polygon > polygon:active {
+   fill: rgba(0, 116, 217, .95);
 }
 
 .chart--x-grid,
