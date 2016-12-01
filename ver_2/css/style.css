@@ -39,6 +39,24 @@ input[type="number"],
 .input-checkbox {
     -webkit-appearance: none;
     border-radius: 0;
+    margin: 0;
+}
+
+
+/* Remove number spinner from Firefox */
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+/* Remove number spinner from Safari and Chrome */
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    /* Removes leftover margin */
 }
 
 header,
