@@ -1,0 +1,82 @@
+/* =============== styles for portfolio tables =============== */
+.pf-table {
+    border-collapse: collapse;
+    font-size: 14px;
+    color: #404040;
+    width: 100%;
+}
+
+.pf-table thead {
+    border-bottom: 2px solid #404040;
+}
+
+.pf-table tr {
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pf-table th {
+    text-align: left;
+    vertical-align: bottom;
+    padding: 0.25rem 0.5rem;
+}
+
+.pf-table td {
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    padding: 0;
+    height: 2.75rem;
+}
+
+.pf-table td input {
+    height: 100%;
+    width: 100%;
+    font-size: 14px;
+    padding: 0 .5em; 
+}
+
+.pf-table td input:hover,
+.pf-table td input:focus {
+    background: rgba(95, 158, 160,.1);
+}
+
+.pf-table td select {
+    height: 80%;
+    width: 90%;
+    margin: 0;
+    padding: .2em .2em;
+    background-color: rgba(95, 158, 160,.1);
+    border: 1px solid rgba(95, 158, 160,.7);
+    font: inherit;
+    font-weight: normal;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.pf-table td > button.icon-button {
+    height: 100%;
+    text-align: center;
+    padding: 0 0.8em;
+    font-size: 17px;
+    border: none;
+    background: none;
+}
+
+.pf-table td > button.icon-button:focus,
+.pf-table td > button.icon-button:hover {
+    background: rgba(95, 158, 160,.1);
+}
+/* =============== end styles for portfolio tables =============== */
+
+
+/* =============== styles for portfolio pie chart =============== */
+portfolio-pie-chart .arcBackground {
+    stroke: none;
+    fill: rgba(217, 116, 0, .35);
+}
+
+portfolio-pie-chart path#pie1 {
+    stroke: none;
+    fill: rgba(0, 116, 217, .45);
+}
+/* =============== end styles for portfolio pie chart =============== */

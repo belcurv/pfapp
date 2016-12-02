@@ -1,0 +1,27 @@
+/* styles for commute calc tables */
+.cc-table {
+    border-collapse: collapse;
+    font-size: 10px;
+    color: #404040;
+    width: 100%;
+}
+
+.cc-table thead {
+    border-bottom: 2px solid #404040;
+}
+
+.cc-table tbody tr:nth-child(odd) {
+    background: #eee;
+}
+
+.cc-table td,
+.cc-table th {
+    text-align: left;
+    padding: 0.5rem 0.25rem;
+}
+
+.cc-table th {
+    vertical-align: bottom;
+    padding: 0.25rem;
+}
+/* end styles for commute calc tables */

@@ -1,0 +1,56 @@
+/* CHART STUFF */
+fire-calc-chart .chart--content {
+   background: rgba(190, 190, 190, .1);
+   margin: 0.25em 0 0.75em;
+   padding: 0;
+}
+
+fire-calc-chart .chart--polygon > polygon {
+   fill: rgba(0, 116, 217, .15);
+   stroke: none;
+   transition: fill .3s ease;
+}
+
+fire-calc-chart .chart--polygon > polygon:hover,
+fire-calc-chart .chart--polygon > polygon:active {
+   fill: rgba(0, 116, 217, .95);
+}
+
+fire-calc-chart .chart--x-grid,
+fire-calc-chart .chart--y-grid,
+fire-calc-chart .tick {
+   stroke: black;
+   stroke-dasharray: 0;
+   stroke-width: 1;
+}
+
+fire-calc-chart .horiz-rule {
+   stroke: rgba(60, 60, 60, .3);
+   stroke-dasharray: 0;
+   stroke-width: 1px;
+}
+
+fire-calc-chart .goal-line {
+   stroke: rgba(217, 116, 0, .75);
+   stroke-dasharray: 3 2;
+   stroke-width: 1px;
+}
+
+fire-calc-chart .goal-text {
+   font-size: 10px;
+   fill: rgba(217, 116, 0, .75);
+   stroke: none;
+   text-anchor: start;
+}
+
+fire-calc-chart .labels.x-labels {
+   text-anchor: middle;
+}
+
+fire-calc-chart .labels.y-labels {
+   text-anchor: end;
+}
+
+fire-calc-chart .labels {
+   font-size: 10px;
+}

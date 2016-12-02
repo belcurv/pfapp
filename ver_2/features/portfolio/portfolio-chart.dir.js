@@ -24,19 +24,17 @@
                 chart
                     .attr('xmlns', ns)
                     .attr('width', '100%')
-//                    .attr('height', '100%') // omitting eight for FF
+//                    .attr('height', '100%') // omitting height for FF
                     .attr('viewBox', '0 0 ' + width + ' ' + height);
 
                 // background circle
                 circle = angular.element(document.createElementNS(ns, 'circle'));
 
                 circle
-                    .attr('id', 'arcBackground')
+                    .addClass('arcBackground')
                     .attr('cx', cx)
                     .attr('cy', cy)
-                    .attr('r', 100)
-                    .attr('stroke', 'none')
-                    .attr('fill', 'rgba(217, 116, 0, .35)');
+                    .attr('r', 100);
 
                 // pie chart arc path
                 path = angular.element(document.createElementNS(ns, 'path'));
@@ -44,7 +42,14 @@
                 
                 // convert input percentage to angle in degrees
                 function percentageToDegrees(anglePercent) {
-                    return 360 * anglePercent;
+                    
+                    // if 100%, no arc is drawn because beginning & end are the same point
+                    if (anglePercent === 1) {
+                        return 359.99 * anglePercent;
+                    } else {
+                        return 360 * anglePercent;
+                    }                    
+                    
                 }
 
                 
@@ -104,17 +109,13 @@
                 
                 // main render function
                 function render() {
-                    
                     path
                         .attr('id', 'pie1')
-                        .attr('fill', 'rgba(0, 116, 217, .45)')
-                        .attr('stroke', 'none')
                         .attr('d', generateArc(cx, cy, 100, percentageToDegrees(scope.percentage)));
 
                     chart
                         .append(circle)
                         .append(path);
-                    
                 }
                 render();
                 
@@ -126,6 +127,7 @@
 
             }
 
+            // DDO
             return {
                 restrict: 'AE',
                 scope: {
