@@ -437,15 +437,6 @@ footer a:hover {
    padding: 0;
 }
 
-.icon--rate1,
-.icon--rate2 {
-   display: inline-block;
-   height: 12px;
-   width: 12px;
-   border-radius: 50%;
-}
-
-
 .chart--polygon {
    
 }

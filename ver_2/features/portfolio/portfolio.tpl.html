@@ -124,18 +124,12 @@
                 
                 <!-- Advise source of input data -->
                 <alert-message message="{{vm.portfolioDataSource}}"></alert-message>
-            
-            </div>
-            
-            <div class="Grid-cell">
                 
                 <p>Total Portfolio Value: {{vm.pfMethods.sumPortfolioValue(vm.state.investments) | currency }}</p>
 
                 <p>Total Stocks: {{ vm.pfMethods.sumInvestmentValue(vm.state.investments, "Stock") | currency }}</p>
 
                 <p>Total Bonds: {{ vm.pfMethods.sumInvestmentValue(vm.state.investments, "Bond") | currency }}</p>
-
-                <p>Current Allocation Ratio: {{ (100 * vm.pfMethods.ratioStocks(vm.state.investments)) | number:1 }}% / {{ (100 * (1 - vm.pfMethods.ratioStocks(vm.state.investments))) | number:1 }}% (stocks / bonds)</p>
                 
                 <p>Avg aggregate Stocks returns: </p>
                 
@@ -147,11 +141,20 @@
                 %bonds  = 1 - %stocks</p>
 
                 <p>Aggregate total return: {{vm.pfMethods.avgPortfolioReturn(vm.state.investments) * 100 | number:2 }}%</p>
-                
+
+
+            
             </div>
             
-    
-
+            <div class="Grid-cell">
+               
+                <portfolio-pie-chart percentage="vm.pfMethods.ratioStocks(vm.state.investments)">
+                    
+                </portfolio-pie-chart>
+                
+                <p>Current Allocation Ratio: {{ (100 * vm.pfMethods.ratioStocks(vm.state.investments)) | number:1 }}% / {{ (100 * (1 - vm.pfMethods.ratioStocks(vm.state.investments))) | number:1 }}% (stocks / bonds)</p>
+                                
+            </div>
             
         </div>
 
