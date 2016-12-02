@@ -24,7 +24,7 @@
                 chart
                     .attr('xmlns', ns)
                     .attr('width', '100%')
-                    .attr('height', '100%')
+//                    .attr('height', '100%') // omitting eight for FF
                     .attr('viewBox', '0 0 ' + width + ' ' + height);
 
                 // background circle
