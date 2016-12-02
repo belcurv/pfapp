@@ -23,7 +23,7 @@
 <!-- =================== END TITLE SECTION ==================== -->
 
 <!-- ===================== INPUTS SECTION ===================== -->
-<section class=Grid-cell>
+<section>
     <div class="content-box">
 
         <!-- inputs title -->
@@ -105,140 +105,123 @@
 <!-- ======================= END INPUTS ======================= -->
 
 <!-- ========================= OUTPUTS ======================== -->
-<div class="Grid Grid--full">
-    <!-- ================== RESULTS SECTION =================== -->
-    <section class=Grid-cell>
-        <div class="content-box">
+<section>
+    <div class="content-box">
 
-            <!-- results title -->
-            <div class="Grid">
-                <div class="Grid-cell">
-                    <h4>RESULTS</h4>
-                </div>
-                <div>
-                    <h4 title="Help" class="icon-button" ng-click="resultsHelpToggle = !resultsHelpToggle">
-                        <span class="glyphicon glyphicon-question-sign"></span>
-                    </h4>
-                </div>
+        <!-- results title -->
+        <div class="Grid">
+            <div class="Grid-cell">
+                <h4>RESULTS</h4>
             </div>
-
-            <!-- help -->
-            <div ng-if="resultsHelpToggle" class="help">
-                <p>These results are based on the inputs entered above.</p>
-
-                <ul>
-                    <li><em>Current Age</em> = Your age based in birth date and today's date.</li>
-                    <li><em>Years to FIRE</em> = Years between today and your anticipated retirement age.</li>
-                    <li><em>Required Savings</em> = The total you need to save based on your expected annual expenses and your safe withdrawal rate.</li>
-                    <li><em>Required Return</em> = The average rate your investments need to return to achieve your target savings given the years to FIRE.</li>
-                </ul>
+            <div>
+                <h4 title="Help" class="icon-button" ng-click="resultsHelpToggle = !resultsHelpToggle">
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                </h4>
             </div>
-
-            <!-- results -->
-            <div class="Grid Grid--gutters Grid--full med-Grid--1of2 ">
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Calculated Age</span>
-                    <span class="InputAddOn-field">
-                       {{ vm.fcMethods.calcAge(vm.state.birthDate) }}
-                    </span>
-                </div>
-
-
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Years to FIRE</span>
-                    <span class="InputAddOn-field">
-                       {{ vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate) }}
-                    </span>
-                </div>
-
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Required Savings</span>
-                    <span class="InputAddOn-field">
-                       {{ vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate) | currency:"$" }}
-                    </span>
-                </div>
-
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Required Return</span>
-                    <span class="InputAddOn-field">
-                       <!-- nper, -pmt, -pv, fv, null, null -->
-                       {{ vm.fcMethods.calcRate(
-                           vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate),
-                           -vm.state.FVpmt,
-                           -vm.state.FVpv,
-                           vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate),
-                           null,
-                           null
-                        ) | number:3 }} %
-                    </span>
-                </div>
-            </div>
-
-            <p>Given your expected annual retirement expenses ({{ vm.state.annualExpenses | currency }}) and Safe Withdrawal Rate ({{ vm.state.withdrawalRate }}%), you will need a total of {{ vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate) | currency:"$" }} to FIRE.</p>
-
-            <p>Given annual contributions of {{ vm.state.FVpmt | currency }}, to achieve your required savings in {{ vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate) }} years you need to earn an average return of {{ vm.fcMethods.calcRate(
-                           vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate),
-                           -vm.state.FVpmt,
-                           -vm.state.FVpv,
-                           vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate),
-                           null,
-                           null) | number:3 }}%.</p>
-
-        
-
-            <!-- section title -->
-            <div class="Grid">
-                <div class="Grid-cell">
-                    <h4>FUTURE VALUE</h4>
-                </div>
-                <div>
-                    <h4 title="Help" class="icon-button" ng-click="fvHelpToggle = !fvHelpToggle">
-                        <span class="glyphicon glyphicon-question-sign"></span>
-                    </h4>
-                </div>
-            </div>
-
-            <!-- help -->
-            <div ng-if="fvHelpToggle" class="help">
-                <p>This is the calculated future value of your current savings, given your expected average rate of return, continued annual savings and years to FIRE.</p>
-            </div>
-
-            <!-- future value section -->
-            <div class="Grid Grid--gutters Grid--full med-Grid--1of2 large-Grid--full">
-                <div class="Grid-cell InputAddOn">
-                    <span class="InputAddOn-item">Future Value</span>
-                    <span class="InputAddOn-field">
-                    <!-- calcFutureValue(rate, pmt, pv, nper) -->
-                    {{ vm.fcMethods.calcFutureValue(vm.state.FVrate / 100, vm.state.FVpmt, vm.state.FVpv, (vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate)) ) | currency:"$"}}
-                </span>
-                </div>
-            </div>
-
-            <p>Given your initial savings of {{vm.state.FVpv | currency}}, plus annual contributions of {{vm.state.FVpmt | currency }}, earning {{100 * vm.state.FVrate / 100}}%, your savings will total {{ vm.fcMethods.calcFutureValue(vm.state.FVrate / 100, vm.state.FVpmt, vm.state.FVpv, (vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate)) ) | currency:"$"}} after {{ vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate) }} years.</p>
         </div>
-    </section>
-    <!-- ============== END FUTURE VALUE SECTION ============== -->
-    
-    <!-- ================ CHARTS SECTION ================ -->   
-    <section class=Grid-cell>
-        <div class="content-box">
-           
-            <!-- results title -->
-            <div class="Grid">
-                <div class="Grid-cell">
-                    <h4>CHART!</h4>
+
+        <!-- help -->
+        <div ng-if="resultsHelpToggle" class="help">
+            <p>These results are based on the inputs entered above.</p>
+
+            <ul>
+                <li><em>Current Age</em> = Your age based in birth date and today's date.</li>
+                <li><em>Years to FIRE</em> = Years between today and your anticipated retirement age.</li>
+                <li><em>Required Savings</em> = The total you need to save based on your expected annual expenses and your safe withdrawal rate.</li>
+                <li><em>Required Return</em> = The average rate your investments need to return to achieve your target savings given the years to FIRE.</li>
+            </ul>
+        </div>
+        
+        <!-- results -->
+        <div class="Grid Grid--gutters Grid--full large-Grid--1of2-30-70">
+            
+            <div class="Grid-cell">
+
+                <!-- results -->
+                <div class="Grid Grid--gutters Grid--full med-Grid--1of2 large-Grid--full">
+                    <div class="Grid-cell InputAddOn">
+                        <span class="InputAddOn-item">Calculated Age</span>
+                        <span class="InputAddOn-field">
+                           {{ vm.fcMethods.calcAge(vm.state.birthDate) }}
+                        </span>
+                    </div>
+
+
+                    <div class="Grid-cell InputAddOn">
+                        <span class="InputAddOn-item">Years to FIRE</span>
+                        <span class="InputAddOn-field">
+                           {{ vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate) }}
+                        </span>
+                    </div>
+
+                    <div class="Grid-cell InputAddOn">
+                        <span class="InputAddOn-item">Required Savings</span>
+                        <span class="InputAddOn-field">
+                           {{ vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate) | currency:"$" }}
+                        </span>
+                    </div>
+
+                    <div class="Grid-cell InputAddOn">
+                        <span class="InputAddOn-item">Required Return</span>
+                        <span class="InputAddOn-field">
+                           <!-- nper, -pmt, -pv, fv, null, null -->
+                           {{ vm.fcMethods.calcRate(
+                               vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate),
+                               -vm.state.FVpmt,
+                               -vm.state.FVpv,
+                               vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate),
+                               null,
+                               null
+                            ) | number:3 }} %
+                        </span>
+                    </div>
                 </div>
+
+                <p>Given your expected annual retirement expenses ({{ vm.state.annualExpenses | currency }}) and Safe Withdrawal Rate ({{ vm.state.withdrawalRate }}%), you will need a total of {{ vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate) | currency:"$" }} to FIRE.</p>
+
+                <p>Given annual contributions of {{ vm.state.FVpmt | currency }}, to achieve your required savings in {{ vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate) }} years you need to earn an average return of {{ vm.fcMethods.calcRate(
+                               vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate),
+                               -vm.state.FVpmt,
+                               -vm.state.FVpv,
+                               vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate),
+                               null,
+                               null) | number:3 }}%.</p>
+
+
+
+                <!-- ============== FUTURE VALUE SECTION ============== -->
+                <div class="Grid Grid--full">
+                    <div class="Grid-cell">
+                        <h4>FUTURE VALUE</h4>
+                    </div>
+                </div>
+
+                <div class="Grid Grid--gutters Grid--full med-Grid--1of2 large-Grid--full">
+                    <div class="Grid-cell InputAddOn">
+                        <span class="InputAddOn-item">Future Value</span>
+                        <span class="InputAddOn-field">
+                        <!-- calcFutureValue(rate, pmt, pv, nper) -->
+                        {{ vm.fcMethods.calcFutureValue(vm.state.FVrate / 100, vm.state.FVpmt, vm.state.FVpv, (vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate)) ) | currency:"$"}}
+                    </span>
+                    </div>
+                </div>
+
+                <p>Given your initial savings of {{vm.state.FVpv | currency}}, plus annual contributions of {{vm.state.FVpmt | currency }}, earning {{100 * vm.state.FVrate / 100}}%, your savings will total {{ vm.fcMethods.calcFutureValue(vm.state.FVrate / 100, vm.state.FVpmt, vm.state.FVpv, (vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate)) ) | currency:"$"}} after {{ vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate) }} years.</p>
+                <!-- ============== END FUTURE VALUE SECTION ============== -->
             </div>
             
-            <!-- chart directive -->            
-            <fire-calc-chart fire-state="vm.state"
-                        nper="vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate)"
-                        required-savings="vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate)">         
-            </fire-calc-chart>
-
+            <!-- ================ CHARTS SECTION ================ -->
+            <div class="Grid-cell">
+                <fire-calc-chart fire-state="vm.state"
+                            nper="vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate)"
+                            required-savings="vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate)">         
+                </fire-calc-chart>
+            </div>
+            <!-- =============== END CHARTS SECTION ============== -->
+            
         </div>
-    </section>
-    <!-- ================ END CHARTS SECTION ================ -->
+    </div>
+</section>
+<!-- ========================= END OUTPUTS ======================== -->
 
-</div>
-<!-- ====================== END OUTPUTS ======================= -->
+

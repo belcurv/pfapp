@@ -12,7 +12,7 @@
 
                 // define chart layout attributes
                 var width   = 600,
-                    height  = 300,
+                    height  = 400,
                     xMargin = 80,
                     yMargin = 20,
                     spacer  = 10,

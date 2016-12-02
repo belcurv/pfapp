@@ -23,7 +23,7 @@
 <!-- =================== END TITLE SECTION ==================== -->
 
 <!-- ===================== INPUTS SECTION ===================== -->
-<section class=Grid-cell>
+<section>
     <div class="content-box">
 
         <!-- inputs title -->
@@ -43,102 +43,118 @@
             <p>Input your portfolio components.</p>
 
             <ul>
-                <li><em>Ticker</em> = The letter abbreviation for the investment.</li>
-                <li><em>Shares</em> = The quantity of shares of each investment you own.</li>
+                <li><em>Holding</em> = The letter abbreviation for the investment.</li>
+                <li><em>Value</em> = The current total dollar value of this holding.</li>
+                <li><em>Class</em> = Asset class, either Stock or Bond.</li>
+                <li><em>10-yr Return</em> = The trailing 10-year rate of return published by your investment company.</li>
             </ul>
         </div>
-
-        <!-- Table -->
-        <div class="horiz-scroll">
-            <table class="pf-table">
-            <thead>
-                <th style="">Holding</th>
-                <th style="">Value ($)</th>
-                <th>Class</th>
-                <th style="">10-yr Return (%)</th>
-                <th style="width: 18px"></th>
-                <th style="width: 18px"></th>
-            </thead>
-            <tbody>
-                <tr ng-repeat="e in vm.state.investments track by $index">
-                    <td>
-                        <input tabindex="{{$index + 1}}" type="text" ng-model="e.ticker">
-                    </td>
-                    <td>
-                        <input tabindex="{{$index + 1}}" type="number" ng-model="e.value">
-                    </td>
-                    <td>
-                        <select name="class" tabindex="{{$index + 1}}" ng-model="e.type">
-                            <option value="Stock">Stock</option>
-                            <option value="Bond">Bond</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input tabindex="{{$index + 1}}" type="number" min="0.00" max="100.00" step="0.0001" ng-model="e.avgReturn">
-                    </td>
-                    <td>  <!-- Update -->
-                        <button class="icon-button" title="Update holding" class="icon-button"
-                           tabindex="{{$index + 1}}"
-                           ng-click="vm.pfMethods.saveState()">
-                            <span class="glyphicon glyphicon-floppy-disk"></span>
-                        </button>
-                    </td>
-                    <td>  <!-- Delete -->
-                        <button title="Delete holding" class="icon-button" tabindex="{{$index + 1}}"
-                                ng-click="vm.pfMethods.deleteInvestment($index)">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input name="ticker" tabindex="999" type="text" ng-model="vm.state.newTicker" placeholder="New holding...">
-                    </td>
-                    <td>
-                        <input name="value" tabindex="999" type="number" ng-model="vm.state.newTickerValue">
-                    </td>
-                    <td>
-                        <select name="class" tabindex="999" ng-model="vm.state.newTickerType">
-                            <option value="Stock">Stock</option>
-                            <option value="Bond">Bond</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input name="avgReturn" tabindex="999" type="number" min="0.00" max="100.00" step="0.0001" ng-model="vm.state.newAvgReturn">
-                    </td>
-                    <td></td>
-                    <td> <!-- ADD HOLDING -->
-                       <button class="icon-button" title="Add new holding" class="icon-button" tabindex="999" 
-                               ng-click="vm.pfMethods.addInvestment(vm.state.newTicker, vm.state.newTickerValue, vm.state.newTickerType, vm.state.newAvgReturn)">
-                           <span class="glyphicon glyphicon-plus"></span>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        </div>
         
-        <!-- Advise source of input data -->
-        <alert-message message="{{vm.portfolioDataSource}}"></alert-message>
+        <div class="Grid Grid--gutters Grid--full large-Grid--1of2-70-30">
+            
+            <div class="Grid-cell">
 
-    </div>
-</section>
+                <!-- Table -->
+                <table class="pf-table">
+                    <thead>
+                        <th style="">Holding</th>
+                        <th style="">Value ($)</th>
+                        <th>Class</th>
+                        <th style="">10-yr Return (%)</th>
+                        <th style="width: 18px"></th>
+                        <th style="width: 18px"></th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="e in vm.state.investments track by $index">
+                            <td>
+                                <input tabindex="{{$index + 1}}" type="text" ng-model="e.ticker">
+                            </td>
+                            <td>
+                                <input tabindex="{{$index + 1}}" type="number" ng-model="e.value">
+                            </td>
+                            <td>
+                                <select name="class" tabindex="{{$index + 1}}" ng-model="e.type">
+                                    <option value="Stock">Stock</option>
+                                    <option value="Bond">Bond</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input tabindex="{{$index + 1}}" type="number" min="0.00" max="100.00" step="0.0001" ng-model="e.avgReturn">
+                            </td>
+                            <td>  <!-- Update -->
+                                <button class="icon-button" title="Update holding" class="icon-button"
+                                   tabindex="{{$index + 1}}"
+                                   ng-click="vm.pfMethods.saveState()">
+                                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                                </button>
+                            </td>
+                            <td>  <!-- Delete -->
+                                <button title="Delete holding" class="icon-button" tabindex="{{$index + 1}}"
+                                        ng-click="vm.pfMethods.deleteInvestment($index)">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="ticker" tabindex="999" type="text" ng-model="vm.state.newTicker" placeholder="New holding...">
+                            </td>
+                            <td>
+                                <input name="value" tabindex="999" type="number" ng-model="vm.state.newTickerValue">
+                            </td>
+                            <td>
+                                <select name="class" tabindex="999" ng-model="vm.state.newTickerType">
+                                    <option value="Stock">Stock</option>
+                                    <option value="Bond">Bond</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input name="avgReturn" tabindex="999" type="number" min="0.00" max="100.00" step="0.0001" ng-model="vm.state.newAvgReturn">
+                            </td>
+                            <td></td>
+                            <td> <!-- ADD HOLDING -->
+                               <button class="icon-button" title="Add new holding" class="icon-button" tabindex="999" 
+                                       ng-click="vm.pfMethods.addInvestment(vm.state.newTicker, vm.state.newTickerValue, vm.state.newTickerType, vm.state.newAvgReturn)">
+                                   <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Advise source of input data -->
+                <alert-message message="{{vm.portfolioDataSource}}"></alert-message>
+            
+            </div>
+            
+            <div class="Grid-cell">
+                
+                <p>Total Portfolio Value: {{vm.pfMethods.sumPortfolioValue(vm.state.investments) | currency }}</p>
 
+                <p>Total Stocks: {{ vm.pfMethods.sumInvestmentValue(vm.state.investments, "Stock") | currency }}</p>
 
-<section>
-    <div class="content-box">
-       
-        <p>Total Value of Portfolio: {{vm.pfMethods.sumPortfolioValue(vm.state.investments) | currency }}</p>
-        
-        <p>Sum of asset class 'Stocks': {{ vm.pfMethods.sumInvestmentValue(vm.state.investments, "Stock") | currency }}</p>
-        
-        <p>Sum of asset class 'Bonds': {{ vm.pfMethods.sumInvestmentValue(vm.state.investments, "Bond") | currency }}</p>
-        
-        <p>Allocation Ratio: {{ (100 * vm.pfMethods.ratioStocks(vm.state.investments)) | number:1 }}% / {{ (100 * (1 - vm.pfMethods.ratioStocks(vm.state.investments))) | number:1 }}% (stocks / bonds)</p>
+                <p>Total Bonds: {{ vm.pfMethods.sumInvestmentValue(vm.state.investments, "Bond") | currency }}</p>
 
-        <p>Aggregate total return: {{vm.pfMethods.avgPortfolioReturn(vm.state.investments) * 100 | number:2 }}%</p>
-        
-    </div>
+                <p>Current Allocation Ratio: {{ (100 * vm.pfMethods.ratioStocks(vm.state.investments)) | number:1 }}% / {{ (100 * (1 - vm.pfMethods.ratioStocks(vm.state.investments))) | number:1 }}% (stocks / bonds)</p>
+                
+                <p>Avg aggregate Stocks returns: </p>
+                
+                <p>Avg aggregate Bonds returns:</p>
+
+                
+                <p>Given your required Rate of Return, your Target Allocation Ratio: <br />
+                %Stocks = (ReqRate – bondRoR) / (stockRoR – BondRoR) <br />
+                %bonds  = 1 - %stocks</p>
+
+                <p>Aggregate total return: {{vm.pfMethods.avgPortfolioReturn(vm.state.investments) * 100 | number:2 }}%</p>
+                
+            </div>
+            
     
+
+            
+        </div>
+
+    </div>
     
 </section>
