@@ -7,8 +7,8 @@
 
     angular.module('pfapp')
 
-        .constant('ns', 'http://www.w3.org/2000/svg')
-
+        // 'ns' = namespace ('http://www.w3.org/2000/svg'), from:
+        // /services/pfapp-svg-ns.constant.js
         .directive('portfolioPieChart', ['ns', function (ns) {
 
             function link(scope, elem, attr) {

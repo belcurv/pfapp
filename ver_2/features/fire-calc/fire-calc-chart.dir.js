@@ -3,9 +3,8 @@
 
     angular.module('pfapp')
 
-        // SVG namespace for use when creating SVG elements
-        .constant('ns', 'http://www.w3.org/2000/svg')
-
+        // 'ns' = namespace ('http://www.w3.org/2000/svg'), from:
+        // /services/pfapp-svg-ns.constant.js
         .directive('fireCalcChart', ['$filter', 'ns', 'fireMath', function ($filter, ns, fireMath) {
 
             var link = function (scope, elem, attrs) {
