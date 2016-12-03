@@ -160,7 +160,11 @@
                            {{ vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate) | currency:"$" }}
                         </span>
                     </div>
+                </div>
 
+                <p>Given your expected annual retirement expenses ({{ vm.state.annualExpenses | currency }}) and Safe Withdrawal Rate ({{ vm.state.withdrawalRate }}%), you will need a total of {{ vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate) | currency:"$" }} to FIRE.</p>
+                                
+                <div class="Grid Grid--gutters Grid--full med-Grid--1of2 large-Grid--full">
                     <div class="Grid-cell InputAddOn">
                         <span class="InputAddOn-item">Required Return</span>
                         <span class="InputAddOn-field">
@@ -176,8 +180,7 @@
                         </span>
                     </div>
                 </div>
-
-                <p>Given your expected annual retirement expenses ({{ vm.state.annualExpenses | currency }}) and Safe Withdrawal Rate ({{ vm.state.withdrawalRate }}%), you will need a total of {{ vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate) | currency:"$" }} to FIRE.</p>
+                
 
                 <p>Given annual contributions of {{ vm.state.FVpmt | currency }}, to achieve your required savings in {{ vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate) }} years you need to earn an average return of {{ vm.fcMethods.calcRate(
                                vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate),
@@ -186,7 +189,6 @@
                                vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate),
                                null,
                                null) | number:3 }}%.</p>
-
 
                 <!-- ============== FUTURE VALUE SECTION ============== -->
                 <div class="Grid Grid--full">
