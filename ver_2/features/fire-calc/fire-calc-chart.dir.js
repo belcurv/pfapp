@@ -120,7 +120,7 @@
                         });
 
                     // loop through points array to build pathParts array
-                    for (i = 0; i < formattedPoints.length; i += 1) {
+                    for (i = 0; i < formattedPoints.length - 1; i += 1) {
 
                         polygon = angular.element(document.createElementNS(ns, 'polygon'));
 
@@ -145,13 +145,18 @@
                             // <title> adds 'tool tip' on hover
                             title.text($filter('currency')(points[i + 1][1]));
                         } else {
-                            y3 = formattedPoints[formattedPoints.length];
+                            y3 = formattedPoints[formattedPoints.length - 1][1];
                             // <title> adds 'tool tip' on hover
                             title.text($filter('currency')(points[points.length]));
                         }
 
                         // assemble 'points' attr as a giant string
-                        pointsString = x1 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x3 + ',' + y3 + ' ' + x4 + ',' + y4;
+                        pointsString = [
+                            x1 + ',' + y1,
+                            x2 + ',' + y2,
+                            x3 + ',' + y3,
+                            x4 + ',' + y4
+                        ].join(' ');
 
                         // add 'points' attribute to <polygon>
                         polygon.attr('points', pointsString);
@@ -244,9 +249,9 @@
                         // calculate relative space between each Y axis label
                         ySpacing = (height - yMargin - spacer) / numPoints;
 
-                        // loop through points, generate <line> and <text> elements,
-                        // and append each of them to our <g>roup
-                        for (i = 0; i < points.length; i += 1) {
+                        // loop through numPoints, generate <line> and <text> elements,
+                        // then append each of them to our <g>roup
+                        for (i = 0; i < numPoints + 1; i += 1) {
                             // calculate y axis label value
                             yValue = i * chartYMax / numPoints;
 
@@ -365,24 +370,24 @@
                     // empty parent <svg> element before each render
                     svgElem
                         .empty();
-
-                    // append <polygon> <g>roup
+                    
+                    // append axis label <text> <g>roups
                     svgElem
-                        .append(genPolygon(points));
+                        .append(genAxisLabels(points, 'y'))
+                        .append(genAxisLabels(points, 'x'));
 
                     // append goal <line> and <text> <g>roup
                     svgElem
                         .append(genGoalLine(points, scope.requiredSavings));
+                    
+                    // append <polygon> <g>roup
+                    svgElem
+                        .append(genPolygon(points));
 
                     // append axis <line> and <text> <g>roups
                     svgElem
                         .append(genAxisLine('chart--x-grid', xMargin, spacer, xMargin, (height - yMargin)))
                         .append(genAxisLine('chart--y-grid', xMargin, (height - yMargin), (width - spacer), (height - yMargin)));
-
-                    // append axis label <text> <g>roups
-                    svgElem
-                        .append(genAxisLabels(points, 'y'))
-                        .append(genAxisLabels(points, 'x'));
 
                 }
                 

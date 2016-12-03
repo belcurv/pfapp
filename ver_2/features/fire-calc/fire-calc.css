@@ -8,7 +8,7 @@ fire-calc-chart .chart--content {
 fire-calc-chart .chart--polygon > polygon {
    fill: rgba(0, 116, 217, .15);
    stroke: none;
-   transition: fill .3s ease;
+/*   transition: fill .3s ease;*/
 }
 
 fire-calc-chart .chart--polygon > polygon:hover,
