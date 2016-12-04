@@ -14,12 +14,14 @@
             function link(scope, elem, attr) {
                 var height = 200,
                     width = 300,
-                    chart = angular.element(document.getElementById('portfolio-pie-chart')),
+                    svg = angular.element(document.getElementById(scope.id)),
+                    chart = angular.element(document.createElementNS(ns, 'svg')),
                     circle,
                     cx = 150,
                     cy = 100,
                     path;
-
+                
+                
                 // base SVG attributes
                 chart
                     .attr('xmlns', ns)
@@ -116,6 +118,8 @@
                     chart
                         .append(circle)
                         .append(path);
+                    
+                    svg.append(chart);
                 }
                 render();
                 
@@ -131,9 +135,9 @@
             return {
                 restrict: 'AE',
                 scope: {
+                    id: '@',
                     percentage: '='
                 },
-                template: '<svg id="portfolio-pie-chart"></svg>',
                 link: link
             };
 
