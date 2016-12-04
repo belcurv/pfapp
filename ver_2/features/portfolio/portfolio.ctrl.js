@@ -102,9 +102,10 @@
              * @returns [none]
             */
             function saveState() {
-                var avgReturn = vm.pfMethods.avgPortfolioReturn(vm.state.investments);
+                var avgReturn = vm.pfMethods.avgPortfolioReturn(vm.state.investments),
+                    sumInvestments = vm.pfMethods.sumPortfolioValue(vm.state.investments);
                 LS.setData('portfolio-storage', [vm.state.investments]);
-                LS.setData('pfapp-storage', avgReturn);
+                LS.setData('pfapp-storage', [avgReturn, sumInvestments]);
                 // reset state; will use local storage values
                 setState();
             }

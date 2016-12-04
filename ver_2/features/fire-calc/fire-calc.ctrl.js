@@ -13,7 +13,6 @@
                     65,     // FIRE age
                     30000,  // annual expenses
                     4.00,   // withdrawal rate
-                    50000,  // existing savings
                     10000   // annual savings
                 ];
             
@@ -21,11 +20,11 @@
             // determine data source and bind alert to model
             function obtainDataSource() {
                 if (LS.getData('fire-calc-storage') && LS.getData('pfapp-storage')) {
-                    return 'Using locally-stored inputs & portfolio rate of return';
+                    return 'Using locally-stored inputs + portfolio rate of return & savings';
                 } else if (LS.getData('fire-calc-storage') && !LS.getData('pfapp-storage')) {
                     return 'Using locally-stored inputs';
                 } else if (!LS.getData('fire-calc-storage') && LS.getData('pfapp-storage')) {
-                    return 'Using default inputs & portfolio rate of return';
+                    return 'Using default inputs + portfolio rate of return & savings';
                 } else {
                     return 'Using default input values';
                 }
@@ -41,17 +40,30 @@
                 }
             }
             
+            
             // check local storage for portfolio avg rate of return.
             // if present, use it instead of default rate of return.
             function loadRoR() {
                 if (LS.getData('pfapp-storage')) {
-                    var numb = 100 * parseFloat(LS.getData('pfapp-storage'));
-                    return Math.round(numb * 100) / 100;
+                    var RoR = 100 * parseFloat(LS.getData('pfapp-storage')[0]);
+                    return Math.round(RoR * 100) / 100;
                 } else {
                     return 6;
                 }
             }
             
+            
+            // check local storage for portfolio sumInvestments.
+            // if present, use it instead of default existing savings.
+            function loadExistingSavings() {
+                if (LS.getData('pfapp-storage')) {
+                    var existingSavings = parseFloat(LS.getData('pfapp-storage')[1]);
+                    return Math.round(existingSavings * 100) / 100;
+                } else {
+                    return 50000;
+                }
+            }
+
             
             // bind input data to model
             function setState() {
@@ -67,9 +79,9 @@
                     retirementAge: arr[1],
                     annualExpenses: arr[2],
                     withdrawalRate: arr[3],
-                    FVpv: arr[4],
+                    FVpv: loadExistingSavings(),
                     FVrate: loadRoR(),
-                    FVpmt: arr[5],
+                    FVpmt: arr[4],
                     requiredSavings: 0,
                     FVnper: 10
                 };
