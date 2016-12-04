@@ -48,12 +48,84 @@
          * @params  [array]     investments     [all investments]
          * @returns [number]                    [percentage of stocks held]
         */
-        function ratioStocks(investments) {
+        function getPercentStocks(investments) {
             var sumStocks = sumInvestmentValue(investments, "Stock"),
                 sumBonds  = sumInvestmentValue(investments, "Bond"),
                 sumTotal  = sumStocks + sumBonds;
                 
                 return (sumStocks / sumTotal);
+        }
+        
+        
+        /* CALCULATE TARGET PERCENTAGE OF STOCKS TO HOLD IN PORTFOLIO
+         *
+         * @params  [number]    requiredRate    [rate required to meet FIRE Calc savings goal]
+         * @params  [array]     investments     [all investments]
+         * @returns [number]                    [percentage of stocks to hold given required rate]
+        */
+        function getTargetPercentStocks(requiredRate, investments) {
+            var sumStocks = sumInvestmentValue(investments, "Stock"),
+                sumBonds  = sumInvestmentValue(investments, "Bond"),
+                sumTotal  = (sumStocks + sumBonds),
+                weightedInvestments,
+                sumStocksRoR = 0,
+                sumBondsRoR = 0,
+                greaterRoR,
+                lesserRoR,
+                percentStocks;
+            
+            // calculate weighted return for each holding in portfolio
+            weightedInvestments = investments.map(function (holding) {
+                if (holding.type === "Stock") {
+                    return {
+                        ticker: holding.ticker,
+                        value: holding.value,
+                        type: holding.type,
+                        avgReturn: holding.avgReturn,
+                        weightedReturn: holding.avgReturn * holding.value / sumStocks
+                    };
+                } else {
+                    return {
+                        ticker: holding.ticker,
+                        value: holding.value,
+                        type: holding.type,
+                        avgReturn: holding.avgReturn,
+                        weightedReturn: holding.avgReturn * holding.value / sumBonds
+                    };
+                }
+            });
+            
+            // loop through weighted investments array, adding weighted returns to
+            // sumStocksRoR or sumBondsRor
+            weightedInvestments.forEach(function (holding) {
+                if (holding.type === "Stock") {
+                    sumStocksRoR += holding.weightedReturn;
+                } else {
+                    sumBondsRoR += holding.weightedReturn;
+                }
+            });
+            
+            // determin which asset class has higher return
+            if (sumStocksRoR > sumBondsRoR) {
+                greaterRoR = sumStocksRoR;
+                lesserRoR  = sumBondsRoR;
+            } else {
+                greaterRoR = sumBondsRoR;
+                lesserRoR  = sumStocksRoR;
+            }
+            
+            // handle extreme cases
+            if (requiredRate > greaterRoR) {
+                // if required rate exceeds greaterRoR hold 100% stocks
+                return 1;
+            } else if (requiredRate < lesserRoR) {
+                // if required rate lower than lesserRoR hold 100% bonds (0 stocks)
+                return 0;
+            } else {
+                // normal case: calculate percentage of stocks required
+                return (requiredRate - sumBondsRoR) / (sumStocksRoR - sumBondsRoR);
+            }
+            
         }
 
         
@@ -91,7 +163,8 @@
         return {
             sumPortfolioValue: sumPortfolioValue,
             sumInvestmentValue: sumInvestmentValue,
-            ratioStocks: ratioStocks,
+            getPercentStocks: getPercentStocks,
+            getTargetPercentStocks: getTargetPercentStocks,
             avgPortfolioReturn: avgPortfolioReturn
         };
         

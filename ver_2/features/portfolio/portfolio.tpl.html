@@ -131,15 +131,9 @@
 
                 <p>Total Bonds: {{ vm.pfMethods.sumInvestmentValue(vm.state.investments, "Bond") | currency }}</p>
                 
-                <p>Avg aggregate Stocks returns: </p>
+                <p>Average Aggregate Rate of Return: {{vm.pfMethods.avgPortfolioReturn(vm.state.investments) * 100 | number:2 }}%</p>
                 
-                <p>Avg aggregate Bonds returns:</p>
-
-                <p>Given your required Rate of Return, your Target Allocation Ratio: <br />
-                %Stocks = (ReqRate – bondRoR) / (stockRoR – BondRoR) <br />
-                %bonds  = 1 - %stocks</p>
-
-                <p>Aggregate total return: {{vm.pfMethods.avgPortfolioReturn(vm.state.investments) * 100 | number:2 }}%</p>
+                <p>Required Rate (from FIRE Calc): {{vm.state.requiredRate | number:2 }}%</p>
             
             </div>
             
@@ -148,15 +142,15 @@
                 <div class="Grid Grid--gutters large-Grid--full Grid--1of2">
                 
                     <div class="Grid-cell">
-                        <portfolio-pie-chart id="pie1" percentage="vm.pfMethods.ratioStocks(vm.state.investments)">
+                        <portfolio-pie-chart id="pie1" percentage="vm.pfMethods.getPercentStocks(vm.state.investments)">
                         </portfolio-pie-chart>
-                        <p>Current Allocation Ratio: {{ (100 * vm.pfMethods.ratioStocks(vm.state.investments)) | number:1 }}% / {{ (100 * (1 - vm.pfMethods.ratioStocks(vm.state.investments))) | number:1 }}% (stocks / bonds)</p>
+                        <p>Current Allocation Ratio: {{ (100 * vm.pfMethods.getPercentStocks(vm.state.investments)) | number:1 }}% / {{ (100 * (1 - vm.pfMethods.getPercentStocks(vm.state.investments))) | number:1 }}% (stocks / bonds)</p>
                     </div>
                     
                     <div class="Grid-cell">
-                        <portfolio-pie-chart id="pie2" percentage="0.70">
+                        <portfolio-pie-chart id="pie2" percentage="vm.pfMethods.getTargetPercentStocks(vm.state.requiredRate, vm.state.investments)">
                         </portfolio-pie-chart>
-                        <p>Target Allocation Ratio: 70% / 30% (stocks / bonds)</p>
+                        <p>Target Allocation Ratio: {{100 * vm.pfMethods.getTargetPercentStocks(vm.state.requiredRate, vm.state.investments) | number:2}}% / {{ 100 * (1 - vm.pfMethods.getTargetPercentStocks(vm.state.requiredRate, vm.state.investments)) | number:2}}% (stocks / bonds)</p>
                     </div>
                 
                 </div>

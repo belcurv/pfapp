@@ -13,17 +13,18 @@
                     65,     // FIRE age
                     30000,  // annual expenses
                     4.00,   // withdrawal rate
+                    50000,
                     10000   // annual savings
                 ];
             
             
             // determine data source and bind alert to model
             function obtainDataSource() {
-                if (LS.getData('fire-calc-storage') && LS.getData('pfapp-storage')) {
+                if (LS.getData('fire-calc-storage') && LS.getData('pf-storage-global')) {
                     return 'Using locally-stored inputs + portfolio rate of return & savings';
-                } else if (LS.getData('fire-calc-storage') && !LS.getData('pfapp-storage')) {
+                } else if (LS.getData('fire-calc-storage') && !LS.getData('pf-storage-global')) {
                     return 'Using locally-stored inputs';
-                } else if (!LS.getData('fire-calc-storage') && LS.getData('pfapp-storage')) {
+                } else if (!LS.getData('fire-calc-storage') && LS.getData('pf-storage-global')) {
                     return 'Using default inputs + portfolio rate of return & savings';
                 } else {
                     return 'Using default input values';
@@ -44,8 +45,8 @@
             // check local storage for portfolio avg rate of return.
             // if present, use it instead of default rate of return.
             function loadRoR() {
-                if (LS.getData('pfapp-storage')) {
-                    var RoR = 100 * parseFloat(LS.getData('pfapp-storage')[0]);
+                if (LS.getData('pf-storage-global')) {
+                    var RoR = 100 * parseFloat(LS.getData('pf-storage-global')[0]);
                     return Math.round(RoR * 100) / 100;
                 } else {
                     return 6;
@@ -56,8 +57,8 @@
             // check local storage for portfolio sumInvestments.
             // if present, use it instead of default existing savings.
             function loadExistingSavings() {
-                if (LS.getData('pfapp-storage')) {
-                    var existingSavings = parseFloat(LS.getData('pfapp-storage')[1]);
+                if (LS.getData('pf-storage-global')) {
+                    var existingSavings = parseFloat(LS.getData('pf-storage-global')[1]);
                     return Math.round(existingSavings * 100) / 100;
                 } else {
                     return 50000;
@@ -81,7 +82,7 @@
                     withdrawalRate: arr[3],
                     FVpv: loadExistingSavings(),
                     FVrate: loadRoR(),
-                    FVpmt: arr[4],
+                    FVpmt: arr[5],
                     requiredSavings: 0,
                     FVnper: 10
                 };
@@ -104,6 +105,9 @@
             
             // Save current state to local storage
             function saveState() {
+                
+                var reqRate = fireMath.solveRate(vm.state.retirementAge - vm.fcMethods.calcAge(vm.state.birthDate), -vm.state.FVpmt, -vm.state.FVpv, vm.fcMethods.calcReqSavings(vm.state.annualExpenses, vm.state.withdrawalRate), null, null);
+                
                 LS.setData('fire-calc-storage', [
                     vm.state.birthDate,
                     vm.state.retirementAge,
@@ -112,6 +116,13 @@
                     vm.state.FVpv,
                     vm.state.FVpmt
                 ]);
+                
+                // save required rate to 'global' local storage,
+                // for use in Portfolio allocation ratio calculations
+                LS.setData('fc-storage-global', [
+                    reqRate
+                ]);
+                
                 // re-set state using newly-loaded values from local storage
                 setState();
             }

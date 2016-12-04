@@ -26,6 +26,17 @@
                 }
             }
             
+
+            // check local storage for Fire Calc required rate.
+            // If present, use it to calculate target allocation ratio.
+            function loadReqRate() {
+                if (LS.getData('fc-storage-global')) {
+                    return parseFloat(LS.getData('fc-storage-global')[0]);
+                } else {
+                    return 'Calculate Required Rate of Return First!';
+                }
+            }
+            
             
             /* BIND INPUT DATA TO MODEL
              *
@@ -34,11 +45,13 @@
             */
             function setState() {
                 // call loadState, which returns array
-                var arr = loadState();
+                var arr = loadState(),
+                    reqRate = loadReqRate();
                 // bind
                 vm.state = {
                     investments: arr[0],
-                    newTickerType: "Stock"
+                    newTickerType: "Stock",
+                    requiredRate: reqRate
                 };
             }
             setState();  // call on page load
@@ -52,7 +65,8 @@
                 deleteInvestment: deleteInvestment,
                 sumPortfolioValue: pfMath.sumPortfolioValue,
                 sumInvestmentValue: pfMath.sumInvestmentValue,
-                ratioStocks: pfMath.ratioStocks,
+                getPercentStocks: pfMath.getPercentStocks,
+                getTargetPercentStocks: pfMath.getTargetPercentStocks,
                 avgPortfolioReturn: pfMath.avgPortfolioReturn
             };
             
@@ -105,7 +119,7 @@
                 var avgReturn = vm.pfMethods.avgPortfolioReturn(vm.state.investments),
                     sumInvestments = vm.pfMethods.sumPortfolioValue(vm.state.investments);
                 LS.setData('portfolio-storage', [vm.state.investments]);
-                LS.setData('pfapp-storage', [avgReturn, sumInvestments]);
+                LS.setData('pf-storage-global', [avgReturn, sumInvestments]);
                 // reset state; will use local storage values
                 setState();
             }
@@ -119,7 +133,7 @@
             function deleteData() {
                 // delete personal portfolio data
                 LS.deleteData('portfolio-storage');
-                LS.deleteData('pfapp-storage');
+                LS.deleteData('pf-storage-global');
                 // reset state; will use defaults
                 setState();
             }
